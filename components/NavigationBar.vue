@@ -20,9 +20,6 @@
               <NuxtLink replace to="/dapps/randomavatarswap">
                 Random Avatar Swap
               </NuxtLink>
-              <NuxtLink replace to="/lookup">
-                Reddit Identity Lookup
-              </NuxtLink>
               <NuxtLink to="https://avatartraits.xyz">
                 AvatarTraits.xyz
               </NuxtLink>

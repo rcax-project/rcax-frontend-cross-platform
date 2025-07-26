@@ -35,13 +35,6 @@
         <p class="text-neutral-500 text-sm">See what avatars are about to be released in the shop and make use of the direct shop links.</p>
       </div>
     </NuxtLink>
-    <NuxtLink to="/lookup" class="w-full max-w-sm">
-      <div class="group tool">
-        <h1 class="text-header text-xl text-center font-semibold">Reddit Identity Lookup</h1>
-        <MagnifyingGlassIcon class="w-8 h-8 text-neutral-500" />
-        <p class="text-neutral-500 text-sm">Lookup a Reddit user's address from their username or a username from an address.</p>
-      </div>
-    </NuxtLink>
     <template v-if="!Capacitor.isNativePlatform()">
       <NuxtLink to="/dapps/randomavatarswap" class="w-full max-w-sm">
         <div class="group tool">
@@ -63,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import {PaintBrushIcon, TagIcon, BellIcon, ArrowPathRoundedSquareIcon, ShoppingBagIcon, MagnifyingGlassIcon, ArrowPathIcon} from "@heroicons/vue/24/solid";
+import {PaintBrushIcon, TagIcon, BellIcon, ArrowPathRoundedSquareIcon, ShoppingBagIcon, ArrowPathIcon} from "@heroicons/vue/24/solid";
 import {useUser} from "#imports";
 import {Capacitor} from "@capacitor/core";
 

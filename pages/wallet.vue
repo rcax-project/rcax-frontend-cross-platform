@@ -26,7 +26,7 @@
       <div class="lg:hidden px-2 sm:px-6 py-2 flex flex-col lg:flex-row-reverse lg:items-center lg:justify-between gap-3 w-full overflow-hidden">
         <div class="flex items-center lg:justify-end text-sm w-full">
           <div class="flex flex-nowrap gap-2 max-w-lg w-full">
-            <input type="text" autocomplete="off" name=“searchTerm” v-model="walletAddress" placeholder="Reddit Username (without u/) or Wallet Address">
+            <input type="text" autocomplete="off" name=“searchTerm” v-model="walletAddress" placeholder="Wallet Address">
             <button @click="getWalletTokens(walletAddress)" :disabled="lookupDisabled()" class="px-4 h-10 flex items-center bg-amber-600 hover:bg-amber-500 disabled:bg-white/5 text-header disabled:text-white/20 text-sm font-medium whitespace-nowrap rounded-lg duration-200 cursor-pointer">
               <template v-if="loading">
                 <svg class="inline w-5 h-5 text-amber-600 animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +45,7 @@
         <div class="px-2 sm:px-6 py-2 flex flex-col lg:flex-row-reverse lg:items-center lg:justify-between gap-3 w-full overflow-hidden">
           <div class="hidden lg:flex items-center lg:justify-end text-sm w-full">
             <div class="flex flex-nowrap gap-2 max-w-lg w-full">
-              <input type="text" autocomplete="off" name=“searchTerm” v-model="walletAddress" placeholder="Reddit Username (without u/) or Wallet Address">
+              <input type="text" autocomplete="off" name=“searchTerm” v-model="walletAddress" placeholder="Wallet Address">
               <button @click="getWalletTokens(walletAddress)" :disabled="lookupDisabled()" class="px-4 h-10 flex items-center bg-amber-600 hover:bg-amber-500 disabled:bg-white/5 text-header disabled:text-white/20 text-sm font-medium whitespace-nowrap rounded-lg duration-200 cursor-pointer">
                 <template v-if="loading">
                   <svg class="inline w-5 h-5 text-amber-600 animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -273,7 +273,6 @@ import {computed, ComputedRef} from "vue";
 import {Haptics, ImpactStyle} from "@capacitor/haptics";
 import {rcaxToEth} from "~/composables/api/rcax";
 import {marketplaceLink} from "~/global/marketplace";
-import {getCryptoContactFromId, getUserInfo} from "~/composables/api/reddit";
 
 const walletAddresses = useWalletAddresses();
 const rcaxEthPrice = useRcaxEthPrice();
@@ -373,16 +372,9 @@ async function getWalletTokens(wallet: string) {
   loading.value = true;
 
   if (!isValidEthereumAddress(wallet)) {
-    try {
-      let userInfo = await getUserInfo(wallet);
-      let userId = userInfo['data']['id'];
-      let cryptoInfo = await getCryptoContactFromId(userId);
-      wallet = cryptoInfo['contacts'][`t2_${userId}`][0]['address'];
-    } catch(err) {
-      loading.value = false;
-      alert(err);
-      return;
-    }
+    loading.value = false;
+    alert('Invalid Ethereum address');
+    return;
   }
 
   await fetchWalletTokens(wallet)
