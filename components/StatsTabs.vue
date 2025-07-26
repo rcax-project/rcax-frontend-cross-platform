@@ -9,7 +9,7 @@
         >
           <WalletIcon class="stats-tab-icon" />
           <span class="relative z-10">Wallet</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-amber-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#df7a30]/5 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
 
         <NuxtLink 
@@ -19,7 +19,7 @@
         >
           <StarIcon class="stats-tab-icon" />
           <span class="relative z-10">Watchlist</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-amber-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#df7a30]/5 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
 
         <NuxtLink 
@@ -29,7 +29,7 @@
         >
           <ChartBarIcon class="stats-tab-icon" />
           <span class="relative z-10">Stats</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-amber-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#df7a30]/5 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
 
         <NuxtLink 
@@ -39,7 +39,7 @@
         >
           <BoltIcon class="stats-tab-icon" />
           <span class="relative z-10">Activity</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-amber-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#df7a30]/5 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
 
         <NuxtLink 
@@ -49,7 +49,7 @@
         >
           <ShoppingBagIcon class="stats-tab-icon" />
           <span class="relative z-10">Shop</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-amber-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#df7a30]/5 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
 
         <NuxtLink 
@@ -59,7 +59,7 @@
         >
           <GlobeEuropeAfricaIcon class="stats-tab-icon" />
           <span class="relative z-10">Browser</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-amber-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#df7a30]/5 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
 
         <NuxtLink 
@@ -69,7 +69,7 @@
         >
           <BellIcon class="stats-tab-icon" />
           <span class="relative z-10">Alerts</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-amber-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#df7a30]/5 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
       </div>
     </div>
@@ -86,16 +86,16 @@ import {StarIcon, BellIcon, ChartBarIcon, WalletIcon, TagIcon, BoltIcon, Shoppin
 }
 
 .stats-tab-active {
-  color: rgb(251 146 60) !important;
-  background-color: rgb(251 146 60 / 0.15) !important;
-  border-color: rgb(251 146 60 / 0.3) !important;
-  box-shadow: 0 10px 15px -3px rgb(251 146 60 / 0.2), 0 4px 6px -4px rgb(251 146 60 / 0.2) !important;
+  color: #df7a30 !important;
+  background-color: rgba(223, 122, 48, 0.15) !important;
+  border-color: rgba(223, 122, 48, 0.3) !important;
+  box-shadow: 0 10px 15px -3px rgba(223, 122, 48, 0.2), 0 4px 6px -4px rgba(223, 122, 48, 0.2) !important;
 }
 
 .stats-tab-active:hover {
-  color: rgb(254 215 170) !important;
-  background-color: rgb(251 146 60 / 0.2) !important;
-  border-color: rgb(251 146 60 / 0.4) !important;
+  color: #df7a30 !important;
+  background-color: rgba(223, 122, 48, 0.2) !important;
+  border-color: rgba(223, 122, 48, 0.4) !important;
 }
 
 .stats-tab-icon {

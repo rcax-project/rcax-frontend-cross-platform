@@ -1,31 +1,31 @@
 <template>
   <div class="sticky top-0 flex flex-col bg-gradient-to-r from-[#141415] via-[#1a1a1b] to-[#141415] border-b border-zinc-800/50 backdrop-blur-xl z-50 w-full shadow-lg" :class="{ 'nav-top': Capacitor.isNativePlatform() }" @mouseleave="closeDropdowns()" ref="navbar">
-    <nav class="relative py-3 px-4 lg:px-8 flex w-full items-center">
+    <nav class="relative py-2 px-4 lg:px-8 flex w-full items-center">
       <!-- Logo Section -->
       <div class="flex items-center space-x-4">
         <NuxtLink to="/" class="flex items-center space-x-3 group">
           <div class="relative">
-            <img class="h-10 w-auto transition-transform duration-300 group-hover:scale-105" src="/images/branding/rcax/RCAX_Logo_Color.svg">
+            <img class="h-8 w-auto transition-transform duration-300 group-hover:scale-105" src="/images/branding/rcax/RCAX_Logo_Color.svg">
             <div class="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-amber-400/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </div>
-          <img class="h-6 w-auto hidden sm:block transition-opacity duration-300 group-hover:opacity-80" src="/images/branding/rcax/rcaxLogo2024Light.svg">
+          <img class="h-5 w-auto hidden sm:block transition-opacity duration-300 group-hover:opacity-80" src="/images/branding/rcax/rcaxLogo2024Light.svg">
         </NuxtLink>
       </div>
 
       <!-- Desktop Navigation Links -->
-      <div class="hidden lg:flex items-center space-x-8 ml-8">
+      <div class="hidden lg:flex items-center space-x-6 ml-6">
         <NuxtLink 
           to="/" 
-          exact-active-class="!text-orange-400" 
-          class="relative px-4 py-2 text-gray-400 hover:text-white transition-all duration-200 font-medium group"
+          exact-active-class="nav-link-active" 
+          class="relative px-3 py-1.5 text-gray-400 hover:text-white transition-all duration-200 font-medium group"
         >
           <span class="relative z-10">Avatars</span>
         </NuxtLink>
         
         <NuxtLink 
           to="/avatar" 
-          active-class="!text-orange-400" 
-          class="relative px-4 py-2 text-gray-400 hover:text-white transition-all duration-200 font-medium group"
+          active-class="nav-link-active" 
+          class="relative px-3 py-1.5 text-gray-400 hover:text-white transition-all duration-200 font-medium group"
         >
           <span class="relative z-10">Exporter</span>
         </NuxtLink>
@@ -33,7 +33,7 @@
         <template v-if="!Capacitor.isNativePlatform()">
           <DropDownMenu class="relative" :usingUser="false">
             <template v-slot:button>
-              <button class="relative px-4 py-2 text-gray-400 hover:text-white transition-all duration-200 font-medium group flex items-center space-x-1">
+              <button class="relative px-3 py-1.5 text-gray-400 hover:text-white transition-all duration-200 font-medium group flex items-center space-x-1">
                 <span class="relative z-10">Apps</span>
                 <ChevronDownIcon class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
               </button>
@@ -58,19 +58,19 @@
       <!-- Mobile Menu Button -->
       <button 
         @click="toggleMobileMenu()"
-        class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-slate-300 hover:text-white hover:bg-zinc-700/50 transition-all duration-200 ml-auto"
+        class="lg:hidden flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-slate-300 hover:text-white hover:bg-zinc-700/50 transition-all duration-200 ml-auto"
       >
-        <Bars3Icon v-if="!mobileMenuOpen" class="w-6 h-6" />
-        <XMarkIcon v-else class="w-6 h-6" />
+        <Bars3Icon v-if="!mobileMenuOpen" class="w-5 h-5" />
+        <XMarkIcon v-else class="w-5 h-5" />
       </button>
 
       <!-- Right Side Actions -->
-      <div class="hidden lg:flex items-center space-x-4 ml-auto">
+      <div class="hidden lg:flex items-center space-x-3 ml-auto">
         <!-- Currency Selector -->
         <div class="relative">
           <select 
             v-model="settings.currency.preferred"
-            class="appearance-none bg-zinc-800/30 border border-zinc-700/30 text-zinc-400 text-sm rounded-lg px-4 py-2 pr-8 hover:bg-zinc-700/40 hover:border-zinc-600/50 focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 transition-all duration-200 cursor-pointer"
+            class="appearance-none bg-zinc-800/30 border border-zinc-700/30 text-zinc-400 text-sm rounded-lg px-3 py-1.5 pr-7 hover:bg-zinc-700/40 hover:border-zinc-600/50 focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 transition-all duration-200 cursor-pointer"
           >
             <option v-for="currency in CURRENCIES" :key="currency.ticker" :value="currency.ticker" class="bg-zinc-800">
               {{ currency.ticker }}
@@ -115,14 +115,14 @@
             <NuxtLink
               replace
               to="/login"
-              class="px-4 py-2 text-zinc-400 hover:text-slate-200 hover:bg-zinc-700/30 rounded-lg transition-all duration-200 font-medium"
+              class="px-3 py-1.5 text-zinc-400 hover:text-slate-200 hover:bg-zinc-700/30 rounded-lg transition-all duration-200 font-medium"
             >
               Login
             </NuxtLink>
             <NuxtLink
               replace
               to="/signup"
-              class="px-4 py-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
+              class="px-3 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
             >
               Create account
             </NuxtLink>
@@ -147,7 +147,7 @@
             <NuxtLink 
               to="/" 
               @click="closeMobileMenu()"
-              exact-active-class="!text-orange-400" 
+              exact-active-class="nav-link-active" 
               class="block px-4 py-3 text-gray-400 hover:text-white transition-all duration-200 font-medium"
             >
               Avatars
@@ -155,7 +155,7 @@
             <NuxtLink 
               to="/avatar" 
               @click="closeMobileMenu()"
-              active-class="!text-orange-400" 
+              active-class="nav-link-active" 
               class="block px-4 py-3 text-gray-400 hover:text-white transition-all duration-200 font-medium"
             >
               Exporter
@@ -379,6 +379,11 @@ function handleScroll() {
 </script>
 
 <style scoped>
+/* RCAX Brand Orange Active State */
+.nav-link-active {
+  color: #df7a30 !important;
+}
+
 .navigation-bar select {
   @apply h-8 max-h-full;
 }

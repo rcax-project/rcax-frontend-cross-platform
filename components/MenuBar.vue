@@ -64,14 +64,14 @@ import {Capacitor} from "@capacitor/core";
 }
 
 .menubar-content > button.active {
-  background-color: rgb(251 146 60 / 0.15);
-  border-color: rgb(251 146 60 / 0.3);
-  color: rgb(251 146 60);
+  background-color: rgba(223, 122, 48, 0.15);
+  border-color: rgba(223, 122, 48, 0.3);
+  color: #df7a30;
 }
 
 .menubar-content > button.active:hover {
-  color: rgb(254 215 170);
-  background-color: rgb(251 146 60 / 0.2);
+  color: #df7a30;
+  background-color: rgba(223, 122, 48, 0.2);
 }
 
 /* Custom scrollbar for horizontal overflow on mobile */
