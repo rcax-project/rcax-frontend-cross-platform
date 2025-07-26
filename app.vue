@@ -258,7 +258,7 @@ const getDeliveredNotifications = async () => {
 }
 
 html, body {
-  @apply bg-primary;
+  @apply bg-gradient-to-r from-[#141415]/95 via-[#1a1a1b]/95 to-[#141415]/95;
   -webkit-tap-highlight-color: transparent;
 }
 

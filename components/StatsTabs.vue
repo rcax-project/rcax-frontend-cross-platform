@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-0 z-30 w-full bg-gradient-to-r from-[#141415]/95 via-[#1a1a1b]/95 to-[#141415]/95 backdrop-blur-xl border-b border-zinc-800/50 shadow-lg">
+  <div class="sticky top-0 z-30 w-full bg-gradient-to-r from-[#141415]/95 via-[#1a1a1b]/95 to-[#141415]/95 backdrop-blur-xl border-b border-zinc-800/50">
     <div class="px-4 lg:px-8 py-4">
       <div class="flex items-center justify-start gap-2 overflow-x-auto scrollbar-hide">
         <NuxtLink 
@@ -9,7 +9,6 @@
         >
           <WalletIcon class="stats-tab-icon" />
           <span class="relative z-10">Wallet</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#df7a30]/5 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
 
         <NuxtLink 
@@ -19,7 +18,6 @@
         >
           <StarIcon class="stats-tab-icon" />
           <span class="relative z-10">Watchlist</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#df7a30]/5 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
 
         <NuxtLink 
@@ -29,7 +27,6 @@
         >
           <ChartBarIcon class="stats-tab-icon" />
           <span class="relative z-10">Stats</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#df7a30]/5 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
 
         <NuxtLink 
@@ -39,7 +36,6 @@
         >
           <BoltIcon class="stats-tab-icon" />
           <span class="relative z-10">Activity</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#df7a30]/5 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
 
         <NuxtLink 
@@ -49,7 +45,6 @@
         >
           <ShoppingBagIcon class="stats-tab-icon" />
           <span class="relative z-10">Shop</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#df7a30]/5 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
 
         <NuxtLink 
@@ -59,7 +54,6 @@
         >
           <GlobeEuropeAfricaIcon class="stats-tab-icon" />
           <span class="relative z-10">Browser</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#df7a30]/5 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
 
         <NuxtLink 
@@ -69,7 +63,6 @@
         >
           <BellIcon class="stats-tab-icon" />
           <span class="relative z-10">Alerts</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#df7a30]/5 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
       </div>
     </div>
@@ -86,26 +79,21 @@ import {StarIcon, BellIcon, ChartBarIcon, WalletIcon, TagIcon, BoltIcon, Shoppin
 }
 
 .stats-tab-active {
-  color: #df7a30 !important;
-  background-color: rgba(223, 122, 48, 0.15) !important;
-  border-color: rgba(223, 122, 48, 0.3) !important;
-  box-shadow: 0 10px 15px -3px rgba(223, 122, 48, 0.2), 0 4px 6px -4px rgba(223, 122, 48, 0.2) !important;
+  color: white !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 .stats-tab-active:hover {
-  color: #df7a30 !important;
-  background-color: rgba(223, 122, 48, 0.2) !important;
-  border-color: rgba(223, 122, 48, 0.4) !important;
+  color: white !important;
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
 }
 
 .stats-tab-icon {
   @apply h-4 w-4 flex-shrink-0;
 }
 
-/* Active state for the gradient overlay */
-.stats-tab-active .absolute {
-  @apply opacity-30;
-}
 
 /* Custom scrollbar for horizontal overflow on mobile */
 .scrollbar-hide {
