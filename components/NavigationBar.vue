@@ -125,7 +125,7 @@
             <NuxtLink
               replace
               to="/signup"
-              class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
+              class="px-4 py-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
             >
               Create account
             </NuxtLink>
@@ -253,7 +253,7 @@
                   replace
                   to="/signup"
                   @click="closeMobileMenu()"
-                  class="block px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-200 font-medium text-center shadow-lg"
+                  class="block px-4 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all duration-200 font-medium text-center shadow-lg"
                 >
                   Create account
                 </NuxtLink>
