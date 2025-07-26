@@ -1,6 +1,6 @@
 <template>
   <div class="sticky top-0 flex flex-col bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700/50 backdrop-blur-xl z-50 w-full shadow-lg" :class="{ 'nav-top': Capacitor.isNativePlatform() }" @mouseleave="closeDropdowns()" ref="navbar">
-    <nav class="relative py-3 px-4 lg:px-8 flex w-full items-center justify-between">
+    <nav class="relative py-3 px-4 lg:px-8 flex w-full items-center">
       <!-- Logo Section -->
       <div class="flex items-center space-x-4">
         <NuxtLink to="/" class="flex items-center space-x-3 group">
@@ -13,7 +13,7 @@
       </div>
 
       <!-- Desktop Navigation Links -->
-      <div class="hidden lg:flex items-center space-x-8">
+      <div class="hidden lg:flex items-center space-x-8 ml-8">
         <NuxtLink 
           to="/" 
           exact-active-class="text-blue-400 bg-blue-400/10 border-blue-400/20" 
@@ -61,14 +61,14 @@
       <!-- Mobile Menu Button -->
       <button 
         @click="toggleMobileMenu()"
-        class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-slate-800/50 border border-slate-700/50 text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200"
+        class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-slate-800/50 border border-slate-700/50 text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200 ml-auto"
       >
         <Bars3Icon v-if="!mobileMenuOpen" class="w-6 h-6" />
         <XMarkIcon v-else class="w-6 h-6" />
       </button>
 
       <!-- Right Side Actions -->
-      <div class="hidden lg:flex items-center space-x-4">
+      <div class="hidden lg:flex items-center space-x-4 ml-auto">
         <!-- Currency Selector -->
         <div class="relative">
           <select 
