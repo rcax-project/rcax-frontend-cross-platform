@@ -8,7 +8,7 @@
             <img class="h-8 w-auto transition-transform duration-300 group-hover:scale-105" src="/images/branding/rcax/RCAX_Logo_Color.svg">
             <div class="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-amber-400/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </div>
-          <img class="h-5 w-auto hidden sm:block transition-opacity duration-300 group-hover:opacity-80" src="/images/branding/rcax/rcaxLogo2024Light.svg">
+          <img class="h-5 w-auto transition-opacity duration-300 group-hover:opacity-80" src="/images/branding/rcax/rcaxLogo2024Light.svg">
         </NuxtLink>
       </div>
 
@@ -58,7 +58,7 @@
       <!-- Mobile Menu Button -->
       <button 
         @click="toggleMobileMenu()"
-        class="lg:hidden flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-slate-300 hover:text-white hover:bg-zinc-700/50 transition-all duration-200 ml-auto"
+        class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-slate-300 hover:text-white hover:bg-zinc-700/50 transition-all duration-200 ml-auto"
       >
         <Bars3Icon v-if="!mobileMenuOpen" class="w-5 h-5" />
         <XMarkIcon v-else class="w-5 h-5" />
