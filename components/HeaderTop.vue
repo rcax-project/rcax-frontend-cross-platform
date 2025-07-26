@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full text-xs bg-gradient-to-r from-slate-950/95 via-slate-900/95 to-slate-950/95 backdrop-blur-xl border-b border-slate-700/30 overflow-hidden z-40 shadow-sm" ref="barMarketInfo" :class="{ 'page-mobile-padding-top': Capacitor.isNativePlatform() }">
+  <div class="relative w-full text-xs bg-gradient-to-r from-[#141415]/95 via-[#1a1a1b]/95 to-[#141415]/95 backdrop-blur-xl border-b border-zinc-800/30 overflow-hidden z-40 shadow-sm" ref="barMarketInfo" :class="{ 'page-mobile-padding-top': Capacitor.isNativePlatform() }">
     <div class="px-4 lg:px-8 py-3 flex whitespace-nowrap items-center overflow-x-auto scrollbar-hide duration-500" :class="{ 'opacity-0': hideItems }">
       <div class="inline-flex shrink-0 gap-3 sm:gap-4">
         <button @click="openLinkWith(`https://app.uniswap.org/tokens/polygon/0x875f123220024368968d9f1ab1f3f9c2f3fd190d`)" class="market-info-card group cursor-pointer">
@@ -9,12 +9,12 @@
               <span class="text-slate-300 font-medium">{{ gweiInLocalCurrency(rcax) }}</span>
             </div>
             <div class="flex items-center gap-1">
-              <span class="text-slate-500">Supply:</span>
-              <span class="text-slate-400">{{ Math.round(rcaxInfo?.data.attributes.total_supply / ETH_TO_GWEI_MODIFIER).toLocaleString() ?? 0 }}</span>
+              <span class="text-zinc-500">Supply:</span>
+              <span class="text-zinc-400">{{ Math.round(rcaxInfo?.data.attributes.total_supply / ETH_TO_GWEI_MODIFIER).toLocaleString() ?? 0 }}</span>
             </div>
             <div class="flex items-center gap-1">
-              <span class="text-slate-500">MC:</span>
-              <span class="text-slate-400">{{ ethereumInLocalCurrency(rcax * (rcaxInfo?.data.attributes.total_supply ?? 0)) }}</span>
+              <span class="text-zinc-500">MC:</span>
+              <span class="text-zinc-400">{{ ethereumInLocalCurrency(rcax * (rcaxInfo?.data.attributes.total_supply ?? 0)) }}</span>
             </div>
           </div>
         </button>
@@ -40,15 +40,15 @@
             <img class="w-4 h-4" src="/images/branding/reddit-icon.svg">
           </div>
           <div class="flex items-center gap-1">
-            <span class="text-slate-500">24h Vol:</span>
+            <span class="text-zinc-500">24h Vol:</span>
             <div class="flex items-center gap-1">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-purple-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-              <span class="text-slate-400">{{ dailyVol.toFixed(4).replace(/\.?0+$/, '') }}</span>
+              <span class="text-zinc-400">{{ dailyVol.toFixed(4).replace(/\.?0+$/, '') }}</span>
             </div>
           </div>
           <div class="flex items-center gap-1">
-            <span class="text-slate-500">MC:</span>
-            <span class="text-slate-400">{{ ethereumInLocalCurrency(mCap * ETH_TO_GWEI_MODIFIER) }}</span>
+            <span class="text-zinc-500">MC:</span>
+            <span class="text-zinc-400">{{ ethereumInLocalCurrency(mCap * ETH_TO_GWEI_MODIFIER) }}</span>
           </div>
         </div>
       </div>
@@ -120,7 +120,7 @@ function openLinkWith(url: string) {
 
 <style scoped>
 .market-info-card {
-  @apply px-3 py-2 bg-slate-800/30 hover:bg-slate-700/40 border border-slate-700/30 hover:border-slate-600/50 rounded-lg transition-all duration-200 backdrop-blur-sm flex-shrink-0;
+  @apply px-3 py-2 bg-zinc-800/20 hover:bg-zinc-700/30 border border-zinc-700/20 hover:border-zinc-600/40 rounded-lg transition-all duration-200 backdrop-blur-sm flex-shrink-0;
 }
 
 

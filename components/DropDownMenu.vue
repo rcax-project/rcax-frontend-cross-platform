@@ -36,10 +36,10 @@ const props = defineProps({
 }
 
 .menu-button--menu {
-  @apply bg-slate-800/95 backdrop-blur-lg border border-slate-700/50 rounded-xl shadow-xl;
+  @apply bg-zinc-800/95 backdrop-blur-lg border border-zinc-700/50 rounded-xl shadow-xl;
 }
 
 .menu-button--menu--item-wrapper > * {
-  @apply px-4 py-3 w-full whitespace-nowrap inline-flex items-center hover:bg-slate-700/50 text-slate-300 hover:text-white rounded-lg duration-200 border-b border-slate-700/30 last:border-b-0;
+  @apply px-4 py-3 w-full whitespace-nowrap inline-flex items-center hover:bg-zinc-700/50 text-slate-300 hover:text-white rounded-lg duration-200 border-b border-zinc-700/30 last:border-b-0;
 }
 </style>

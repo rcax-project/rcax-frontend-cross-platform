@@ -21,7 +21,7 @@ const props = defineProps({
 
 <style scoped>
 .refresh-button {
-  @apply px-3 py-2 bg-slate-800/30 hover:bg-slate-700/50 border border-slate-700/30 hover:border-slate-600/50 text-slate-300 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-all duration-200 flex items-center justify-center;
+  @apply px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-slate-300 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-all duration-200 flex items-center justify-center;
 }
 
 .refresh-button:focus {

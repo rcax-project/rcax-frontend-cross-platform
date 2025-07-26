@@ -35,17 +35,17 @@ const props = defineProps({
 
 <style scoped>
 .searchbar {
-  @apply px-2.5 py-2 bg-slate-800/30 hover:bg-slate-700/50 border border-slate-700/30 hover:border-slate-600/50 focus-within:ring-2 focus-within:ring-orange-500/50 focus-within:border-orange-500/50 rounded-lg transition-all duration-200 flex items-center gap-2 cursor-text w-full;
+  @apply px-2.5 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 focus-within:ring-2 focus-within:ring-orange-500/50 focus-within:border-orange-500/50 rounded-lg transition-all duration-200 flex items-center gap-2 cursor-text w-full;
   max-width: 400px;
   height: 36px;
 }
 
 .searchbar--icon {
-  @apply text-slate-400 w-4 h-4 flex-shrink-0;
+  @apply text-zinc-400 w-4 h-4 flex-shrink-0;
 }
 
 .searchbar--input {
-  @apply flex-1 bg-transparent text-sm text-slate-300 placeholder-slate-500 border-none focus:outline-none cursor-text min-w-0;
+  @apply flex-1 bg-transparent text-sm text-slate-300 placeholder-zinc-500 border-none focus:outline-none cursor-text min-w-0;
   padding: 0;
   margin: 0;
   height: 20px;
@@ -53,13 +53,13 @@ const props = defineProps({
 }
 
 .searchbar--clear {
-  @apply p-1 bg-slate-700/30 hover:bg-slate-600/50 rounded transition-all duration-200 flex-shrink-0 flex items-center justify-center;
+  @apply p-1 bg-zinc-700/30 hover:bg-zinc-600/50 rounded transition-all duration-200 flex-shrink-0 flex items-center justify-center;
   width: 20px;
   height: 20px;
 }
 
 .searchbar--clear--icon {
-  @apply text-slate-400 hover:text-slate-300 w-3 h-3;
+  @apply text-zinc-400 hover:text-slate-300 w-3 h-3;
 }
 
 /* Responsive adjustments */

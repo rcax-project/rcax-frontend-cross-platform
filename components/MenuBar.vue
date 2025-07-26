@@ -13,7 +13,7 @@ import {Capacitor} from "@capacitor/core";
 
 <style>
 .menubar {
-  @apply sticky top-[52px] sm:top-[63px] z-30 w-full bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 shadow-sm duration-500;
+  @apply sticky top-[52px] sm:top-[63px] z-30 w-full bg-gradient-to-r from-[#141415]/95 via-[#1a1a1b]/95 to-[#141415]/95 backdrop-blur-xl border-b border-zinc-800/50 shadow-sm duration-500;
 }
 
 .menubar-content {
@@ -51,16 +51,16 @@ import {Capacitor} from "@capacitor/core";
 
 /* Modern select styling */
 .menubar-content > select {
-  @apply px-3 py-2 bg-slate-800/30 hover:bg-slate-700/50 border border-slate-700/30 hover:border-slate-600/50 text-sm text-slate-300 hover:text-white placeholder-slate-500 font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer min-w-0 w-full max-w-[7rem] md:max-w-fit;
+  @apply px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-slate-300 hover:text-white placeholder-zinc-500 font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer min-w-0 w-full max-w-[7rem] md:max-w-fit;
 }
 
 .menubar-content > select > option {
-  @apply bg-slate-800 text-slate-300;
+  @apply bg-zinc-800 text-slate-300;
 }
 
 /* Modern button styling for filter buttons */
 .menubar-content > button {
-  @apply px-3 py-2 bg-slate-800/30 hover:bg-slate-700/50 border border-slate-700/30 hover:border-slate-600/50 text-slate-300 hover:text-white rounded-lg transition-all duration-200 font-medium whitespace-nowrap;
+  @apply px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-slate-300 hover:text-white rounded-lg transition-all duration-200 font-medium whitespace-nowrap;
 }
 
 .menubar-content > button.active {

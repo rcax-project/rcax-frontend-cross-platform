@@ -33,7 +33,7 @@ const props = defineProps({
 
 <style>
 .filter-menu-button--button {
-  @apply px-3 py-2 bg-slate-800/30 hover:bg-slate-700/50 border border-slate-700/30 hover:border-slate-600/50 text-slate-300 hover:text-white rounded-lg transition-all duration-200 font-medium flex items-center gap-2;
+  @apply px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-slate-300 hover:text-white rounded-lg transition-all duration-200 font-medium flex items-center gap-2;
 }
 
 .filter-menu-button--button:focus {
@@ -43,7 +43,7 @@ const props = defineProps({
 .filter-menu-button--menu {
   right: 0;
   top: 100%;
-  @apply bg-slate-800/95 backdrop-blur-lg border border-slate-700/50 rounded-xl shadow-xl;
+  @apply bg-zinc-800/95 backdrop-blur-lg border border-zinc-700/50 rounded-xl shadow-xl;
   min-width: 280px;
   max-width: 350px;
   width: max-content;
@@ -55,11 +55,11 @@ const props = defineProps({
 
 .filter-menu-button--menu select, 
 .filter-menu-button--menu input {
-  @apply px-3 py-2 bg-slate-800/50 hover:bg-slate-700/50 border border-slate-700/30 hover:border-slate-600/50 text-sm text-slate-300 placeholder-slate-500 font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 w-full rounded-lg transition-all duration-200;
+  @apply px-3 py-2 bg-zinc-800/50 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-slate-300 placeholder-zinc-500 font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 w-full rounded-lg transition-all duration-200;
 }
 
 .filter-menu-button--menu select > option {
-  @apply bg-slate-800 text-slate-300;
+  @apply bg-zinc-800 text-slate-300;
 }
 
 .filter-menu-button--menu input[type="number"] {
@@ -67,7 +67,7 @@ const props = defineProps({
 }
 
 .filter-menu-button--menu button {
-  @apply px-3 py-2 bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 hover:text-white rounded-lg transition-all duration-200 font-medium;
+  @apply px-3 py-2 bg-zinc-700/50 hover:bg-zinc-600/50 text-slate-300 hover:text-white rounded-lg transition-all duration-200 font-medium;
 }
 
 .filter-menu-button--menu button.clear-button {

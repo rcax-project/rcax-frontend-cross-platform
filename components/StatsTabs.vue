@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-0 z-30 w-full bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 shadow-lg">
+  <div class="sticky top-0 z-30 w-full bg-gradient-to-r from-[#141415]/95 via-[#1a1a1b]/95 to-[#141415]/95 backdrop-blur-xl border-b border-zinc-800/50 shadow-lg">
     <div class="px-4 lg:px-8 py-4">
       <div class="flex items-center justify-start gap-2 overflow-x-auto scrollbar-hide">
         <NuxtLink 
@@ -82,7 +82,7 @@ import {StarIcon, BellIcon, ChartBarIcon, WalletIcon, TagIcon, BoltIcon, Shoppin
 
 <style scoped>
 .stats-tab {
-  @apply relative inline-flex items-center gap-1.5 px-3 py-2 text-slate-300 hover:text-white bg-slate-800/30 hover:bg-slate-700/50 border border-slate-700/30 hover:border-slate-600/50 rounded-lg transition-all duration-200 font-medium whitespace-nowrap min-w-0 flex-shrink-0 text-sm;
+  @apply relative inline-flex items-center gap-1.5 px-3 py-2 text-slate-300 hover:text-white bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 rounded-lg transition-all duration-200 font-medium whitespace-nowrap min-w-0 flex-shrink-0 text-sm;
 }
 
 .stats-tab-active {

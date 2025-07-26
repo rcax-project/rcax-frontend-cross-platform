@@ -5,7 +5,7 @@
       class="user-menu-button relative flex flex-row flex-nowrap items-center duration-200 cursor-pointer">
     <button @click.prevent="showUserMenu = !showUserMenu" class="user-menu-button--button flex flex-row flex-nowrap items-center gap-3">
       <div v-if="user?.username" class="flex items-center space-x-3">
-        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+        <div class="w-8 h-8 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
           {{ user.username.charAt(0).toUpperCase() }}
         </div>
         <span class="text-slate-300 font-medium hidden xl:block">{{ user.username }}</span>
@@ -43,15 +43,15 @@ const props = defineProps({
 }
 
 .user-menu-button--menu {
-  @apply bg-slate-800/95 backdrop-blur-lg border border-slate-700/50 rounded-xl shadow-xl;
+  @apply bg-zinc-800/95 backdrop-blur-lg border border-zinc-700/50 rounded-xl shadow-xl;
 }
 
 .user-menu-button--menu--item-wrapper > * {
-  @apply px-4 py-3 w-full inline-flex items-center hover:bg-slate-700/50 text-slate-300 hover:text-white rounded-lg duration-200 font-medium;
+  @apply px-4 py-3 w-full inline-flex items-center hover:bg-zinc-700/50 text-slate-300 hover:text-white rounded-lg duration-200 font-medium;
 }
 
 .user-menu-button--menu--item-wrapper > *:first-child {
-  @apply border-b border-slate-700/30 pb-4 mb-2;
+  @apply border-b border-zinc-700/30 pb-4 mb-2;
 }
 
 .user-menu-button--menu--item-wrapper > .text-amber-400 {

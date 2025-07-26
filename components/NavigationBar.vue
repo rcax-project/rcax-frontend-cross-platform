@@ -1,12 +1,12 @@
 <template>
-  <div class="sticky top-0 flex flex-col bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700/50 backdrop-blur-xl z-50 w-full shadow-lg" :class="{ 'nav-top': Capacitor.isNativePlatform() }" @mouseleave="closeDropdowns()" ref="navbar">
+  <div class="sticky top-0 flex flex-col bg-gradient-to-r from-[#141415] via-[#1a1a1b] to-[#141415] border-b border-zinc-800/50 backdrop-blur-xl z-50 w-full shadow-lg" :class="{ 'nav-top': Capacitor.isNativePlatform() }" @mouseleave="closeDropdowns()" ref="navbar">
     <nav class="relative py-3 px-4 lg:px-8 flex w-full items-center">
       <!-- Logo Section -->
       <div class="flex items-center space-x-4">
         <NuxtLink to="/" class="flex items-center space-x-3 group">
           <div class="relative">
             <img class="h-10 w-auto transition-transform duration-300 group-hover:scale-105" src="/images/branding/rcax/RCAX_Logo_Color.svg">
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-amber-400/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </div>
           <img class="h-6 w-auto hidden sm:block transition-opacity duration-300 group-hover:opacity-80" src="/images/branding/rcax/rcaxLogo2024Light.svg">
         </NuxtLink>
@@ -16,29 +16,29 @@
       <div class="hidden lg:flex items-center space-x-8 ml-8">
         <NuxtLink 
           to="/" 
-          exact-active-class="text-blue-400 bg-blue-400/10 border-blue-400/20" 
-          class="relative px-4 py-2 text-slate-300 hover:text-white hover:bg-white/5 rounded-lg border border-transparent transition-all duration-200 font-medium group"
+          exact-active-class="text-orange-400 bg-orange-400/10 border-orange-400/20" 
+          class="relative px-4 py-2 text-zinc-400 hover:text-slate-200 hover:bg-zinc-800/30 rounded-lg border border-transparent transition-all duration-200 font-medium group"
         >
           <span class="relative z-10">Avatars</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-purple-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-amber-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
         
         <NuxtLink 
           to="/avatar" 
-          active-class="text-blue-400 bg-blue-400/10 border-blue-400/20" 
-          class="relative px-4 py-2 text-slate-300 hover:text-white hover:bg-white/5 rounded-lg border border-transparent transition-all duration-200 font-medium group"
+          active-class="text-orange-400 bg-orange-400/10 border-orange-400/20" 
+          class="relative px-4 py-2 text-zinc-400 hover:text-slate-200 hover:bg-zinc-800/30 rounded-lg border border-transparent transition-all duration-200 font-medium group"
         >
           <span class="relative z-10">Exporter</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-purple-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-amber-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
 
         <template v-if="!Capacitor.isNativePlatform()">
           <DropDownMenu class="relative" :usingUser="false">
             <template v-slot:button>
-              <button class="relative px-4 py-2 text-slate-300 hover:text-white hover:bg-white/5 rounded-lg border border-transparent transition-all duration-200 font-medium group flex items-center space-x-1">
+              <button class="relative px-4 py-2 text-zinc-400 hover:text-slate-200 hover:bg-zinc-800/30 rounded-lg border border-transparent transition-all duration-200 font-medium group flex items-center space-x-1">
                 <span class="relative z-10">Apps</span>
                 <ChevronDownIcon class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-purple-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-amber-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
               </button>
             </template>
             <template v-slot:menu>
@@ -61,7 +61,7 @@
       <!-- Mobile Menu Button -->
       <button 
         @click="toggleMobileMenu()"
-        class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-slate-800/50 border border-slate-700/50 text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200 ml-auto"
+        class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-slate-300 hover:text-white hover:bg-zinc-700/50 transition-all duration-200 ml-auto"
       >
         <Bars3Icon v-if="!mobileMenuOpen" class="w-6 h-6" />
         <XMarkIcon v-else class="w-6 h-6" />
@@ -73,13 +73,13 @@
         <div class="relative">
           <select 
             v-model="settings.currency.preferred"
-            class="appearance-none bg-slate-800/50 border border-slate-700/50 text-slate-300 text-sm rounded-lg px-4 py-2 pr-8 hover:bg-slate-700/50 hover:border-slate-600/50 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200 cursor-pointer"
+            class="appearance-none bg-zinc-800/30 border border-zinc-700/30 text-zinc-400 text-sm rounded-lg px-4 py-2 pr-8 hover:bg-zinc-700/40 hover:border-zinc-600/50 focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 transition-all duration-200 cursor-pointer"
           >
-            <option v-for="currency in CURRENCIES" :key="currency.ticker" :value="currency.ticker" class="bg-slate-800">
+            <option v-for="currency in CURRENCIES" :key="currency.ticker" :value="currency.ticker" class="bg-zinc-800">
               {{ currency.ticker }}
             </option>
           </select>
-          <ChevronDownIcon class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+          <ChevronDownIcon class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
         </div>
 
         <!-- User Menu -->
@@ -107,7 +107,7 @@
             </button>
             <button 
               @click="resetSettings()"
-              class="text-slate-400 hover:text-slate-300 text-sm"
+              class="text-zinc-400 hover:text-slate-300 text-sm"
             >
               Reset settings
             </button>
@@ -118,7 +118,7 @@
             <NuxtLink
               replace
               to="/login"
-              class="px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-all duration-200 font-medium"
+              class="px-4 py-2 text-zinc-400 hover:text-slate-200 hover:bg-zinc-700/30 rounded-lg transition-all duration-200 font-medium"
             >
               Login
             </NuxtLink>
@@ -143,43 +143,43 @@
       leave-from-class="opacity-100 scale-100"
       leave-to-class="opacity-0 scale-95"
     >
-      <div v-if="mobileMenuOpen" class="lg:hidden absolute top-full left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 shadow-xl">
+      <div v-if="mobileMenuOpen" class="lg:hidden absolute top-full left-0 right-0 bg-zinc-900/95 backdrop-blur-xl border-b border-zinc-700/50 shadow-xl">
         <div class="px-4 py-6 space-y-4">
           <!-- Mobile Navigation Links -->
           <div class="space-y-2">
             <NuxtLink 
               to="/" 
               @click="closeMobileMenu()"
-              exact-active-class="text-blue-400 bg-blue-400/10 border-blue-400/20" 
-              class="block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-lg border border-transparent transition-all duration-200 font-medium"
+              exact-active-class="text-orange-400 bg-orange-400/10 border-orange-400/20" 
+              class="block px-4 py-3 text-zinc-400 hover:text-slate-200 hover:bg-zinc-800/30 rounded-lg border border-transparent transition-all duration-200 font-medium"
             >
               Avatars
             </NuxtLink>
             <NuxtLink 
               to="/avatar" 
               @click="closeMobileMenu()"
-              active-class="text-blue-400 bg-blue-400/10 border-blue-400/20" 
-              class="block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-lg border border-transparent transition-all duration-200 font-medium"
+              active-class="text-orange-400 bg-orange-400/10 border-orange-400/20" 
+              class="block px-4 py-3 text-zinc-400 hover:text-slate-200 hover:bg-zinc-800/30 rounded-lg border border-transparent transition-all duration-200 font-medium"
             >
               Exporter
             </NuxtLink>
             
             <template v-if="!Capacitor.isNativePlatform()">
               <div class="pl-4 pt-2 pb-1">
-                <div class="text-slate-400 text-sm font-medium uppercase tracking-wide mb-2">Apps</div>
+                <div class="text-zinc-400 text-sm font-medium uppercase tracking-wide mb-2">Apps</div>
                 <div class="space-y-1">
                   <NuxtLink 
                     replace 
                     to="/dapps/randomavatarswap"
                     @click="closeMobileMenu()"
-                    class="block px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-all duration-200"
+                    class="block px-4 py-2 text-slate-300 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200"
                   >
                     Random Avatar Swap
                   </NuxtLink>
                   <NuxtLink 
                     to="https://avatartraits.xyz"
                     @click="closeMobileMenu()"
-                    class="block px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-all duration-200"
+                    class="block px-4 py-2 text-slate-300 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200"
                   >
                     AvatarTraits.xyz
                   </NuxtLink>
@@ -189,15 +189,15 @@
           </div>
 
           <!-- Mobile User Section -->
-          <div class="pt-4 border-t border-slate-700/50 space-y-3">
+          <div class="pt-4 border-t border-zinc-700/50 space-y-3">
             <!-- Currency Selector -->
             <div class="flex items-center justify-between">
-              <span class="text-slate-400 text-sm font-medium">Currency</span>
+              <span class="text-zinc-400 text-sm font-medium">Currency</span>
               <select 
                 v-model="settings.currency.preferred"
-                class="bg-slate-800/50 border border-slate-700/50 text-slate-300 text-sm rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50"
+                class="bg-zinc-800/50 border border-zinc-700/50 text-slate-300 text-sm rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50"
               >
-                <option v-for="currency in CURRENCIES" :key="currency.ticker" :value="currency.ticker" class="bg-slate-800">
+                <option v-for="currency in CURRENCIES" :key="currency.ticker" :value="currency.ticker" class="bg-zinc-800">
                   {{ currency.ticker }}
                 </option>
               </select>
@@ -205,13 +205,13 @@
 
             <!-- User Actions -->
             <template v-if="user?.username">
-              <div class="flex items-center space-x-3 px-4 py-3 bg-slate-800/30 rounded-lg">
-                <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
+              <div class="flex items-center space-x-3 px-4 py-3 bg-zinc-800/30 rounded-lg">
+                <div class="w-10 h-10 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full flex items-center justify-center text-white font-semibold">
                   {{ user.username.charAt(0).toUpperCase() }}
                 </div>
                 <div>
                   <div class="text-white font-medium">{{ user.username }}</div>
-                  <div class="text-slate-400 text-sm">{{ user.tier < 1 ? 'Free User' : 'Pro User' }}</div>
+                  <div class="text-zinc-400 text-sm">{{ user.tier < 1 ? 'Free User' : 'Pro User' }}</div>
                 </div>
               </div>
               
@@ -234,7 +234,7 @@
               </button>
               <button 
                 @click="logout(); closeMobileMenu()"
-                class="block w-full text-left px-4 py-3 text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-all duration-200"
+                class="block w-full text-left px-4 py-3 text-slate-300 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200"
               >
                 Sign out
               </button>
@@ -245,7 +245,7 @@
                   replace
                   to="/login"
                   @click="closeMobileMenu()"
-                  class="block px-4 py-3 text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-lg transition-all duration-200 font-medium text-center border border-slate-700/50"
+                  class="block px-4 py-3 text-slate-300 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200 font-medium text-center border border-zinc-700/50"
                 >
                   Login
                 </NuxtLink>
@@ -262,7 +262,7 @@
             
             <button 
               @click="resetSettings()"
-              class="block w-full text-left px-4 py-2 text-slate-400 hover:text-slate-300 hover:bg-slate-700/50 rounded-lg transition-all duration-200 text-sm"
+              class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-slate-300 hover:bg-zinc-700/50 rounded-lg transition-all duration-200 text-sm"
             >
               Reset settings
             </button>
