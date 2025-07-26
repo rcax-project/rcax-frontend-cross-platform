@@ -16,29 +16,26 @@
       <div class="hidden lg:flex items-center space-x-8 ml-8">
         <NuxtLink 
           to="/" 
-          exact-active-class="text-orange-400 bg-orange-400/10 border-orange-400/20" 
-          class="relative px-4 py-2 text-zinc-400 hover:text-slate-200 hover:bg-zinc-800/30 rounded-lg border border-transparent transition-all duration-200 font-medium group"
+          exact-active-class="!text-orange-400" 
+          class="relative px-4 py-2 text-gray-400 hover:text-white transition-all duration-200 font-medium group"
         >
           <span class="relative z-10">Avatars</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-amber-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
         
         <NuxtLink 
           to="/avatar" 
-          active-class="text-orange-400 bg-orange-400/10 border-orange-400/20" 
-          class="relative px-4 py-2 text-zinc-400 hover:text-slate-200 hover:bg-zinc-800/30 rounded-lg border border-transparent transition-all duration-200 font-medium group"
+          active-class="!text-orange-400" 
+          class="relative px-4 py-2 text-gray-400 hover:text-white transition-all duration-200 font-medium group"
         >
           <span class="relative z-10">Exporter</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-amber-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
         </NuxtLink>
 
         <template v-if="!Capacitor.isNativePlatform()">
           <DropDownMenu class="relative" :usingUser="false">
             <template v-slot:button>
-              <button class="relative px-4 py-2 text-zinc-400 hover:text-slate-200 hover:bg-zinc-800/30 rounded-lg border border-transparent transition-all duration-200 font-medium group flex items-center space-x-1">
+              <button class="relative px-4 py-2 text-gray-400 hover:text-white transition-all duration-200 font-medium group flex items-center space-x-1">
                 <span class="relative z-10">Apps</span>
                 <ChevronDownIcon class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
-                <div class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-amber-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
               </button>
             </template>
             <template v-slot:menu>
@@ -150,16 +147,16 @@
             <NuxtLink 
               to="/" 
               @click="closeMobileMenu()"
-              exact-active-class="text-orange-400 bg-orange-400/10 border-orange-400/20" 
-              class="block px-4 py-3 text-zinc-400 hover:text-slate-200 hover:bg-zinc-800/30 rounded-lg border border-transparent transition-all duration-200 font-medium"
+              exact-active-class="!text-orange-400" 
+              class="block px-4 py-3 text-gray-400 hover:text-white transition-all duration-200 font-medium"
             >
               Avatars
             </NuxtLink>
             <NuxtLink 
               to="/avatar" 
               @click="closeMobileMenu()"
-              active-class="text-orange-400 bg-orange-400/10 border-orange-400/20" 
-              class="block px-4 py-3 text-zinc-400 hover:text-slate-200 hover:bg-zinc-800/30 rounded-lg border border-transparent transition-all duration-200 font-medium"
+              active-class="!text-orange-400" 
+              class="block px-4 py-3 text-gray-400 hover:text-white transition-all duration-200 font-medium"
             >
               Exporter
             </NuxtLink>
