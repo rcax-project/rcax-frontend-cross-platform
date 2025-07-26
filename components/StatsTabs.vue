@@ -82,7 +82,7 @@ import {StarIcon, BellIcon, ChartBarIcon, WalletIcon, TagIcon, BoltIcon, Shoppin
 
 <style scoped>
 .stats-tab {
-  @apply relative inline-flex items-center gap-2 px-4 py-2.5 text-slate-300 hover:text-white bg-slate-800/30 hover:bg-slate-700/50 border border-slate-700/30 hover:border-slate-600/50 rounded-lg transition-all duration-200 font-medium whitespace-nowrap min-w-0 flex-shrink-0;
+  @apply relative inline-flex items-center gap-1.5 px-3 py-2 text-slate-300 hover:text-white bg-slate-800/30 hover:bg-slate-700/50 border border-slate-700/30 hover:border-slate-600/50 rounded-lg transition-all duration-200 font-medium whitespace-nowrap min-w-0 flex-shrink-0 text-sm;
 }
 
 .stats-tab-active {
@@ -99,7 +99,7 @@ import {StarIcon, BellIcon, ChartBarIcon, WalletIcon, TagIcon, BoltIcon, Shoppin
 }
 
 .stats-tab-icon {
-  @apply h-5 w-5 flex-shrink-0;
+  @apply h-4 w-4 flex-shrink-0;
 }
 
 /* Active state for the gradient overlay */
@@ -120,11 +120,11 @@ import {StarIcon, BellIcon, ChartBarIcon, WalletIcon, TagIcon, BoltIcon, Shoppin
 /* Additional responsive improvements */
 @media (max-width: 768px) {
   .stats-tab {
-    @apply px-3 py-2 text-sm;
+    @apply px-2 py-1.5 text-xs gap-1;
   }
   
   .stats-tab-icon {
-    @apply h-4 w-4;
+    @apply h-3.5 w-3.5;
   }
 }
 </style>
