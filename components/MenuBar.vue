@@ -13,7 +13,7 @@ import {Capacitor} from "@capacitor/core";
 
 <style>
 .menubar {
-  @apply sticky top-[52px] sm:top-[63px] z-30 w-full bg-gradient-to-r from-[#141415]/95 via-[#1a1a1b]/95 to-[#141415]/95 backdrop-blur-xl border-b border-zinc-800/50 shadow-sm duration-500;
+  @apply sticky top-[48px] lg:top-[56px] z-30 w-full bg-gradient-to-r from-[#141415]/95 via-[#1a1a1b]/95 to-[#141415]/95 backdrop-blur-xl border-b border-zinc-800/50 shadow-sm duration-500;
 }
 
 .menubar-content {
@@ -85,7 +85,14 @@ import {Capacitor} from "@capacitor/core";
 }
 
 .mobile-padding-top {
-  top: calc(52px + env(safe-area-inset-top));
+  top: calc(48px + env(safe-area-inset-top));
+}
+
+/* Desktop mobile padding adjustment */
+@media (min-width: 1024px) {
+  .mobile-padding-top {
+    top: calc(56px + env(safe-area-inset-top));
+  }
 }
 
 /* Additional responsive improvements */
