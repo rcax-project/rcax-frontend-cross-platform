@@ -1,6 +1,6 @@
 <template>
   <div class="sticky top-0 flex flex-col bg-gradient-to-r from-[#141415] via-[#1a1a1b] to-[#141415] border-b border-zinc-800/50 backdrop-blur-xl z-50 w-full shadow-lg" :class="{ 'nav-top': Capacitor.isNativePlatform() }" @mouseleave="closeDropdowns()" ref="navbar">
-    <nav class="relative py-2 px-4 lg:px-8 flex w-full items-center">
+    <nav class="relative py-2 px-4 lg:px-6 flex w-full items-center">
       <!-- Logo Section -->
       <div class="flex items-center space-x-4">
         <NuxtLink to="/" class="flex items-center space-x-3 group">

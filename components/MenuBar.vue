@@ -17,7 +17,7 @@ import {Capacitor} from "@capacitor/core";
 }
 
 .menubar-content {
-  @apply px-4 lg:px-8 py-3 flex items-center gap-3 sm:gap-4 overflow-x-auto scrollbar-hide relative;
+  @apply px-4 lg:px-6 py-3 flex items-center gap-3 sm:gap-4 overflow-x-auto scrollbar-hide relative;
 }
 
 /* Prevent horizontal scroll when dropdowns are open */

@@ -1,6 +1,6 @@
 <template>
   <div class="sticky top-0 z-30 w-full bg-[#141415] border-b border-zinc-800/50">
-    <div class="px-4 lg:px-8 py-4">
+    <div class="px-4 lg:px-6 py-4">
       <div class="flex items-center justify-start gap-2 overflow-x-auto scrollbar-hide">
         <NuxtLink 
           to="/wallet" 
