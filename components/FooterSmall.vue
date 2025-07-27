@@ -3,12 +3,12 @@
     <!-- Main Footer Content -->
     <div class="relative px-4 md:px-6 py-8 md:py-12 w-full">
       <!-- Footer Grid -->
-      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
+      <div class="px-4 mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
         <!-- Brand Section -->
         <div class="col-span-1">
           <div class="flex items-center gap-2 mb-4">
             <span class="text-lg font-semibold text-white">RCAX</span>
-            <span class="text-xs text-zinc-500 uppercase tracking-wide">© 2024</span>
+            <span class="text-xs text-zinc-500 uppercase tracking-wide">© 2025</span>
           </div>
           <p class="text-sm text-zinc-400 leading-relaxed mb-6">
             The premier marketplace for Reddit Collectible Avatars
