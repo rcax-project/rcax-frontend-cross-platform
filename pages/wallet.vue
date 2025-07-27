@@ -209,19 +209,17 @@
                         <template v-for="series in sortedWalletTokensGrouped(filterWalletTokensGrouped(tokensCount.get(walletAddress)))">
                           <div @click="selectAvatar(getSeriesStats(series.contract_address, series.name))" class="group cursor-pointer">
                             <div class="relative aspect-square rounded-md overflow-hidden bg-zinc-800">
-                              <a @click.stop="openLinkWith(marketplaceLink(getSeriesStats(series.contract_address, series.name)))" class="block w-full h-full">
-                                <img-placeholder 
-                                  img-class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" 
-                                  :src="getTokenImage(getSeriesStats(series.contract_address, series.name)?.series.image ?? '/img/rcax_placeholder.png')" 
-                                />
-                              </a>
+                              <img-placeholder 
+                                img-class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" 
+                                :src="getTokenImage(getSeriesStats(series.contract_address, series.name)?.series.image ?? '/img/rcax_placeholder.png')" 
+                              />
                               <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2">
                                 <span class="text-[10px] font-medium text-white bg-black/60 px-1.5 py-0.5 rounded">{{ series.count }}x</span>
                               </div>
                             </div>
                             <div class="mt-1.5">
                               <p class="text-xs font-medium text-white truncate group-hover:text-zinc-300 transition-colors">{{ getSeriesStats(series.contract_address, series.name)?.series.name }}</p>
-                              <div class="flex items-center gap-0.5 mt-0.5">
+                              <div @click.stop="openLinkWith(marketplaceLink(getSeriesStats(series.contract_address, series.name)))" class="flex items-center gap-0.5 mt-0.5 cursor-pointer hover:text-orange-400 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-zinc-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
                                 <span class="text-xs text-zinc-400 font-medium">{{ (getSeriesValue(series.contract_address, series.name) / 1000000000000000000 * series.count).toFixed(3).replace(/\.?0+$/, '') }}</span>
                                 <span v-if="series.count > 1" class="text-xs text-zinc-500">({{ (getSeriesValue(series.contract_address, series.name) / 1000000000000000000).toFixed(3).replace(/\.?0+$/, '') }})</span>
@@ -234,30 +232,28 @@
                         <template v-for="token in sortedTokens(filterWalletTokens(walletTokens))">
                           <div @click="selectAvatar(getSeriesStats(token.contract_address, token.name))" class="group cursor-pointer">
                             <div class="relative aspect-square rounded-md overflow-hidden bg-zinc-800">
-                              <a @click.stop="openLinkWith(marketplaceLink(getSeriesStats(token.contract_address, token.name)))" class="block w-full h-full">
-                                <template v-if="Capacitor.isNativePlatform()">
-                                  <img 
-                                    v-lazy-pix="getTokenImage(getSeriesStats(token.contract_address, token.name)?.series.image ?? '/img/rcax_placeholder.png')" 
-                                    src="/img/rcax_placeholder.png" 
-                                    :alt="getSeriesStats(token.contract_address, token.name)?.series.name" 
-                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                                  >
-                                </template>
-                                <template v-else>
-                                  <img 
-                                    :src="getTokenImage(getSeriesStats(token.contract_address, token.name)?.series.image ?? '/img/rcax_placeholder.png')" 
-                                    :alt="getSeriesStats(token.contract_address, token.name)?.series.name" 
-                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                                  >
-                                </template>
-                              </a>
+                              <template v-if="Capacitor.isNativePlatform()">
+                                <img 
+                                  v-lazy-pix="getTokenImage(getSeriesStats(token.contract_address, token.name)?.series.image ?? '/img/rcax_placeholder.png')" 
+                                  src="/img/rcax_placeholder.png" 
+                                  :alt="getSeriesStats(token.contract_address, token.name)?.series.name" 
+                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                                >
+                              </template>
+                              <template v-else>
+                                <img 
+                                  :src="getTokenImage(getSeriesStats(token.contract_address, token.name)?.series.image ?? '/img/rcax_placeholder.png')" 
+                                  :alt="getSeriesStats(token.contract_address, token.name)?.series.name" 
+                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                                >
+                              </template>
                               <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2">
                                 <span class="text-[10px] font-medium text-white bg-black/60 px-1.5 py-0.5 rounded">#{{ token.mint_number }}</span>
                               </div>
                             </div>
                             <div class="mt-1.5">
                               <p class="text-xs font-medium text-white truncate group-hover:text-zinc-300 transition-colors">{{ getSeriesStats(token.contract_address, token.name)?.series.name }}</p>
-                              <div class="flex items-center gap-0.5 mt-0.5">
+                              <div @click.stop="openLinkWith(marketplaceLink(getSeriesStats(token.contract_address, token.name)))" class="flex items-center gap-0.5 mt-0.5 cursor-pointer hover:text-orange-400 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-zinc-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
                                 <span class="text-xs text-zinc-400 font-medium">{{ (getSeriesValue(token.contract_address, token.name) / 1000000000000000000).toFixed(3).replace(/\.?0+$/, '') }}</span>
                               </div>
