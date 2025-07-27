@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-col w-full">
-    <StatsTabs class="hidden md:block" />
     <MenuBar class="mb-3">
       <select class="ml-auto" v-model="settings.shop.showAvailable">
         <option :value="true">Available: Show</option>

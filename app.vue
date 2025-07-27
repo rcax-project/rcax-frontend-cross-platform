@@ -1,18 +1,24 @@
 <template>
-  <div class="relative flex flex-col items-center min-h-screen w-full" style="max-width: 100vw;">
-    <HeaderTop :hide-items="scrolled >= 48" :class="{ 'sticky -top-[48px]': Capacitor.isNativePlatform() }" ref="barMarketInfo" />
-    <NavigationBar />
-    <AvatarViewer />
-    <template v-if="!Capacitor.isNativePlatform()">
-      <AdvertisementBanner class="" />
-    </template>
-    <div class="relative flex flex-col grow items-center w-full" style="max-width: 100vw;" :class="{ 'page-mobile-padding-bottom': Capacitor.isNativePlatform() }">
-      <NuxtPage/>
+  <div class="relative flex min-h-screen w-full">
+    <!-- Sidebar -->
+    <Sidebar />
+    
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col lg:ml-16">
+      <HeaderTop :hide-items="scrolled >= 48" :class="{ 'sticky -top-[48px]': Capacitor.isNativePlatform(), 'lg:ml-0': true }" ref="barMarketInfo" />
+      <AvatarViewer />
+      <template v-if="!Capacitor.isNativePlatform()">
+        <AdvertisementBanner class="" />
+      </template>
+      <div class="relative flex flex-col grow items-center w-full" :class="{ 'page-mobile-padding-bottom': Capacitor.isNativePlatform() }">
+        <NuxtPage/>
+      </div>
+      <template v-if="!Capacitor.isNativePlatform()">
+        <FooterSmall/>
+      </template>
     </div>
-    <template v-if="!Capacitor.isNativePlatform()">
-      <FooterSmall/>
-    </template>
-    <MobileNavigationBar/>
+    
+    <!-- Modals and Overlays -->
     <template v-if="!Capacitor.isNativePlatform() && !settings.cookies.accepted">
       <CookieWarning/>
     </template>
@@ -52,6 +58,7 @@ import Prompt from "~/components/Prompt.vue";
 import {computed} from "vue";
 import HeaderTop from "~/components/HeaderTop.vue";
 import FooterSmall from "~/components/FooterSmall.vue";
+import Sidebar from "~/components/Sidebar.vue";
 import {Ref} from "@vue/reactivity";
 
 useHead({
@@ -258,7 +265,7 @@ const getDeliveredNotifications = async () => {
 }
 
 html, body {
-  @apply bg-gradient-to-r from-[#141415]/95 via-[#1a1a1b]/95 to-[#141415]/95;
+  @apply bg-[#141415];
   -webkit-tap-highlight-color: transparent;
 }
 

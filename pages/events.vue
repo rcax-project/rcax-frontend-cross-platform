@@ -1,6 +1,5 @@
 <template>
   <div class="events-view relative flex flex-col items-center w-full">
-    <StatsTabs class="hidden md:block" />
     <MenuBar>
       <SearchBar v-model:search-term="searchTerm" :placeholder="`Search by Name`" />
       <select v-model="settings.activity.filterGenOption">

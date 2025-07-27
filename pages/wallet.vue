@@ -1,6 +1,5 @@
 <template>
   <div class="wallet-view pb-3 md:pb-0 relative flex flex-col items-center w-full">
-    <StatsTabs class="hidden md:block" />
     <MenuBar>
       <select v-model="settings.wallet.valuationMethod">
         <option value="floor">Value by Floor Price</option>

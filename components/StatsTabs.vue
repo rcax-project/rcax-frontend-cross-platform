@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-0 z-30 w-full bg-gradient-to-r from-[#141415]/95 via-[#1a1a1b]/95 to-[#141415]/95 backdrop-blur-xl border-b border-zinc-800/50">
+  <div class="sticky top-0 z-30 w-full bg-[#141415] border-b border-zinc-800/50">
     <div class="px-4 lg:px-8 py-4">
       <div class="flex items-center justify-start gap-2 overflow-x-auto scrollbar-hide">
         <NuxtLink 

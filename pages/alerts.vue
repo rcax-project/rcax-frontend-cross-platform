@@ -1,6 +1,5 @@
 <template>
   <div class="relative flex flex-col items-center gap-6 w-full">
-    <StatsTabs class="hidden md:block" />
     <template v-if="!user">
       <div class="py-6 flex flex-col items-center gap-2">
         <div class="text-neutral-300">Please sign in to create price alerts.</div>
