@@ -92,14 +92,16 @@
         </div>
 
         <!-- Developer Credits -->
-        <div class="col-span-1">
-          <h3 class="text-xs font-medium text-zinc-400 uppercase tracking-wide mb-4">Developed By</h3>
-          <a href="https://dutchbits.nl" 
-             class="inline-flex items-center gap-2 group">
-            <img class="h-6 w-auto opacity-80 group-hover:opacity-100 transition-opacity duration-200" 
-                 src="~/assets/images/logo-dutchbits.svg" 
-                 alt="Dutchbits">
-          </a>
+        <div class="col-span-1 flex flex-col">
+          <h3 class="text-xs font-medium text-zinc-400 uppercase tracking-wide mb-4 text-center">Developed By</h3>
+          <div class="flex justify-center items-center flex-1">
+            <a href="https://dutchbits.nl" 
+               class="inline-flex items-center gap-2 group">
+              <img class="h-10 w-auto grayscale group-hover:grayscale-0 transition-all duration-200" 
+                   src="~/assets/images/logo-dutchbits.svg" 
+                   alt="Dutchbits">
+            </a>
+          </div>
         </div>
       </div>
     </div>
