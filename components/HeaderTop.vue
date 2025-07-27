@@ -6,36 +6,36 @@
           <div class="flex items-center gap-3 text-xs">
             <div class="flex items-center gap-2">
               <img class="h-4 w-4" src="/images/branding/rcax/RCAX_Logo_Color.svg">
-              <span class="text-slate-300 font-medium">{{ gweiInLocalCurrency(rcax) }}</span>
+              <span class="text-zinc-400">{{ gweiInLocalCurrency(rcax) }}</span>
             </div>
-            <div class="flex items-center gap-1">
-              <span class="text-zinc-500">Supply:</span>
-              <span class="text-zinc-400">{{ Math.round(rcaxInfo?.data.attributes.total_supply / ETH_TO_GWEI_MODIFIER).toLocaleString() ?? 0 }}</span>
-            </div>
-            <div class="flex items-center gap-1">
-              <span class="text-zinc-500">MC:</span>
-              <span class="text-zinc-400">{{ ethereumInLocalCurrency(rcax * (rcaxInfo?.data.attributes.total_supply ?? 0)) }}</span>
-            </div>
+<!--            <div class="flex items-center gap-1">-->
+<!--              <span class="text-zinc-500">Supply:</span>-->
+<!--              <span class="text-zinc-400">{{ Math.round(rcaxInfo?.data.attributes.total_supply / ETH_TO_GWEI_MODIFIER).toLocaleString() ?? 0 }}</span>-->
+<!--            </div>-->
+<!--            <div class="flex items-center gap-1">-->
+<!--              <span class="text-zinc-500">MC:</span>-->
+<!--              <span class="text-zinc-400">{{ ethereumInLocalCurrency(rcax * (rcaxInfo?.data.attributes.total_supply ?? 0)) }}</span>-->
+<!--            </div>-->
           </div>
         </button>
         
         <div class="market-info-card">
           <div class="flex items-center gap-2">
             <img class="h-4 w-4" src="/images/coins/eth/icon.svg">
-            <span class="text-slate-300 font-medium">{{ ethereumInLocalCurrency(ETH_TO_GWEI_MODIFIER) }}</span>
+            <span class="text-zinc-400">{{ ethereumInLocalCurrency(ETH_TO_GWEI_MODIFIER) }}</span>
           </div>
         </div>
         
         <div class="market-info-card">
           <div class="flex items-center gap-2">
             <img class="h-4 w-4" src="/images/coins/matic/icon.svg">
-            <span class="text-slate-300 font-medium">{{ ethereumInLocalCurrency(1 / ethereumPriceMap.get("MATIC") * ETH_TO_GWEI_MODIFIER) }}</span>
+            <span class="text-zinc-400">{{ ethereumInLocalCurrency(1 / ethereumPriceMap.get("MATIC") * ETH_TO_GWEI_MODIFIER) }}</span>
           </div>
         </div>
       </div>
       
       <div class="ml-4 md:ml-auto market-info-card">
-        <div class="flex items-center gap-3 text-xs">
+        <div class="flex items-center gap-3">
           <div class="flex items-center gap-2">
             <img class="w-4 h-4" src="/images/branding/reddit-icon.svg">
           </div>
