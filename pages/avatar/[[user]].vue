@@ -12,8 +12,13 @@
       </button>
     </MenuBar>
     <template v-if="error">
-      <div class="p-4 bg-red-500/20 rounded-2xl">
-        <span class="text-white/80">{{ error }}</span>
+      <div class="mx-6 mt-6 p-4 bg-gradient-to-br from-red-500/10 to-red-600/20 border border-red-500/30 rounded-2xl backdrop-blur-sm">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+          </svg>
+          <span class="text-red-300 font-medium">{{ error }}</span>
+        </div>
       </div>
     </template>
     <div class="px-6 pt-6 flex flex-col md:flex-row md:justify-center md:items-center gap-6 md:gap-12 w-full" :class="{ 'hidden': !avatar }">
@@ -76,7 +81,7 @@
       </div>
     </div>
     <template v-if="!avatar">
-      <div class="w-72 h-96">
+      <div class="mt-8 w-72 h-96">
         <img
             class="w-full h-full"
             :src="exampleImage"
@@ -292,7 +297,12 @@ async function fetchUserImage() {
           avatar.value = "";
           error.value = `Could not find user: ${user.value}`;
         }
-
+      })
+      .catch((err) => {
+        avatar.value = "";
+        error.value = `Could not find user: ${user.value}`;
+      })
+      .finally(() => {
         pending.value = false;
       });
 }
