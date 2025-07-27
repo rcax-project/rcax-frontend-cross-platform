@@ -1,5 +1,5 @@
 <template>
-  <div class="wallet-view relative flex flex-col w-full min-h-screen bg-[#0a0a0b]">
+  <div class="wallet-view relative flex flex-col w-full min-h-screen bg-[#141415]">
     <MenuBar>
       <SearchBar v-model:search-term="searchTerm" :placeholder="`Search by Name, Artist or Collection`" />
       <div class="ml-auto flex items-center gap-2 menubar-overrides">
@@ -44,7 +44,7 @@
               <button 
                 @click="getWalletTokens(walletAddress)" 
                 :disabled="lookupDisabled()" 
-                class="px-6 py-2.5 bg-white hover:bg-zinc-100 disabled:bg-zinc-800 disabled:hover:bg-zinc-800 text-black disabled:text-zinc-600 font-medium rounded-lg transition-all duration-200 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                class="px-6 py-2.5 bg-white hover:bg-zinc-100 disabled:bg-zinc-800 disabled:hover:bg-zinc-800 text-black disabled:text-zinc-600 text-sm font-medium rounded-lg transition-all duration-200 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 <template v-if="loading">
                   <svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
@@ -113,7 +113,7 @@
           
           <div v-else class="space-y-4">
             <template v-for="[walletAddress, walletTokens] in sortedWallets().entries()">
-              <div class="bg-zinc-900 rounded-xl border border-zinc-800 overflow-hidden">
+              <div class="bg-zinc-800/30 rounded-xl border border-zinc-700/30 overflow-hidden">
                 <!-- Wallet Header -->
                 <div class="px-6 py-4 border-b border-zinc-800">
                   <div class="flex items-center justify-between">
