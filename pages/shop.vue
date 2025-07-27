@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col w-full">
-    <MenuBar class="mb-3">
+  <div class="shop-page">
+    <MenuBar class="shop-controls">
       <SearchBar v-model:search-term="searchTerm" :placeholder="`Search by Name or Artist`" />
       <select class="ml-auto" v-model="settings.shop.showAvailable">
         <option :value="true">Available: Show</option>
@@ -10,61 +10,87 @@
         <RefreshButton class="sm:ml-0" :action="refresh" :refreshing="isRefreshing" />
       </template>
     </MenuBar>
-    <div class="px-2 md:px-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-2">
-      <template v-for="item in sortedItems">
-        <div class="p-4 w-full flex flex-col gap-2 border border-tertiary rounded-2xl overflow-hidden">
-          <div class="relative overflow-hidden rounded-2xl">
-            <a :href="`https://www.reddit.com/avatar/shop/product/storefront_nft_${item['edge']['node']['item']['benefits']['avatarOutfit']['id']}`" target="_blank">
-              <ImgPlaceholder :src="item['edge']['node']['item']['benefits']['avatarOutfit']['preRenderImage']['url']" />
+    
+    <div class="shop-grid">
+      <template v-for="item in sortedItems" :key="item['edge']['node']['item']['benefits']['avatarOutfit']['id']">
+        <div class="avatar-card group">
+          <div class="avatar-image-container">
+            <a :href="`https://www.reddit.com/avatar/shop/product/storefront_nft_${item['edge']['node']['item']['benefits']['avatarOutfit']['id']}`" target="_blank" class="avatar-image-link">
+              <ImgPlaceholder :src="item['edge']['node']['item']['benefits']['avatarOutfit']['preRenderImage']['url']" class="avatar-image" />
             </a>
-            <div class="absolute bottom-0 w-full px-3 py-1.5 bg-secondary/40 backdrop-blur-2xl">
-              <h2 class="text-center text-white/80 text-sm font-semibold truncate">{{ item['edge']['node']['item']['name'] }}</h2>
+            <div class="avatar-status-badge" :class="{
+              'status-available': item['edge']['node']['status'] === 'AVAILABLE',
+              'status-pending': item['edge']['node']['status'] === 'PENDING'
+            }">
+              <span v-if="item['edge']['node']['status'] === 'AVAILABLE'">Available</span>
+              <span v-else>Coming Soon</span>
             </div>
           </div>
-          <div class="px-2 w-full">
-            <div class="flex gap-1 text-details text-xs truncate">
-              <span>By</span>
-              <div class="font-semibold">
+          
+          <div class="avatar-content">
+            <div class="avatar-header">
+              <h3 class="avatar-title">{{ item['edge']['node']['item']['name'] }}</h3>
+              <div class="avatar-artist">
+                <span class="artist-label">by</span>
                 <template v-if="item['edge']['node']['artist']">
-                  <a :href="`https://reddit.com/u/${item['edge']['node']['artist']['redditorInfo']['displayName']}`" target="_blank" class="block text-orange-600 hover:text-orange-500 cursor-pointer">{{ item['edge']['node']['artist']['redditorInfo']['displayName'] }}</a>
+                  <a :href="`https://reddit.com/u/${item['edge']['node']['artist']['redditorInfo']['displayName']}`" target="_blank" class="artist-link">
+                    {{ item['edge']['node']['artist']['redditorInfo']['displayName'] }}
+                  </a>
                 </template>
                 <template v-else>
-                  <span class="block">UNKNOWN</span>
+                  <span class="artist-unknown">Unknown Artist</span>
                 </template>
               </div>
             </div>
-            <div class="flex gap-1 text-details text-xs">
+            
+            <div class="avatar-meta">
+              <div class="meta-item">
+                <span class="meta-label">Supply</span>
+                <span class="meta-value supply-value" :class="getMintClassesText(item['edge']['node']['totalQuantity'])">
+                  {{ item['edge']['node']['totalQuantity'] }}
+                </span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Price</span>
+                <span class="meta-value price-value">
+                  ${{ item['edge']['node']['productOffer']['pricePackages'][0]['price'] / 100.00 }}
+                </span>
+              </div>
+            </div>
+            
+            <div class="avatar-timing">
               <template v-if="item['date_available']">
-                <span>Released</span>
-                <span class="text-amber-500">{{ $timeAgo(new Date(item['date_available'])) }} ago</span>
+                <span class="timing-label">Released</span>
+                <span class="timing-value">{{ $timeAgo(new Date(item['date_available'])) }} ago</span>
               </template>
               <template v-else>
-                <span>Found</span>
-                <span class="text-amber-500">{{ $timeAgo(new Date(item['date_found'])) }} ago</span>
+                <span class="timing-label">Found</span>
+                <span class="timing-value">{{ $timeAgo(new Date(item['date_found'])) }} ago</span>
               </template>
             </div>
-          </div>
-          <div>
-            <div class="grid grid-cols-2 divide-x divide-white/10 py-1.5 bg-secondary rounded-lg">
-              <h2 class="text-center text-sm font-medium" :class="getMintClassesText(item['edge']['node']['totalQuantity'])">{{ item['edge']['node']['totalQuantity'] }}</h2>
-              <h2 class="text-center text-white/80 text-sm font-medium">${{ item['edge']['node']['productOffer']['pricePackages'][0]['price'] / 100.00 }}</h2>
+            
+            <div class="avatar-actions">
+              <template v-if="item['edge']['node']['status'] === 'PENDING'">
+                <a :href="`https://www.reddit.com/avatar/shop/product/storefront_nft_${item['edge']['node']['item']['benefits']['avatarOutfit']['id']}`" target="_blank" class="action-button action-pending">
+                  <ClockIcon class="action-icon" />
+                  <span>Shop Link</span>
+                </a>
+              </template>
+              <template v-else-if="item['edge']['node']['status'] === 'AVAILABLE'">
+                <a :href="`https://www.reddit.com/avatar/shop/product/storefront_nft_${item['edge']['node']['item']['benefits']['avatarOutfit']['id']}`" target="_blank" class="action-button action-buy">
+                  <span>Buy Now</span>
+                </a>
+              </template>
             </div>
-          </div>
-          <div class="w-full">
-            <template v-if="item['edge']['node']['status'] === 'PENDING'">
-              <a :href="`https://www.reddit.com/avatar/shop/product/storefront_nft_${item['edge']['node']['item']['benefits']['avatarOutfit']['id']}`" target="_blank" class="flex justify-center items-center gap-1 px-2 py-2 w-full bg-secondary hover:bg-white/10 text-details text-xs font-semibold uppercase rounded-lg cursor-pointer duration-300">
-                <ClockIcon class="w-4 h-4" />
-                <span>Direct Link</span>
-              </a>
-            </template>
-            <template v-else-if="item['edge']['node']['status'] === 'AVAILABLE'">
-              <a :href="`https://www.reddit.com/avatar/shop/product/storefront_nft_${item['edge']['node']['item']['benefits']['avatarOutfit']['id']}`" target="_blank" class="flex justify-center items-center gap-1 px-2 py-2 w-full bg-amber-600 hover:bg-amber-500 text-header text-xs font-semibold uppercase rounded-lg cursor-pointer duration-300">
-                <span>Buy Now</span>
-              </a>
-            </template>
           </div>
         </div>
       </template>
+    </div>
+    
+    <div class="shop-footer">
+      <div class="no-more-results">
+        <span class="no-more-text">No more results</span>
+      </div>
     </div>
   </div>
 </template>
@@ -156,5 +182,231 @@ const sortedItems: ComputedRef<Array<Object>> = computed(() => {
 </script>
 
 <style scoped>
+.shop-page {
+  @apply flex flex-col w-full min-h-screen;
+}
 
+.shop-header {
+  @apply relative bg-gradient-to-br from-zinc-900/50 to-zinc-800/30 border-b border-zinc-700/50;
+}
+
+.shop-header-content {
+  @apply px-4 lg:px-6 py-8 lg:py-12;
+}
+
+.shop-title-section {
+  @apply text-center max-w-4xl mx-auto;
+}
+
+.shop-title {
+  @apply text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-to-r from-white via-orange-100 to-amber-200 bg-clip-text text-transparent mb-3;
+}
+
+.shop-subtitle {
+  @apply text-lg lg:text-xl text-zinc-300 font-medium max-w-2xl mx-auto;
+}
+
+.shop-controls {
+  @apply mb-6;
+}
+
+.shop-grid {
+  @apply px-4 lg:px-6 pb-4 grid gap-3;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+/* Avatar Card Styling */
+.avatar-card {
+  @apply relative bg-gradient-to-b from-zinc-800/40 to-zinc-900/60 border border-zinc-700/40 rounded-2xl overflow-hidden transition-all duration-300 hover:border-orange-500/30 hover:shadow-lg hover:shadow-orange-500/10;
+  backdrop-filter: blur(12px);
+}
+
+.avatar-card:hover {
+  transform: translateY(-2px);
+}
+
+.avatar-image-container {
+  @apply relative aspect-square overflow-hidden;
+}
+
+.avatar-image-link {
+  @apply block w-full h-full relative;
+}
+
+.avatar-image {
+  @apply w-full h-full object-cover;
+}
+
+.avatar-status-badge {
+  @apply absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide;
+}
+
+.status-available {
+  @apply bg-green-600/90 text-green-100 border border-green-500/50;
+}
+
+.status-pending {
+  @apply bg-orange-600/90 text-orange-100 border border-orange-500/50;
+}
+
+.avatar-content {
+  @apply p-3 space-y-2;
+}
+
+.avatar-header {
+  @apply space-y-0.5;
+}
+
+.avatar-title {
+  @apply text-xs font-bold text-white leading-tight truncate;
+}
+
+.avatar-artist {
+  @apply flex items-center gap-1 text-xs;
+}
+
+.artist-label {
+  @apply text-zinc-400;
+}
+
+.artist-link {
+  @apply text-zinc-500 hover:text-zinc-400 font-medium transition-colors duration-200;
+}
+
+.artist-unknown {
+  @apply text-zinc-500 italic;
+}
+
+.avatar-meta {
+  @apply grid grid-cols-2 gap-2 py-2 border-y border-zinc-700/50;
+}
+
+.meta-item {
+  @apply text-center;
+}
+
+.meta-label {
+  @apply block text-xs text-zinc-600 font-normal uppercase tracking-wider mb-0.5;
+}
+
+.meta-value {
+  @apply block text-xs font-bold;
+}
+
+.supply-value {
+  @apply text-zinc-200;
+}
+
+.price-value {
+  @apply text-orange-400 text-xs;
+}
+
+.avatar-timing {
+  @apply flex items-center justify-center gap-2 text-xs text-zinc-400;
+}
+
+.timing-label {
+  @apply font-medium;
+}
+
+.timing-value {
+  @apply text-zinc-300 font-semibold;
+}
+
+.avatar-actions {
+  @apply pt-1;
+}
+
+.action-button {
+  @apply flex items-center justify-center gap-1 w-full py-2 px-3 rounded-lg font-semibold text-xs transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900;
+}
+
+.action-buy {
+  @apply bg-gradient-to-r from-amber-600 to-orange-600 text-white hover:from-amber-500 hover:to-orange-500 focus:ring-amber-500 shadow-lg shadow-amber-600/25;
+}
+
+.action-pending {
+  @apply bg-zinc-700/50 text-zinc-300 hover:bg-zinc-600/50 hover:text-white focus:ring-zinc-500 border border-zinc-600/50;
+}
+
+.action-icon {
+  @apply w-4 h-4;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .shop-grid {
+    @apply px-3 gap-2;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+  
+  .shop-title {
+    @apply text-2xl;
+  }
+  
+  .shop-subtitle {
+    @apply text-base;
+  }
+  
+  .avatar-content {
+    @apply p-2 space-y-1.5;
+  }
+  
+  .avatar-title {
+    @apply text-xs;
+  }
+  
+  .avatar-meta {
+    @apply gap-1 py-1;
+  }
+  
+  .action-button {
+    @apply py-1.5 text-xs;
+  }
+}
+
+@media (min-width: 1024px) {
+  .shop-grid {
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  }
+}
+
+@media (min-width: 1536px) {
+  .shop-grid {
+    @apply px-8 gap-4;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+/* Loading and Empty States */
+.shop-grid:empty::before {
+  content: "No avatars found matching your search criteria.";
+  @apply col-span-full text-center text-zinc-400 py-12 text-lg;
+}
+
+/* Ensure consistent card heights */
+.avatar-card {
+  @apply flex flex-col;
+}
+
+.avatar-content {
+  @apply flex-1 flex flex-col;
+}
+
+.avatar-actions {
+  @apply mt-auto;
+}
+
+/* Shop Footer */
+.shop-footer {
+  @apply px-4 lg:px-6 ;
+}
+
+.no-more-results {
+  @apply flex justify-center py-8;
+}
+
+.no-more-text {
+  @apply text-zinc-500 text-sm font-medium;
+}
 </style>
