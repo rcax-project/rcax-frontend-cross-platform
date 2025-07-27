@@ -18,13 +18,6 @@
             <a :href="`https://www.reddit.com/avatar/shop/product/storefront_nft_${item['edge']['node']['item']['benefits']['avatarOutfit']['id']}`" target="_blank" class="avatar-image-link">
               <ImgPlaceholder :src="item['edge']['node']['item']['benefits']['avatarOutfit']['preRenderImage']['url']" class="avatar-image" />
             </a>
-            <div class="avatar-status-badge" :class="{
-              'status-available': item['edge']['node']['status'] === 'AVAILABLE',
-              'status-pending': item['edge']['node']['status'] === 'PENDING'
-            }">
-              <span v-if="item['edge']['node']['status'] === 'AVAILABLE'">Available</span>
-              <span v-else>Coming Soon</span>
-            </div>
           </div>
           
           <div class="avatar-content">
@@ -73,7 +66,7 @@
               <template v-if="item['edge']['node']['status'] === 'PENDING'">
                 <a :href="`https://www.reddit.com/avatar/shop/product/storefront_nft_${item['edge']['node']['item']['benefits']['avatarOutfit']['id']}`" target="_blank" class="action-button action-pending">
                   <ClockIcon class="action-icon" />
-                  <span>Shop Link</span>
+                  <span>Coming Soon</span>
                 </a>
               </template>
               <template v-else-if="item['edge']['node']['status'] === 'AVAILABLE'">
@@ -217,37 +210,36 @@ const sortedItems: ComputedRef<Array<Object>> = computed(() => {
 
 /* Avatar Card Styling */
 .avatar-card {
-  @apply relative bg-gradient-to-b from-zinc-800/40 to-zinc-900/60 border border-zinc-700/40 rounded-2xl overflow-hidden transition-all duration-300 hover:border-orange-500/30 hover:shadow-lg hover:shadow-orange-500/10;
+  @apply relative bg-gradient-to-b from-zinc-800/40 to-zinc-900/60 border border-zinc-700/40 rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/20;
   backdrop-filter: blur(12px);
 }
 
-.avatar-card:hover {
-  transform: translateY(-2px);
-}
 
 .avatar-image-container {
-  @apply relative aspect-square overflow-hidden;
+  @apply relative p-6;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .avatar-image-link {
-  @apply block w-full h-full relative;
+  @apply block relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .avatar-image {
-  @apply w-full h-full object-cover;
+  @apply object-contain;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
 }
 
-.avatar-status-badge {
-  @apply absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide;
-}
-
-.status-available {
-  @apply bg-green-600/90 text-green-100 border border-green-500/50;
-}
-
-.status-pending {
-  @apply bg-orange-600/90 text-orange-100 border border-orange-500/50;
-}
 
 .avatar-content {
   @apply p-3 space-y-2;
