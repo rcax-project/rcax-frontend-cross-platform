@@ -34,7 +34,7 @@
         </div>
         <VirtualContainerGrid :items="filteredAvatarBackgrounds" :buffer-mobile="12" :buffer-desktop="20" class="p-1.5 h-[16rem] sm:h-[28rem] md:h-[42rem] w-full border border-white/5 rounded-2xl">
           <template #default="{ item, index }">
-            <BackgroundItem @click="setBackground(getBackgroundIndex(item))" :background="item" class="p-2 h-fit flex flex-col justify-center items-center bg-secondary text-header rounded-xl hover:bg-tertiary duration-200 cursor-pointer"/>
+            <BackgroundItem @click="setBackground(getBackgroundIndex(item))" :background="item" class="p-2 h-fit flex flex-col justify-center items-center bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-slate-300 hover:text-white rounded-lg transition-all duration-200 cursor-pointer"/>
           </template>
         </VirtualContainerGrid>
       </div>
