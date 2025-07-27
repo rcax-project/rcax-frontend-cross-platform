@@ -2,7 +2,7 @@
   <div class="avatar-view pb-3 md:pb-0 relative flex flex-col items-center w-full">
     <MenuBar class="mb-3">
       <SearchBar v-model:search-term="userSearch" placeholder="Reddit Username (without u/)"></SearchBar>
-      <button :disabled="!userSearch || pending || userSearch === user" class="px-4 h-10 flex items-center bg-amber-600 hover:bg-amber-500 disabled:bg-white/5 text-header disabled:text-white/20 text-sm font-medium whitespace-nowrap rounded-2xl duration-200" @click="searchUser(userSearch)">
+      <button :disabled="!userSearch || pending || userSearch === user" class="px-4 h-10 flex items-center bg-amber-600 hover:bg-amber-500 disabled:bg-zinc-700/50 disabled:text-zinc-400 text-white text-sm font-medium whitespace-nowrap rounded-lg transition-all duration-200" @click="searchUser(userSearch)">
         <template v-if="!pending">
           <span>Let's go!</span>
         </template>
@@ -16,11 +16,11 @@
         <span class="text-white/80">{{ error }}</span>
       </div>
     </template>
-    <div class="px-2 flex flex-col md:flex-row md:justify-center md:items-center gap-6 md:gap-12 w-full" :class="{ 'hidden': !avatar }">
+    <div class="px-2 pt-6 flex flex-col md:flex-row md:justify-center md:items-center gap-6 md:gap-12 w-full" :class="{ 'hidden': !avatar }">
       <div class="flex flex-col items-center md:w-3/4 max-w-3xl gap-3">
         <div class="sm:px-3 flex gap-2 md:items-start w-full">
           <SearchBar v-model:search-term="searchTerm" :placeholder="`Search by Name`" class="w-full" />
-          <select v-model="filterGenOption" class="w-fit rounded-2xl">
+          <select v-model="filterGenOption" class="px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-slate-300 hover:text-white font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer w-fit">
             <option value="all">Gen: All</option>
             <template v-for="gen in Object.keys(Filters)">
               <option :value="gen">{{ gen }}</option>
@@ -55,20 +55,20 @@
         </div>
         <div class="mt-2 flex flex-col items-center gap-2 text-white/80 w-full max-w-xs">
           <template v-if="!Capacitor.isNativePlatform() && bgSeriesStats">
-            <a :href="marketplaceLink(bgSeriesStats)" target="_blank" class="mb-2 py-2 px-4 max-w-full flex items-center gap-1.5 border border-white/10 hover:border-amber-500 rounded-lg duration-300">
-              Buy <span class="text-white font-semibold truncate">{{ selectedBackground.name }}</span> on <img src="/images/branding/rcax/RCAX_Badge_Color.svg" class="w-5 h-5">
+            <a :href="marketplaceLink(bgSeriesStats)" target="_blank" class="mb-2 py-2 px-4 max-w-full flex items-center gap-1.5 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-orange-500/50 rounded-lg transition-all duration-300">
+              Buy background <span class="text-white font-semibold truncate">{{ selectedBackground.name }}</span>
               <span class="text-sm text-details">({{ ethereumInLocalCurrency(getLowestListingAsGweiPrice(bgSeriesStats)) }})</span>
             </a>
           </template>
           <label>Avatar Size</label>
-          <select v-model="avatarSize" @change="drawAvatar">
+          <select v-model="avatarSize" @change="drawAvatar" class="w-full px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-slate-300 hover:text-white font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer">
             <option v-for="size in AvatarSize" :value="size">{{ size }}</option>
           </select>
           <label class="mt-2">Avatar Position</label>
-          <select v-model="avatarPosition" @change="drawAvatar">
+          <select v-model="avatarPosition" @change="drawAvatar" class="w-full px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-slate-300 hover:text-white font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer">
             <option v-for="position in AvatarPosition" :value="position">{{ position }}</option>
           </select>
-          <button :disabled="savingImage || pending" class="mt-4 px-6 py-3 bg-amber-600 hover:bg-amber-700 text-header font-medium rounded-xl duration-200" @click="saveImage">Download</button>
+          <button :disabled="savingImage || pending" class="mt-4 px-6 py-3 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 disabled:from-zinc-700 disabled:to-zinc-700 disabled:text-zinc-400 text-white font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500/50" @click="saveImage">Download Image</button>
         </div>
         <img ref="background" crossorigin="anonymous" class="hidden" :src="`${selectedBackground.path}?not-from-cache-please`" alt="background">
         <img ref="foreground" crossorigin="anonymous" class="hidden" :src="`${avatar}?not-from-cache-please`" alt="foreground">
@@ -471,11 +471,5 @@ async function savePermissions() {
   transform: translate(-50%, -50%);
 }
 
-.avatar-view select {
-  @apply w-full;
-}
-
-.avatar-view input {
-  @apply p-2 h-10 bg-transparent text-header placeholder-white/40 border border-white/10 hover:border-neutral-600 rounded-lg w-full duration-200 cursor-pointer;
-}
+/* Modern input and select styling now applied inline */
 </style>
