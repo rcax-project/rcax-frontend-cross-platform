@@ -61,7 +61,7 @@
         <div class="mt-2 flex flex-col items-center gap-2 text-white/80 w-full max-w-xs">
           <template v-if="!Capacitor.isNativePlatform() && bgSeriesStats">
             <a :href="marketplaceLink(bgSeriesStats)" target="_blank" class="mb-2 py-2 px-4 max-w-full flex items-center gap-1.5 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-orange-500/50 rounded-lg transition-all duration-300">
-              Buy background <span class="text-white font-semibold truncate">{{ selectedBackground.name }}</span>
+              Buy <span class="text-white font-semibold truncate">{{ selectedBackground.name }}</span>
               <span class="text-sm text-details">({{ ethereumInLocalCurrency(getLowestListingAsGweiPrice(bgSeriesStats)) }})</span>
             </a>
           </template>
@@ -212,7 +212,7 @@ const selectedBackground: ComputedRef<AvatarBackground> = computed(() => {
 });
 
 const apiRoute = computed(() => {
-  return `https://www.reddit.com/user/${user.value}/about.json`;
+  return `https://corsproxy.io/?${encodeURIComponent(`https://www.reddit.com/user/${user.value}/about.json`)}`;
 });
 
 watch([queryBackgroundIndex, avatarSize, avatarPosition, series, user], () => {
@@ -288,8 +288,12 @@ async function fetchUserImage() {
   error.value = "";
 
   await fetch(apiRoute.value)
-      .then(async (data) => {
-        data = await data.json();
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
 
         if (data['data'] && data['data']['snoovatar_img']) {
           avatar.value = data['data']['snoovatar_img'];
