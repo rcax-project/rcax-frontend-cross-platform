@@ -1,25 +1,28 @@
 <template>
   <div class="wallet-view pb-3 md:pb-0 relative flex flex-col items-center w-full">
     <MenuBar>
-      <select v-model="settings.wallet.valuationMethod">
-        <option value="floor">Value by Floor Price</option>
-        <option value="lastSale">Value by Last Sale</option>
-        <option value="fiveLastSales">Value by Last 5 Sales Average</option>
-        <option value="weeklyAvg">Value by 7 Days Average Sale Price</option>
-        <option value="twoWeeklyAvg">Value by 14 Days Average Sale Price</option>
-        <option value="monthlyAvg">Value by 30 Days Average Sale Price</option>
-      </select>
-      <select v-model="settings.wallet.filterOption">
-        <option value="all">Show All</option>
-        <option value="premium">Show Premium Only</option>
-      </select>
-      <select v-model="settings.wallet.groupMethod">
-        <option value="group">Group by Series</option>
-        <option value="mint">Show Mint Numbers</option>
-      </select>
-      <template v-if="!Capacitor.isNativePlatform()">
-        <RefreshButton :action="refresh" :refreshing="isRefreshing" />
-      </template>
+      <SearchBar v-model:search-term="searchTerm" :placeholder="`Search by Name, Artist or Collection`" />
+      <div class="ml-auto flex items-center gap-2">
+        <select v-model="settings.wallet.valuationMethod">
+          <option value="floor">Value by Floor Price</option>
+          <option value="lastSale">Value by Last Sale</option>
+          <option value="fiveLastSales">Value by Last 5 Sales Average</option>
+          <option value="weeklyAvg">Value by 7 Days Average Sale Price</option>
+          <option value="twoWeeklyAvg">Value by 14 Days Average Sale Price</option>
+          <option value="monthlyAvg">Value by 30 Days Average Sale Price</option>
+        </select>
+        <select v-model="settings.wallet.filterOption">
+          <option value="all">Show All</option>
+          <option value="premium">Show Premium Only</option>
+        </select>
+        <select v-model="settings.wallet.groupMethod">
+          <option value="group">Group by Series</option>
+          <option value="mint">Show Mint Numbers</option>
+        </select>
+        <template v-if="!Capacitor.isNativePlatform()">
+          <RefreshButton :action="refresh" :refreshing="isRefreshing" />
+        </template>
+      </div>
     </MenuBar>
     <div class="flex flex-col items-center w-full">
       <div class="lg:hidden px-2 sm:px-6 py-2 flex flex-col lg:flex-row-reverse lg:items-center lg:justify-between gap-3 w-full overflow-hidden">
@@ -280,6 +283,7 @@ const settings = useSettings();
 const selectedAvatar = useSelectedAvatar();
 
 const walletAddress = ref<string>("");
+const searchTerm = ref<string>("");
 const tokens: Ref<Map<string, Token[]>> = ref(new Map());
 const tokensCount: Ref<Map<string, Map<string, TokenGrouped>>> = ref(new Map());
 const rcax: Ref<Map<string, number>> = ref(new Map());
@@ -304,34 +308,60 @@ interface TokenGrouped {
 }
 
 function filterWalletTokensGrouped(walletTokens: Map<string, TokenGrouped>): Map<string, TokenGrouped> {
-  if (settings.value.wallet?.filterOption === "all") {
-    return walletTokens;
-  }
-
   let filteredTokens: Map<string, TokenGrouped> = new Map<string, TokenGrouped>();
 
   for (const [contractAddress, tokens] of walletTokens) {
-    if (!getFreeCollections().includes(contractAddress.slice(0,42))) {
-      filteredTokens.set(contractAddress, tokens);
+    // Apply premium filter
+    if (settings.value.wallet?.filterOption === "premium" && getFreeCollections().includes(contractAddress.slice(0,42))) {
+      continue;
     }
+
+    // Apply search filter
+    if (searchTerm.value) {
+      const searchTermLower = searchTerm.value.toLowerCase();
+      const seriesStats = getSeriesStats(tokens.contract_address, tokens.name);
+      
+      const matchesName = tokens.name.toLowerCase().includes(searchTermLower);
+      const matchesArtist = seriesStats?.collection?.artist?.displayName?.toLowerCase().includes(searchTermLower);
+      const matchesCollection = seriesStats?.collection?.name?.toLowerCase().includes(searchTermLower);
+      
+      if (!matchesName && !matchesArtist && !matchesCollection) {
+        continue;
+      }
+    }
+
+    filteredTokens.set(contractAddress, tokens);
   }
 
   return filteredTokens;
 }
 
 function filterWalletTokens(walletTokens: Token[]): Token[] {
-  if (settings.value.wallet?.filterOption === "all") {
-    return walletTokens;
-  }
-
   const filteredTokens: Token[] = [];
 
   for (const token of walletTokens) {
     const contractAddress = token.contract_address;
 
-    if (!getFreeCollections().includes(contractAddress)) {
-      filteredTokens.push(token);
+    // Apply premium filter
+    if (settings.value.wallet?.filterOption === "premium" && getFreeCollections().includes(contractAddress)) {
+      continue;
     }
+
+    // Apply search filter
+    if (searchTerm.value) {
+      const searchTermLower = searchTerm.value.toLowerCase();
+      const seriesStats = getSeriesStats(token.contract_address, token.name);
+      
+      const matchesName = token.name.toLowerCase().includes(searchTermLower);
+      const matchesArtist = seriesStats?.collection?.artist?.displayName?.toLowerCase().includes(searchTermLower);
+      const matchesCollection = seriesStats?.collection?.name?.toLowerCase().includes(searchTermLower);
+      
+      if (!matchesName && !matchesArtist && !matchesCollection) {
+        continue;
+      }
+    }
+
+    filteredTokens.push(token);
   }
 
   return filteredTokens;
