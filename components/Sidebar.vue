@@ -55,7 +55,11 @@
               class="transition-all duration-300 overflow-hidden flex-shrink-0"
               :class="isDesktop && isCompact && !isHovered ? 'w-0 opacity-0' : 'w-auto opacity-100'"
             >
-              <img class="h-5 w-auto transition-opacity duration-300 whitespace-nowrap" src="/images/branding/rcax/RCAX_Text_White.svg">
+              <img 
+                class="h-5 w-auto whitespace-nowrap transition-opacity duration-150"
+                :class="isDesktop && isCompact && !isHovered ? 'delay-150' : 'delay-0'"
+                src="/images/branding/rcax/RCAX_Text_White.svg"
+              >
             </div>
           </div>
         </div>
@@ -342,7 +346,15 @@ function logout() {
 }
 
 .sidebar-link span {
-  @apply whitespace-nowrap flex-shrink-0 overflow-hidden;
+  @apply whitespace-nowrap flex-shrink-0 overflow-hidden transition-opacity duration-150;
+}
+
+.sidebar-link:not(.compact-mode) span {
+  @apply delay-0;
+}
+
+.sidebar-link.compact-mode span {
+  @apply delay-150 opacity-0;
 }
 
 .sidebar-link.compact-mode {
