@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-col w-full">
     <MenuBar class="mb-3">
+      <SearchBar v-model:search-term="searchTerm" :placeholder="`Search by Name or Artist`" />
       <select class="ml-auto" v-model="settings.shop.showAvailable">
         <option :value="true">Available: Show</option>
         <option :value="false">Available: Hide</option>
@@ -77,12 +78,14 @@ import {ComputedRef} from "vue";
 import {Filters} from "~/global/generations";
 import {Capacitor} from "@capacitor/core";
 import MenuBar from "~/components/MenuBar.vue";
+import SearchBar from "~/components/SearchBar.vue";
 import {ref, useSettings} from "#imports";
 
 const settings = useSettings();
 
 const items: Ref<Array<Object>> = ref([]);
 const isRefreshing = ref(false);
+const searchTerm = ref('');
 
 onBeforeMount(() => {
   refresh();
@@ -111,6 +114,20 @@ const filteredItems: ComputedRef<Array<Object>> = computed(() => {
 
     if (dateAvailable && dateAvailable.getSeconds() < twoDaysAgo) {
       return false;
+    }
+
+    // Search functionality
+    if (searchTerm.value.trim()) {
+      const searchLower = searchTerm.value.toLowerCase();
+      const itemName = v['edge']['node']['item']['name']?.toLowerCase() || '';
+      const artistName = v['edge']['node']['artist']?.['redditorInfo']?.['displayName']?.toLowerCase() || '';
+      
+      const matchesName = itemName.includes(searchLower);
+      const matchesArtist = artistName.includes(searchLower);
+      
+      if (!matchesName && !matchesArtist) {
+        return false;
+      }
     }
 
     return true;
