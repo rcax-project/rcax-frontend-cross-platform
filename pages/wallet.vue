@@ -39,7 +39,7 @@
                 type="text" 
                 v-model="walletAddress" 
                 placeholder="Enter wallet address (0x...)" 
-                class="px-4 py-2.5 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600 text-white placeholder-zinc-500 rounded-lg transition-all duration-200 focus:outline-none w-full sm:w-96"
+                class="px-4 py-2.5 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 text-slate-300 placeholder-zinc-500 rounded-lg transition-all duration-200 focus:outline-none w-full sm:w-96"
               >
               <button 
                 @click="getWalletTokens(walletAddress)" 
