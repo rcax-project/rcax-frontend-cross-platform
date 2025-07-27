@@ -11,7 +11,7 @@
             <span class="text-xs text-zinc-500 uppercase tracking-wide">© 2025</span>
           </div>
           <p class="text-sm text-zinc-400 leading-relaxed mb-6">
-            The premier marketplace for Reddit Collectible Avatars
+            The hub for Reddit Collectible Avatars
           </p>
           <!-- Social Links -->
           <div class="flex items-center gap-2">

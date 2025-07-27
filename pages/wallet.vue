@@ -28,7 +28,7 @@
     <div class="flex-1">
       <!-- Add Wallet Section -->
       <div class="border-b border-zinc-800">
-        <div class="px-4 sm:px-6 lg:px-8 py-6">
+        <div class="px-4 lg:px-6  py-6">
           <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
               <h1 class="text-2xl font-semibold text-white">Portfolio Overview</h1>
@@ -68,7 +68,7 @@
       <PullToRefresh @refresh="refresh" :is-refreshing="isRefreshing">
         <!-- Portfolio Summary -->
         <div v-if="walletAddresses.size > 0" class="border-b border-zinc-800">
-          <div class="px-4 sm:px-6 lg:px-8 py-6">
+          <div class="px-4 lg:px-6 py-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div>
                 <p class="text-sm text-zinc-400">Total Portfolio Value</p>
@@ -102,7 +102,7 @@
         </div>
         
         <!-- Wallets List -->
-        <div class="px-4 sm:px-6 lg:px-8 py-6">
+        <div class="px-4 lg:px-6 py-6">
           <div v-if="walletAddresses.size === 0" class="text-center py-16">
             <svg class="mx-auto h-12 w-12 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -224,6 +224,7 @@
                               <div class="flex items-center gap-0.5 mt-0.5">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-zinc-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
                                 <span class="text-xs text-zinc-400 font-medium">{{ (getSeriesValue(series.contract_address, series.name) / 1000000000000000000 * series.count).toFixed(3).replace(/\.?0+$/, '') }}</span>
+                                <span v-if="series.count > 1" class="text-xs text-zinc-500">({{ (getSeriesValue(series.contract_address, series.name) / 1000000000000000000).toFixed(3).replace(/\.?0+$/, '') }})</span>
                               </div>
                             </div>
                           </div>
