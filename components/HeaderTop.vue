@@ -5,7 +5,7 @@
         <button @click="openLinkWith(`https://app.uniswap.org/tokens/polygon/0x875f123220024368968d9f1ab1f3f9c2f3fd190d`)" class="market-info-card group cursor-pointer">
           <div class="flex items-center gap-3 text-xs">
             <div class="flex items-center gap-2">
-              <img class="h-4 w-4" src="/images/branding/rcax/RCAX_Round_Color.svg">
+              <img class="h-4 w-4" src="/images/branding/rcax/RCAX_Logo_Color.svg">
               <span class="text-slate-300 font-medium">{{ gweiInLocalCurrency(rcax) }}</span>
             </div>
             <div class="flex items-center gap-1">
