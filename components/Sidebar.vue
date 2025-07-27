@@ -87,52 +87,6 @@
               <span>Exporter</span>
             </NuxtLink>
 
-            <template v-if="!Capacitor.isNativePlatform()">
-              <div class="relative">
-                <button 
-                  @click="toggleAppsMenu()"
-                  class="sidebar-link w-full justify-between"
-                  :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
-                >
-                  <div class="flex items-center gap-3">
-                    <Squares2X2Icon class="sidebar-icon flex-shrink-0" />
-                    <span>Apps</span>
-                  </div>
-                  <ChevronDownIcon 
-                    v-if="!(isDesktop && isCompact && !isHovered)"
-                    class="w-4 h-4 transition-transform duration-200" 
-                    :class="{ 'rotate-180': appsMenuOpen }" 
-                  />
-                </button>
-                
-                <Transition
-                  enter-active-class="transition-all duration-200 ease-out"
-                  enter-from-class="opacity-0 max-h-0"
-                  enter-to-class="opacity-100 max-h-40"
-                  leave-active-class="transition-all duration-150 ease-in"
-                  leave-from-class="opacity-100 max-h-40"
-                  leave-to-class="opacity-0 max-h-0"
-                >
-                  <div v-if="appsMenuOpen && !(isDesktop && isCompact && !isHovered)" class="ml-10 mt-1 space-y-1 overflow-hidden">
-                    <NuxtLink 
-                      to="/dapps/randomavatarswap"
-                      class="sidebar-sublink"
-                      @click="closeSidebarOnMobile"
-                    >
-                      Random Avatar Swap
-                    </NuxtLink>
-                    <NuxtLink 
-                      to="https://avatartraits.xyz"
-                      target="_blank"
-                      class="sidebar-sublink"
-                      @click="closeSidebarOnMobile"
-                    >
-                      AvatarTraits.xyz
-                    </NuxtLink>
-                  </div>
-                </Transition>
-              </div>
-            </template>
           </div>
 
           <!-- Analytics Section -->
@@ -219,6 +173,29 @@
               <span>Alerts</span>
             </NuxtLink>
           </div>
+
+          <!-- Apps Section -->
+          <template v-if="!Capacitor.isNativePlatform() && !(isDesktop && isCompact && !isHovered)">
+            <div class="mt-3 pt-3 border-t border-zinc-700/50 space-y-1">
+              <NuxtLink 
+                to="/dapps/randomavatarswap"
+                class="sidebar-link"
+                @click="closeSidebarOnMobile"
+              >
+                <Squares2X2Icon class="sidebar-icon flex-shrink-0" />
+                <span>Random Avatar Swap</span>
+              </NuxtLink>
+              <NuxtLink 
+                to="https://avatartraits.xyz"
+                target="_blank"
+                class="sidebar-link"
+                @click="closeSidebarOnMobile"
+              >
+                <GlobeAltIcon class="sidebar-icon flex-shrink-0" />
+                <span>AvatarTraits.xyz</span>
+              </NuxtLink>
+            </div>
+          </template>
         </nav>
 
         <!-- Bottom Section -->
@@ -303,7 +280,7 @@ import { Capacitor } from '@capacitor/core';
 import { 
   ChevronDownIcon, Bars3Icon, XMarkIcon, HomeIcon, PhotoIcon,
   Squares2X2Icon, WalletIcon, ChartBarIcon, BoltIcon, 
-  ShoppingBagIcon, GlobeEuropeAfricaIcon, BellIcon, StarIcon
+  ShoppingBagIcon, GlobeEuropeAfricaIcon, BellIcon, StarIcon, GlobeAltIcon
 } from '@heroicons/vue/24/outline';
 
 const user = useUser();
@@ -362,6 +339,10 @@ function logout() {
 <style scoped>
 .sidebar-link {
   @apply flex items-center gap-3 px-2 text-slate-300 hover:text-white hover:bg-zinc-700/30 rounded-lg transition-all duration-200 text-sm font-medium relative h-10;
+}
+
+.sidebar-link span {
+  @apply whitespace-nowrap;
 }
 
 .sidebar-link.compact-mode {
