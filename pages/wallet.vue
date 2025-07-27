@@ -115,7 +115,7 @@
             <template v-for="[walletAddress, walletTokens] in sortedWallets().entries()">
               <div class="bg-zinc-800/30 rounded-xl border border-zinc-700/30 overflow-hidden">
                 <!-- Wallet Header -->
-                <div class="px-6 py-4 border-b border-zinc-800">
+                <div class="px-6 py-4" :class="{ 'border-b border-zinc-800': !isCollapsed(walletAddress) }">
                   <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                       <div class="w-12 h-12 bg-zinc-800 rounded-lg flex items-center justify-center">
