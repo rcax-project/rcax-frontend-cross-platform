@@ -13,7 +13,14 @@ import {Capacitor} from "@capacitor/core";
 
 <style>
 .menubar {
-  @apply sticky top-0 z-40 w-full bg-[#141415] border-b border-zinc-800/50 shadow-sm duration-500;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  width: 100%;
+  background-color: #141415;
+  border-bottom: 1px solid rgba(39, 39, 42, 0.5);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition-duration: 500ms;
 }
 
 .menubar-content {
@@ -91,7 +98,7 @@ import {Capacitor} from "@capacitor/core";
 /* Desktop mobile padding adjustment */
 @media (min-width: 1024px) {
   .mobile-padding-top {
-    top: env(safe-area-inset-top);
+    top: 0;
   }
 }
 
