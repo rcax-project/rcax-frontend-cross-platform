@@ -79,22 +79,17 @@
               <HomeIcon class="sidebar-icon flex-shrink-0" />
               <span>Avatars</span>
             </NuxtLink>
-            
-            <NuxtLink 
-              to="/avatar" 
-              active-class="sidebar-link-active" 
-              class="sidebar-link"
-              :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
-              @click="closeSidebarOnMobile"
+
+            <NuxtLink
+                to="/watchlist"
+                exact-active-class="sidebar-link-active"
+                class="sidebar-link"
+                :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
+                @click="closeSidebarOnMobile"
             >
-              <PhotoIcon class="sidebar-icon flex-shrink-0" />
-              <span>Exporter</span>
+              <StarIcon class="sidebar-icon flex-shrink-0" />
+              <span>Watchlist</span>
             </NuxtLink>
-
-          </div>
-
-          <!-- Analytics Section -->
-          <div class="space-y-1">
             
             <NuxtLink 
               to="/wallet" 
@@ -108,28 +103,6 @@
             </NuxtLink>
 
             <NuxtLink 
-              to="/watchlist" 
-              exact-active-class="sidebar-link-active" 
-              class="sidebar-link"
-              :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
-              @click="closeSidebarOnMobile"
-            >
-              <StarIcon class="sidebar-icon flex-shrink-0" />
-              <span>Watchlist</span>
-            </NuxtLink>
-
-            <NuxtLink 
-              to="/stats/general" 
-              active-class="sidebar-link-active" 
-              class="sidebar-link"
-              :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
-              @click="closeSidebarOnMobile"
-            >
-              <ChartBarIcon class="sidebar-icon flex-shrink-0" />
-              <span>Stats</span>
-            </NuxtLink>
-
-            <NuxtLink 
               to="/events" 
               active-class="sidebar-link-active" 
               class="sidebar-link"
@@ -139,10 +112,6 @@
               <BoltIcon class="sidebar-icon flex-shrink-0" />
               <span>Activity</span>
             </NuxtLink>
-          </div>
-
-          <!-- Marketplace Section -->
-          <div class="space-y-1">
             
             <NuxtLink 
               to="/shop" 
@@ -164,6 +133,17 @@
             >
               <GlobeEuropeAfricaIcon class="sidebar-icon flex-shrink-0" />
               <span>Browser</span>
+            </NuxtLink>
+
+            <NuxtLink
+                to="/avatar"
+                active-class="sidebar-link-active"
+                class="sidebar-link"
+                :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
+                @click="closeSidebarOnMobile"
+            >
+              <PhotoIcon class="sidebar-icon flex-shrink-0" />
+              <span>Exporter</span>
             </NuxtLink>
 
             <NuxtLink 
