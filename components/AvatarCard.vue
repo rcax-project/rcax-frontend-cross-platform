@@ -14,7 +14,7 @@
         </button>
         <div class="relative pl-2 flex flex-col overflow-hidden grow">
           <div class="flex items-center gap-1 text-[0.7rem]">
-            <button @click.stop="openLinkWith(marketplaceLink(seriesStats))" class="text-white font-semibold text-[0.8rem] hover:text-orange-500 transition-colors duration-200" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ seriesStats.series.name }}</button>
+            <button @click.stop="openLinkWith(marketplaceLink(seriesStats))" class="text-white font-semibold text-[0.8rem] transition-colors duration-200" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ seriesStats.series.name }}</button>
             <template v-if="ranking">
               <h1 class="text-zinc-500 font-semibold rounded-md">#{{ ranking }}</h1>
             </template>
