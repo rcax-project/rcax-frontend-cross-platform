@@ -370,12 +370,6 @@ const sortedItems: ComputedRef<Array<Object>> = computed(() => {
   }
 }
 
-/* Loading and Empty States */
-.shop-grid:empty::before {
-  content: "No avatars found matching your search criteria.";
-  @apply col-span-full text-center text-zinc-400 py-12 text-lg;
-}
-
 /* Ensure consistent card heights */
 .avatar-card {
   @apply flex flex-col;

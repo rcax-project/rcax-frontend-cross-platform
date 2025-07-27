@@ -362,7 +362,7 @@ function logout() {
 }
 
 .sidebar-link.compact-mode span {
-  @apply absolute left-14 top-1/2 transform -translate-y-1/2 bg-zinc-800 text-white px-2 py-1 rounded shadow-lg z-50 opacity-0 pointer-events-none transition-opacity duration-200 whitespace-nowrap border border-zinc-700;
+  @apply absolute left-14 top-1/2 transform -translate-y-1/2 text-white px-2 py-1 rounded shadow-lg z-50 opacity-0 pointer-events-none transition-opacity duration-200 whitespace-nowrap;
 }
 
 .sidebar-link.compact-mode:hover span {
