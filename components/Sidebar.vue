@@ -39,7 +39,7 @@
         v-show="sidebarOpen || isDesktop"
         @mouseenter="isHovered = true"
         @mouseleave="isHovered = false; appsMenuOpen = false"
-        class="group fixed left-0 top-0 h-full bg-[#141415] border-r border-zinc-800/50 flex flex-col transition-all duration-300 ease-in-out"
+        class="group fixed left-0 top-0 h-full bg-[#141415] border-r border-zinc-800/50 flex flex-col transition-all duration-300 ease-in-out overflow-hidden"
         :class="[
           { 'sidebar-mobile-padding-top': Capacitor.isNativePlatform() },
           isDesktop && isCompact && !isHovered ? 'w-16 z-40' : 'w-64 z-50'
@@ -47,21 +47,21 @@
       >
         <!-- Logo Section -->
         <div class="px-4 py-6 overflow-hidden">
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-3 min-w-0">
             <div class="relative flex-shrink-0">
               <img class="h-8 w-8 transition-transform duration-300" src="/images/branding/rcax/RCAX_RoundedSquare_Color.svg">
             </div>
             <div
-              class="transition-all duration-300 overflow-hidden"
+              class="transition-all duration-300 overflow-hidden flex-shrink-0"
               :class="isDesktop && isCompact && !isHovered ? 'w-0 opacity-0' : 'w-auto opacity-100'"
             >
-              <img class="h-5 w-auto transition-opacity duration-300" src="/images/branding/rcax/RCAX_Text_White.svg">
+              <img class="h-5 w-auto transition-opacity duration-300 whitespace-nowrap" src="/images/branding/rcax/RCAX_Text_White.svg">
             </div>
           </div>
         </div>
 
         <!-- Navigation Links -->
-        <nav class="flex-1 overflow-y-auto px-2 py-0">
+        <nav class="flex-1 overflow-y-auto overflow-x-hidden px-2 py-0">
           <!-- Main Navigation -->
           <div class="space-y-1">
             
@@ -201,7 +201,7 @@
         <!-- Bottom Section -->
         <div 
           v-if="!(isDesktop && isCompact && !isHovered)"
-          class="border-t border-zinc-800/50 p-4 space-y-3"
+          class="border-t border-zinc-800/50 p-4 space-y-3 overflow-hidden"
         >
           <!-- Currency Selector -->
           <div class="relative">
@@ -219,13 +219,13 @@
           <!-- User Section -->
           <template v-if="user?.username">
             <div class="space-y-2">
-              <div class="flex items-center space-x-3 px-3 py-2 bg-zinc-800/30 rounded-lg">
-                <div class="w-8 h-8 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+              <div class="flex items-center space-x-3 px-3 py-2 bg-zinc-800/30 rounded-lg min-w-0">
+                <div class="w-8 h-8 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full flex items-center justify-center text-white font-semibold text-sm flex-shrink-0">
                   {{ user.username.charAt(0).toUpperCase() }}
                 </div>
-                <div class="flex-1 min-w-0">
+                <div class="flex-1 min-w-0 overflow-hidden">
                   <div class="text-white font-medium text-sm truncate">{{ user.username }}</div>
-                  <div class="text-zinc-500 text-xs">{{ user.tier < 1 ? 'Free User' : 'Pro User' }}</div>
+                  <div class="text-zinc-500 text-xs whitespace-nowrap">{{ user.tier < 1 ? 'Free User' : 'Pro User' }}</div>
                 </div>
               </div>
               
@@ -338,11 +338,11 @@ function logout() {
 
 <style scoped>
 .sidebar-link {
-  @apply flex items-center gap-3 px-2 text-slate-300 hover:text-white hover:bg-zinc-700/30 rounded-lg transition-all duration-200 text-sm font-medium relative h-10;
+  @apply flex items-center gap-3 px-2 text-slate-300 hover:text-white hover:bg-zinc-700/30 rounded-lg transition-all duration-200 text-sm font-medium relative h-10 min-w-0;
 }
 
 .sidebar-link span {
-  @apply whitespace-nowrap;
+  @apply whitespace-nowrap flex-shrink-0 overflow-hidden;
 }
 
 .sidebar-link.compact-mode {
