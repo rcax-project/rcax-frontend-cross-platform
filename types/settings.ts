@@ -31,7 +31,7 @@ export interface Settings {
     stats: {
         layout: string;
     },
-    shop: {
+    unreleased: {
         showAvailable: boolean;
     }
 }
@@ -69,7 +69,7 @@ export const Default: Settings = {
     stats: {
         layout: "grid"
     },
-    shop: {
+    unreleased: {
         showAvailable: true
     },
 }

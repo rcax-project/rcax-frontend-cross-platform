@@ -1,8 +1,8 @@
 <template>
-  <div class="shop-page">
-    <MenuBar class="shop-controls">
+  <div class="unreleased-page">
+    <MenuBar class="unreleased-controls">
       <SearchBar v-model:search-term="searchTerm" :placeholder="`Search by Name or Artist`" />
-      <select class="ml-auto" v-model="settings.shop.showAvailable">
+      <select class="ml-auto" v-model="settings.unreleased.showAvailable">
         <option :value="true">Available: Show</option>
         <option :value="false">Available: Hide</option>
       </select>
@@ -12,7 +12,7 @@
     </MenuBar>
     
     <div class="px-4 lg:px-6 py-6">
-      <div class="shop-grid">
+      <div class="unreleased-grid">
         <template v-for="item in sortedItems" :key="item['edge']['node']['item']['benefits']['avatarOutfit']['id']">
         <div class="avatar-card group">
           <div class="avatar-image-container">
@@ -86,7 +86,7 @@
         </template>
       </div>
       
-      <div class="shop-footer">
+      <div class="unreleased-footer">
         <div class="no-more-results">
           <span class="no-more-text">No more results</span>
         </div>
@@ -97,7 +97,7 @@
 
 <script setup lang="ts">
 import {Ref} from "@vue/reactivity";
-import {getShopItems} from "~/composables/api/shop";
+import {getUnreleasedItems} from "~/composables/api/unreleased";
 import {ClockIcon} from "@heroicons/vue/24/outline";
 import {getMintClassesText} from "~/global/mint";
 import {ComputedRef} from "vue";
@@ -118,14 +118,14 @@ onBeforeMount(() => {
 })
 
 function refresh() {
-  getShopItems()
+  getUnreleasedItems()
       .then((value) => {
         items.value = value
       });
 }
 
 const usingFilter: ComputedRef<boolean> = computed(() => {
-  return !settings.value.shop.showAvailable;
+  return !settings.value.unreleased.showAvailable;
 });
 
 const twoDaysAgo = new Date().getSeconds() - 172800;
@@ -134,7 +134,7 @@ const filteredItems: ComputedRef<Array<Object>> = computed(() => {
   return Object.values(items.value).filter((v) => {
     let dateAvailable = v['date_available'] ? new Date(v['date_available']) : null;
 
-    if (!settings.value.shop.showAvailable && dateAvailable) {
+    if (!settings.value.unreleased.showAvailable && dateAvailable) {
       return false;
     }
 
@@ -182,35 +182,31 @@ const sortedItems: ComputedRef<Array<Object>> = computed(() => {
 </script>
 
 <style scoped>
-.shop-page {
+.unreleased-page {
   @apply flex flex-col w-full min-h-screen;
 }
 
-.shop-header {
+.unreleased-header {
   @apply relative bg-gradient-to-br from-zinc-900/50 to-zinc-800/30 border-b border-zinc-700/50;
 }
 
-.shop-header-content {
+.unreleased-header-content {
   @apply px-4 lg:px-6 py-8 lg:py-12;
 }
 
-.shop-title-section {
+.unreleased-title-section {
   @apply text-center max-w-4xl mx-auto;
 }
 
-.shop-title {
+.unreleased-title {
   @apply text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-to-r from-white via-orange-100 to-amber-200 bg-clip-text text-transparent mb-3;
 }
 
-.shop-subtitle {
+.unreleased-subtitle {
   @apply text-lg lg:text-xl text-zinc-300 font-medium max-w-2xl mx-auto;
 }
 
-.shop-controls {
-  @apply mb-6;
-}
-
-.shop-grid {
+.unreleased-grid {
   @apply grid gap-3;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
@@ -334,16 +330,16 @@ const sortedItems: ComputedRef<Array<Object>> = computed(() => {
 
 /* Responsive Design */
 @media (max-width: 640px) {
-  .shop-grid {
+  .unreleased-grid {
     @apply gap-2;
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   }
   
-  .shop-title {
+  .unreleased-title {
     @apply text-2xl;
   }
   
-  .shop-subtitle {
+  .unreleased-subtitle {
     @apply text-base;
   }
   
@@ -365,13 +361,13 @@ const sortedItems: ComputedRef<Array<Object>> = computed(() => {
 }
 
 @media (min-width: 1024px) {
-  .shop-grid {
+  .unreleased-grid {
     grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
   }
 }
 
 @media (min-width: 1536px) {
-  .shop-grid {
+  .unreleased-grid {
     @apply gap-4;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
@@ -390,8 +386,8 @@ const sortedItems: ComputedRef<Array<Object>> = computed(() => {
   @apply mt-auto;
 }
 
-/* Shop Footer */
-.shop-footer {
+/* Unreleased Footer */
+.unreleased-footer {
 }
 
 .no-more-results {

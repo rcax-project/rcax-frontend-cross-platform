@@ -114,14 +114,14 @@
             </NuxtLink>
             
             <NuxtLink 
-              to="/shop" 
+              to="/unreleased" 
               active-class="sidebar-link-active" 
               class="sidebar-link"
               :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
               @click="closeSidebarOnMobile"
             >
               <ShoppingBagIcon class="sidebar-icon flex-shrink-0" />
-              <span>Shop</span>
+              <span>Unreleased</span>
             </NuxtLink>
 
             <NuxtLink 
