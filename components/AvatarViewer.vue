@@ -9,6 +9,12 @@
       <div class="px-4 lg:px-6 py-4 sticky top-0 bg-[#141415]/95 backdrop-blur-xl border-b border-zinc-800/50 z-30">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3 min-w-0 flex-1">
+            <div class="w-10 h-10 rounded-lg overflow-hidden bg-zinc-800 flex-shrink-0">
+              <img-placeholder 
+                :src="avatarImage" 
+                img-class="w-full h-full object-cover"
+              />
+            </div>
             <div class="min-w-0 flex-1">
               <h1 class="text-white font-semibold text-lg truncate">{{ selectedAvatar.series }}</h1>
               <p class="text-sm text-zinc-400 truncate">{{ seriesStats.collection.name.replace("x Reddit Collectible Avatars", "") }}</p>
@@ -44,11 +50,11 @@
           <template v-if="seriesStats.stats.lowest_listing">
             <div class="text-center">
               <p class="text-sm text-zinc-400 mb-1">Current price</p>
-              <div class="flex items-center justify-center gap-2">
+              <div class="flex items-center justify-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-5 h-5 text-purple-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-                <span class="text-2xl font-bold text-white">{{ (seriesStats.stats.lowest_listing.payment_token.base_price / 1000000000000000000).toFixed(4).replace(/\.?0+$/, '') }}</span>
+                <span class="text-xl font-bold text-white">{{ (seriesStats.stats.lowest_listing.payment_token.base_price / 1000000000000000000).toFixed(4).replace(/\.?0+$/, '') }}</span>
               </div>
-              <p class="text-sm text-zinc-500 mt-1">{{ ethereumInLocalCurrency(seriesStats.stats.lowest_listing.payment_token.base_price) }}</p>
+              <p class="text text-zinc-500 mt-1">{{ ethereumInLocalCurrency(seriesStats.stats.lowest_listing.payment_token.base_price) }}</p>
             </div>
           </template>
 
@@ -278,8 +284,8 @@
                           </div>
                         </div>
                         <div class="text-right">
-                          <button @click="openLinkWith(`https://opensea.io/${listing.maker_address}`)" class="text-xs text-zinc-400 hover:text-zinc-300 transition-colors">{{ listing.maker_address.slice(0, 6) }}...{{ listing.maker_address.slice(-4) }}</button>
-                          <p class="text-xs text-zinc-500 mt-1">{{ $timeAgo(new Date(listing.date_listed)) }}</p>
+                          <p class="text-xs text-zinc-500">{{ $timeAgo(new Date(listing.date_listed)) }}</p>
+                          <button @click="openLinkWith(`https://opensea.io/${listing.maker_address}`)" class="text-xs text-zinc-400 hover:text-zinc-300 transition-colors mt-1">{{ listing.maker_address.slice(0, 6) }}...{{ listing.maker_address.slice(-4) }}</button>
                         </div>
                       </div>
                     </div>
@@ -347,8 +353,8 @@
                           </div>
                         </div>
                         <div class="text-right">
-                          <button @click="openLinkWith(`https://opensea.io/${sale.buyer}`)" class="text-xs text-zinc-400 hover:text-zinc-300 transition-colors">{{ sale.buyer.slice(0, 6) }}...{{ sale.buyer.slice(-4) }}</button>
-                          <p class="text-xs text-zinc-500 mt-1">{{ $timeAgo(new Date(sale.date_sold)) }}</p>
+                          <p class="text-xs text-zinc-500">{{ $timeAgo(new Date(sale.date_sold)) }}</p>
+                          <button @click="openLinkWith(`https://opensea.io/${sale.buyer}`)" class="text-xs text-zinc-400 hover:text-zinc-300 transition-colors mt-1">{{ sale.buyer.slice(0, 6) }}...{{ sale.buyer.slice(-4) }}</button>
                         </div>
                       </div>
                     </div>

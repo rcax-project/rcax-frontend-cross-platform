@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-4">
     <!-- Chart Container -->
-    <div class="relative bg-zinc-900/50 rounded-lg p-4 border border-zinc-800/30 h-64">
+    <div class="relative bg-zinc-900/50 rounded-lg h-64">
       <Line :data="getData()" :options="options"></Line>
     </div>
     
@@ -206,9 +206,9 @@ function getData() {
       {
         label: 'Avg Price (ETH)',
         data: Array(labels[0].length).fill([0]),
-        backgroundColor: "rgba(147, 51, 234, 0.1)",
-        borderColor: "#9333ea",
-        pointBackgroundColor: "#9333ea",
+        backgroundColor: "rgba(251, 146, 60, 0.1)",
+        borderColor: "#f97316",
+        pointBackgroundColor: "#f97316",
         pointBorderColor: "#ffffff",
         pointRadius: 5,
         pointHoverRadius: 7,
