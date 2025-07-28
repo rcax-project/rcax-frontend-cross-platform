@@ -30,8 +30,44 @@
     </MenuBar>
     
     <div class="flex-1">
+      <!-- Pro Feature Gate for non-authenticated users -->
+      <template v-if="!user">
+        <div class="flex items-center justify-center min-h-[calc(100vh-80px)]">
+          <div class="text-center py-16 px-4">
+            <div class="mx-auto h-12 w-12 text-zinc-600 mb-4">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-medium text-white mb-2">Pro Feature</h3>
+            <p class="text-sm text-zinc-400 mb-6">This is a Pro feature. Please sign in using your Pro account.</p>
+            <NuxtLink to="/login" class="inline-flex items-center px-6 py-3 bg-white hover:bg-zinc-100 text-black font-semibold rounded-lg transition-colors">
+              Sign In
+            </NuxtLink>
+          </div>
+        </div>
+      </template>
+      
+      <!-- Pro Feature Gate for non-Pro users -->
+      <template v-else-if="user.tier < 1">
+        <div class="flex items-center justify-center min-h-[calc(100vh-80px)]">
+          <div class="text-center py-16 px-4">
+            <div class="mx-auto h-12 w-12 text-zinc-600 mb-4">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-medium text-white mb-2">Upgrade Required</h3>
+            <p class="text-sm text-zinc-400 mb-6">Please upgrade to Pro to access marketplace listings</p>
+            <NuxtLink to="/upgrade" class="inline-flex items-center px-6 py-3 bg-white hover:bg-zinc-100 text-black font-semibold rounded-lg transition-colors">
+              Upgrade to Pro
+            </NuxtLink>
+          </div>
+        </div>
+      </template>
+      
       <!-- Loading State -->
-      <template v-if="isRefreshing && !listingsWithStats.length">
+      <template v-else-if="isRefreshing && !listingsWithStats.length">
         <div class="flex items-center justify-center min-h-[calc(100vh-80px)]">
           <div class="text-center py-16 px-4">
             <div class="inline-flex items-center justify-center w-12 h-12 mb-4">
@@ -134,7 +170,7 @@
                         <div class="flex items-center gap-4">
                           <button @click="openLinkWith(marketplaceLink(listing.stats))" class="flex-shrink-0">
                             <div class="relative w-12 h-12 rounded-xl overflow-hidden bg-zinc-900/50 border border-zinc-700/30">
-                              <img :src="getTokenImage(listing.stats.series.image)" :key="listing.stats.series.image" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" :alt="listing.stats.series.name">
+                              <img :src="getTokenImage(listing.stats?.series?.image || '/img/rcax_placeholder.png')" :key="listing.stats?.series?.image || 'placeholder'" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" :alt="listing.stats?.series?.name || listing.listing.token.name">
                             </div>
                           </button>
                           <div class="min-w-0">
@@ -149,7 +185,7 @@
                       </td>
                       <td class="px-6 py-4">
                         <div class="text-zinc-300 text-sm font-medium">
-                          {{ listing.stats?.series.total_sold?.toLocaleString() || 'N/A' }}
+                          {{ listing.stats?.series?.total_sold?.toLocaleString() || 'N/A' }}
                         </div>
                       </td>
                       <td class="px-6 py-4">
@@ -188,40 +224,6 @@
           </div>
         </div>
       </template>
-      
-      <!-- Pro Feature Gate -->
-      <template v-if="!user">
-        <div class="flex items-center justify-center min-h-[calc(100vh-80px)]">
-          <div class="text-center py-16 px-4">
-            <div class="mx-auto h-12 w-12 text-zinc-600 mb-4">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-              </svg>
-            </div>
-            <h3 class="text-lg font-medium text-white mb-2">Pro Feature</h3>
-            <p class="text-sm text-zinc-400 mb-6">This is a Pro feature. Please sign in using your Pro account.</p>
-            <NuxtLink to="/login" class="inline-flex items-center px-6 py-3 bg-white hover:bg-zinc-100 text-black font-semibold rounded-lg transition-colors">
-              Sign In
-            </NuxtLink>
-          </div>
-        </div>
-      </template>
-      <template v-else-if="user.tier < 1">
-        <div class="flex items-center justify-center min-h-[calc(100vh-80px)]">
-          <div class="text-center py-16 px-4">
-            <div class="mx-auto h-12 w-12 text-zinc-600 mb-4">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-              </svg>
-            </div>
-            <h3 class="text-lg font-medium text-white mb-2">Upgrade Required</h3>
-            <p class="text-sm text-zinc-400 mb-6">Please upgrade to Pro to access marketplace listings</p>
-            <NuxtLink to="/upgrade" class="inline-flex items-center px-6 py-3 bg-white hover:bg-zinc-100 text-black font-semibold rounded-lg transition-colors">
-              Upgrade to Pro
-            </NuxtLink>
-          </div>
-        </div>
-      </template>
     </div>
   </div>
 </template>
@@ -233,6 +235,7 @@ import {
   computed,
   onMounted,
   ref,
+  watch,
   updateEthereumPrices,
   updateMarketInfo,
   updateSeriesStats,
@@ -244,7 +247,8 @@ import {
 import {fetchListings} from "~/composables/api/listings";
 import {SeriesStats} from "~/types/seriesStats";
 import {Filters} from "~/global/generations";
-import {getSeriesStats} from "~/composables/states";
+import {getSeriesStats, useSeriesStatsV2} from "~/composables/states";
+import {fetchSeriesStats} from "~/composables/api/seriesStats";
 import {getTokenImage, normalizeTokenSymbol} from "~/global/utils";
 import {Haptics, ImpactStyle} from "@capacitor/haptics";
 import {marketplaceLink} from "~/global/marketplace";
@@ -290,36 +294,71 @@ function clearFilters() {
   filterRarityOption.value = "all";
 }
 
-function refresh() {
+async function refresh() {
   isRefreshing.value = true;
 
-  let promises = [];
+  try {
+    // Load series stats first, then listings
+    console.log('Loading series stats...');
+    
+    // Fix the updateSeriesStats to properly await
+    try {
+      const seriesStats = await fetchSeriesStats();
+      useSeriesStatsV2().value = seriesStats;
+      console.log('Series stats loaded, keys:', Object.keys(useSeriesStatsV2().value).length);
+    } catch (seriesError) {
+      console.error('Error loading series stats:', seriesError);
+    }
+    
+    const promises = [
+      updateListings(),
+      updateMarketInfo(),
+      updateEthereumPrices()
+    ];
 
-  promises.push(updateListings());
-  promises.push(updateSeriesStats());
-  promises.push(updateMarketInfo());
-  promises.push(updateEthereumPrices());
-
-  Promise.all(promises).finally(() => {
+    await Promise.allSettled(promises);
+  } catch (error) {
+    console.error('Error during refresh:', error);
+  } finally {
     isRefreshing.value = false;
-  })
+  }
 }
 
 async function updateListings() {
-  await fetchListings()
-      .then((data) => {
-        const listings = Object.values(data)
-            .flatMap((innerObj) => Object.values(innerObj))
-            .flatMap((nestedObj) => Object.values(nestedObj))
-            .flat();
+  try {
+    const data = await fetchListings();
+    const listings = Object.values(data)
+        .flatMap((innerObj) => Object.values(innerObj))
+        .flatMap((nestedObj) => Object.values(nestedObj))
+        .flat();
 
-        listingsWithStats.value = listings.map((listing) => {
-          return {
-            listing,
-            stats: getSeriesStats(listing.token.contract_address, listing.token.name)
-          }
-        })
-      });
+    console.log('Sample listing:', listings[0]); // Debug log
+    
+    // Check series stats structure
+    const seriesStatsData = useSeriesStatsV2().value;
+    console.log('Series stats keys:', Object.keys(seriesStatsData).slice(0, 5)); // First 5 contract addresses
+    const firstContract = Object.keys(seriesStatsData)[0];
+    if (firstContract) {
+      console.log('Series names for first contract:', Object.keys(seriesStatsData[firstContract]));
+    }
+    
+    listingsWithStats.value = listings.map((listing) => {
+      const stats = getSeriesStats(listing.token.contract_address, listing.token.name);
+      if (!stats && listings.indexOf(listing) === 0) {
+        console.log('No stats found for:', listing.token.contract_address, listing.token.name); // Debug log
+      }
+      return {
+        listing,
+        stats: stats // Keep even if undefined, handle in template
+      }
+    });
+    
+    console.log('Total listings with stats:', listingsWithStats.value.filter(l => l.stats).length);
+    console.log('Total listings without stats:', listingsWithStats.value.filter(l => !l.stats).length);
+  } catch (error) {
+    console.error('Error fetching listings:', error);
+    listingsWithStats.value = [];
+  }
 }
 
 const slicedListings = computed(() => {
@@ -357,18 +396,18 @@ const filteredListings: ComputedRef<ListingWithStats[]> = computed(() => {
   }
 
   if (filterGenOption.value && filterGenOption.value != "all") {
-    filteredListings = filteredListings.filter((listing) => Filters[filterGenOption.value].collections.includes(listing.stats.collection.contract_address));
+    filteredListings = filteredListings.filter((listing) => listing.stats?.collection?.contract_address && Filters[filterGenOption.value].collections.includes(listing.stats.collection.contract_address));
   }
 
   switch (filterRarityOption.value) {
     case "250":
-      filteredListings = filteredListings.filter((listing) => listing.stats.series.total_quantity <= 250);
+      filteredListings = filteredListings.filter((listing) => listing.stats?.series?.total_quantity && listing.stats.series.total_quantity <= 250);
       break;
     case "777":
-      filteredListings = filteredListings.filter((listing) => listing.stats.series.total_quantity <= 777);
+      filteredListings = filteredListings.filter((listing) => listing.stats?.series?.total_quantity && listing.stats.series.total_quantity <= 777);
       break;
     case "1000":
-      filteredListings = filteredListings.filter((listing) => listing.stats.series.total_quantity <= 1000);
+      filteredListings = filteredListings.filter((listing) => listing.stats?.series?.total_quantity && listing.stats.series.total_quantity <= 1000);
       break;
   }
 
@@ -384,12 +423,12 @@ const sortedListings: ComputedRef<ListingWithStats[]> = computed(() => {
 
     switch (listingsSortColumn.value) {
       case "name":
-        aValue = a.stats.series.name;
-        bValue = b.stats.series.name;
+        aValue = a.stats?.series?.name || a.listing.token.name;
+        bValue = b.stats?.series?.name || b.listing.token.name;
         break;
       case "supply":
-        aValue = Math.max(a.stats.series.total_sold, a.stats.series.total_quantity);
-        bValue = Math.max(b.stats.series.total_sold, b.stats.series.total_quantity);
+        aValue = a.stats?.series ? Math.max(a.stats.series.total_sold || 0, a.stats.series.total_quantity || 0) : 0;
+        bValue = b.stats?.series ? Math.max(b.stats.series.total_sold || 0, b.stats.series.total_quantity || 0) : 0;
         break;
       case "mint_number":
         aValue = a.listing.token.mint_number;
