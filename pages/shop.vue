@@ -20,7 +20,7 @@
                 <ImgPlaceholder :src="item['edge']['node']['item']['benefits']['avatarOutfit']['preRenderImage']['url']" class="avatar-image" />
               </div>
               <div class="absolute inset-0 z-10 flex items-center justify-center">
-                <ImgPlaceholder :src="item['edge']['node']['item']['benefits']['avatarOutfit']['preRenderImage']['url']" img-class="avatar-image blur-3xl opacity-20" />
+                <ImgPlaceholder :src="item['edge']['node']['item']['benefits']['avatarOutfit']['preRenderImage']['url']" img-class="avatar-image blur-3xl opacity-40" />
               </div>
             </a>
           </div>
