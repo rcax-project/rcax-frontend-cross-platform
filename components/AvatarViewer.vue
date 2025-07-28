@@ -1,6 +1,6 @@
 <template>
   <!-- The overlay is used to cover the main content when the drawer is open -->
-  <div class="fixed inset-0 bg-black/50 z-40" v-if="open" @click="close"></div>
+  <div class="fixed inset-0 bg-black/50 z-50" v-if="open" @click="close"></div>
 
   <!-- The drawer content -->
   <transition name="slide">
