@@ -16,7 +16,12 @@
         <div class="avatar-card group">
           <div class="avatar-image-container">
             <a :href="`https://www.reddit.com/avatar/shop/product/storefront_nft_${item['edge']['node']['item']['benefits']['avatarOutfit']['id']}`" target="_blank" class="avatar-image-link">
-              <ImgPlaceholder :src="item['edge']['node']['item']['benefits']['avatarOutfit']['preRenderImage']['url']" class="avatar-image" />
+              <div class="relative max-w-full z-20">
+                <ImgPlaceholder :src="item['edge']['node']['item']['benefits']['avatarOutfit']['preRenderImage']['url']" class="avatar-image" />
+              </div>
+              <div class="absolute inset-0 z-10 flex items-center justify-center">
+                <ImgPlaceholder :src="item['edge']['node']['item']['benefits']['avatarOutfit']['preRenderImage']['url']" img-class="avatar-image blur-3xl opacity-20" />
+              </div>
             </a>
           </div>
           
