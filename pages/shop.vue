@@ -11,8 +11,9 @@
       </template>
     </MenuBar>
     
-    <div class="shop-grid">
-      <template v-for="item in sortedItems" :key="item['edge']['node']['item']['benefits']['avatarOutfit']['id']">
+    <div class="px-4 lg:px-6 py-6">
+      <div class="shop-grid">
+        <template v-for="item in sortedItems" :key="item['edge']['node']['item']['benefits']['avatarOutfit']['id']">
         <div class="avatar-card group">
           <div class="avatar-image-container">
             <a :href="`https://www.reddit.com/avatar/shop/product/storefront_nft_${item['edge']['node']['item']['benefits']['avatarOutfit']['id']}`" target="_blank" class="avatar-image-link">
@@ -82,12 +83,13 @@
             </div>
           </div>
         </div>
-      </template>
-    </div>
-    
-    <div class="shop-footer">
-      <div class="no-more-results">
-        <span class="no-more-text">No more results</span>
+        </template>
+      </div>
+      
+      <div class="shop-footer">
+        <div class="no-more-results">
+          <span class="no-more-text">No more results</span>
+        </div>
       </div>
     </div>
   </div>
@@ -209,7 +211,7 @@ const sortedItems: ComputedRef<Array<Object>> = computed(() => {
 }
 
 .shop-grid {
-  @apply px-4 lg:px-6 pb-4 grid gap-3;
+  @apply grid gap-3;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
 
@@ -333,7 +335,7 @@ const sortedItems: ComputedRef<Array<Object>> = computed(() => {
 /* Responsive Design */
 @media (max-width: 640px) {
   .shop-grid {
-    @apply px-3 gap-2;
+    @apply gap-2;
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   }
   
@@ -370,7 +372,7 @@ const sortedItems: ComputedRef<Array<Object>> = computed(() => {
 
 @media (min-width: 1536px) {
   .shop-grid {
-    @apply px-8 gap-4;
+    @apply gap-4;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
 }
@@ -390,7 +392,6 @@ const sortedItems: ComputedRef<Array<Object>> = computed(() => {
 
 /* Shop Footer */
 .shop-footer {
-  @apply px-4 lg:px-6 ;
 }
 
 .no-more-results {
