@@ -210,7 +210,7 @@ const sortedItems: ComputedRef<Array<Object>> = computed(() => {
 
 /* Avatar Card Styling */
 .avatar-card {
-  @apply relative bg-gradient-to-b from-zinc-800/40 to-zinc-900/60 border border-zinc-700/40 rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/20;
+  @apply relative bg-zinc-800/30 border border-zinc-700/40 rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/20;
   backdrop-filter: blur(12px);
 }
 
