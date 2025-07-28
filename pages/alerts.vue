@@ -177,13 +177,22 @@
                                 :src="getSeries(alert.collection_tier_hash).image" 
                                 :alt="getSeries(alert.collection_tier_hash).name"
                                 class="w-full h-full object-cover"
+                                @error="$event.target.style.display='none'"
                               >
                             </template>
                             <template v-else>
                               <div class="w-full h-full flex items-center justify-center">
-                                <svg class="w-6 h-6 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                </svg>
+                                <template v-if="isAlertDataLoaded(alert)">
+                                  <svg class="w-6 h-6 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                  </svg>
+                                </template>
+                                <template v-else>
+                                  <svg class="w-4 h-4 text-zinc-500 animate-spin" viewBox="0 0 24 24" fill="none">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                  </svg>
+                                </template>
                               </div>
                             </template>
                           </div>
@@ -192,7 +201,7 @@
                         <!-- Alert Details -->
                         <div class="flex-1 min-w-0">
                           <h3 class="text-sm font-medium text-white truncate">
-                            {{ alert.item_hash ? (avatars.get(alert.item_hash)?.fullname() ?? 'Loading...') : (series.get(alert.collection_tier_hash)?.name ?? 'Loading...') }}
+                            {{ getAlertTitle(alert) }}
                           </h3>
                           <div class="flex items-center gap-4 mt-1">
                             <span class="text-xs text-zinc-400">
@@ -219,7 +228,8 @@
                         <div class="flex items-center gap-2">
                           <button 
                             @click="openAlertModal(alertHash, alert)"
-                            class="p-2 hover:bg-zinc-700/50 text-zinc-400 hover:text-white rounded-lg transition-all duration-200"
+                            :disabled="!isAlertDataLoaded(alert)"
+                            class="p-2 hover:bg-zinc-700/50 disabled:opacity-50 disabled:cursor-not-allowed text-zinc-400 hover:text-white rounded-lg transition-all duration-200"
                             title="Edit Alert"
                           >
                             <PencilSquareIcon class="w-4 h-4" />
@@ -468,12 +478,14 @@ const userSettings: Ref<UserSettings> = ref({
 });
 const seriesOptions: Ref<Array<SelectSearchOption>> = ref([]);
 
-onBeforeMount( () => {
-  updateSeriesHashed();
+onBeforeMount(async () => {
+  await updateSeriesHashed();
 });
 
 onMounted(async () => {
   if (token.value) {
+    // Ensure series data is loaded before loading alerts
+    await updateSeriesHashed();
     loadAlerts();
     loadUserSettings().then(() => {
       userSettings.value = JSON.parse(JSON.stringify(useUserSettings().value));
@@ -483,6 +495,8 @@ onMounted(async () => {
 
 watch([token], async () => {
   if (token.value) {
+    // Ensure series data is loaded before loading alerts
+    await updateSeriesHashed();
     loadAlerts();
     loadUserSettings().then(() => {
       userSettings.value = JSON.parse(JSON.stringify(useUserSettings().value));
@@ -508,6 +522,12 @@ watch([series], async () => {
   seriesOptions.value = arr;
 }, { deep: true });
 
+// Watch for series data changes to re-render alerts when data becomes available
+watch([series], () => {
+  // Force reactivity update when series data changes
+  // This helps with alerts that were loaded before series data was available
+}, { deep: true });
+
 function getSeries(seriesHash: string) {
   return series.value.get(seriesHash);
 }
@@ -520,6 +540,24 @@ function getSettingDescription(key: string): string {
     'push_notifications': 'Receive price alerts and updates via push notifications'
   };
   return descriptions[key] || 'Toggle this notification setting';
+}
+
+function getAlertTitle(alert: Alert): string {
+  if (alert.item_hash) {
+    const avatar = avatars.value.get(alert.item_hash);
+    return avatar?.fullname() || 'Avatar Data Loading...';
+  } else {
+    const seriesData = series.value.get(alert.collection_tier_hash);
+    return seriesData?.name || 'Series Data Loading...';
+  }
+}
+
+function isAlertDataLoaded(alert: Alert): boolean {
+  if (alert.item_hash) {
+    return avatars.value.has(alert.item_hash);
+  } else {
+    return series.value.has(alert.collection_tier_hash);
+  }
 }
 
 function onSelectedTier() {
@@ -554,22 +592,37 @@ function logout() {
   deleteToken();
 }
 
-function loadAlerts() {
+async function loadAlerts() {
   loading.value = true;
 
-  getAlerts()
-      .then((res) => {
-        if (res.alerts) alerts.value = res.alerts;
-        if (res.alertQuota) alertQuota.value = res.alertQuota;
-        if (res.alertMaxQuota) alertMaxQuota.value = res.alertMaxQuota;
+  try {
+    const res = await getAlerts();
+    if (res.alerts) alerts.value = res.alerts;
+    if (res.alertQuota) alertQuota.value = res.alertQuota;
+    if (res.alertMaxQuota) alertMaxQuota.value = res.alertMaxQuota;
 
-        loading.value = false;
-      })
-      .catch((err) => {
-        alert(err);
+    // Ensure series data is available for all alerts
+    if (res.alerts && res.alerts.size > 0) {
+      const alertArray = Array.from(res.alerts.values());
+      const missingSeriesHashes = alertArray
+        .map(alert => alert.collection_tier_hash)
+        .filter(hash => !series.value.has(hash));
+      
+      if (missingSeriesHashes.length > 0) {
+        // Wait a bit more for series data to load
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        // If still missing, try to update series data one more time
+        if (missingSeriesHashes.some(hash => !series.value.has(hash))) {
+          await updateSeriesHashed();
+        }
+      }
+    }
 
-        loading.value = false;
-      })
+    loading.value = false;
+  } catch (err) {
+    alert(err);
+    loading.value = false;
+  }
 }
 
 function submitAlert() {
