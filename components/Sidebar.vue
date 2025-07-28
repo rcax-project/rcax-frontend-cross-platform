@@ -92,17 +92,6 @@
             </NuxtLink>
             
             <NuxtLink 
-              to="/wallet" 
-              active-class="sidebar-link-active" 
-              class="sidebar-link"
-              :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
-              @click="closeSidebarOnMobile"
-            >
-              <WalletIcon class="sidebar-icon flex-shrink-0" />
-              <span>Wallet</span>
-            </NuxtLink>
-
-            <NuxtLink 
               to="/events" 
               active-class="sidebar-link-active" 
               class="sidebar-link"
@@ -111,6 +100,17 @@
             >
               <BoltIcon class="sidebar-icon flex-shrink-0" />
               <span>Activity</span>
+            </NuxtLink>
+
+            <NuxtLink 
+              to="/wallet" 
+              active-class="sidebar-link-active" 
+              class="sidebar-link"
+              :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
+              @click="closeSidebarOnMobile"
+            >
+              <WalletIcon class="sidebar-icon flex-shrink-0" />
+              <span>Wallet</span>
             </NuxtLink>
             
             <NuxtLink 
@@ -132,7 +132,7 @@
               @click="closeSidebarOnMobile"
             >
               <GlobeEuropeAfricaIcon class="sidebar-icon flex-shrink-0" />
-              <span>Browser</span>
+              <span>Listings</span>
             </NuxtLink>
 
             <NuxtLink
