@@ -1,8 +1,8 @@
 <template>
-  <div class="pb-3 relative flex flex-col items-center w-full">
-    <MenuBar class="mb-3">
+  <div class="listings-view relative flex flex-col w-full min-h-screen bg-[#141415]">
+    <MenuBar>
       <SearchBar v-model:search-term="searchTerm" :placeholder="`Search by Name, Artist or Collection`" />
-      <FilterMenuButton :using-filter="usingFilter()">
+      <FilterMenuButton :using-filter="usingFilter()" class="ml-auto">
         <input type="number" v-model="maxPrice" :placeholder="`Max price ${paymentToken.toUpperCase()}`">
         <input type="number" v-model="minMint" placeholder="Min mint number">
         <input type="number" v-model="maxMint" placeholder="Max mint number">
@@ -19,73 +19,207 @@
           <option value="1000">Supply: Max 1000</option>
         </select>
         <template v-if="usingFilter()">
-          <button @click="clearFilters()" class="p-2 bg-amber-500/20 text-amber-500 text-sm rounded-md">Clear All</button>
+          <button @click="clearFilters()" class="p-2 bg-white/10 text-white hover:bg-white/20 text-sm rounded-md transition-colors">Clear All</button>
         </template>
       </FilterMenuButton>
-      <select v-model="paymentToken">
+      <select v-model="paymentToken" class="px-3 py-2 bg-zinc-800/30 border border-zinc-700/30 text-zinc-300 text-sm rounded-lg hover:bg-zinc-700/40 hover:border-zinc-600/50 focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all duration-200">
         <option value="eth">ETH</option>
         <option value="matic">MATIC</option>
       </select>
       <RefreshButton :action="refresh" :refreshing="isRefreshing" />
     </MenuBar>
-    <div class="px-2 md:px-6 w-full">
-      <div class="px-2 border border-white/10 rounded-2xl">
-        <div class="w-full overflow-x-auto">
-          <table class="w-full whitespace-nowrap">
-            <thead>
-            <tr class="border-b border-white/10 text-white/80 text-xs">
-              <th class="border-b border-white/10 text-left px-2 py-3 cursor-pointer" :class="{ 'text-amber-500': listingsSortColumn === 'name' }" @click="sortListings('name')">Name</th>
-              <th class="table--cell" :class="{ 'text-amber-500': listingsSortColumn === 'supply' }" @click="sortListings('supply')">Supply</th>
-              <th class="table--cell" :class="{ 'text-amber-500': listingsSortSecondaryColumn === 'price' }" @click="sortSecondaryListings('price')">Price</th>
-              <th class="table--cell" :class="{ 'text-amber-500': listingsSortColumn === 'mint_number' }" @click="sortListings('mint_number')">Mint</th>
-              <th class="table--cell">Seller</th>
-              <th class="table--cell" :class="{ 'text-amber-500': listingsSortColumn === 'date_listed' }" @click="sortListings('date_listed')">Date</th>
-            </tr>
-            </thead>
-            <tbody>
-            <template v-for="(listing, index) in slicedListings" :key="index">
-              <tr class="border-b border-white/10 hover:bg-tertiary text-white/80 text-xs">
-                <td class="relative px-2 py-1 flex gap-2">
-                  <button @click="openLinkWith(marketplaceLink(listing.stats))">
-                    <div class="relative rounded-md w-6 h-6 flex items-center overflow-hidden">
-                      <img :src="getTokenImage(listing.stats.series.image)" :key="listing.stats.series.image" class="object-cover" :alt="listing.stats.series.name">
-                    </div>
-                  </button>
-                  <button @click="selectAvatar(listing.stats)" class="font-semibold">{{ listing.listing.token.name }}</button>
-                </td>
-                <td class="px-2 py-1">{{ listing.stats?.series.total_sold }}</td>
-                <td class="px-2 py-1" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                  <button @click="openLinkWith(`https://opensea.io/assets/matic/${listing.listing.token.contract_address}/${listing.listing.token.id}`)">
-                    <span>{{ (listing.listing.payment_token.base_price / 1000000000000000000).toFixed(6).replace(/\.?0+$/, '') }} {{ listing.listing.payment_token.symbol }}</span>
-                    <span class="text-white/40"> (<span class="text-amber-500">{{ ethereumInLocalCurrency(getListingAsGweiPrice(listing.listing)) }}</span>)</span>
-                  </button>
-                </td>
-                <td class="px-2 py-1">
-                  <button @click="openLinkWith(`https://opensea.io/assets/matic/${listing.listing.token.contract_address}/${listing.listing.token.id}`)" class="text-amber-500">#{{ listing.listing.token.mint_number }}</button>
-                </td>
-                <td class="px-2 py-1">
-                  <button @click="openLinkWith(`https://opensea.io/${listing.listing.maker_address}`)" class="text-amber-500">{{ listing.listing.maker_address.slice(2, 5) }}</button>
-                </td>
-                <td class="px-2 py-1" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $timeAgo(new Date(listing.listing.date_listed)) }} ago</td>
-              </tr>
-            </template>
-            </tbody>
-          </table>
+    
+    <div class="flex-1">
+      <!-- Loading State -->
+      <template v-if="isRefreshing && !listingsWithStats.length">
+        <div class="flex items-center justify-center min-h-[calc(100vh-80px)]">
+          <div class="text-center py-16 px-4">
+            <div class="inline-flex items-center justify-center w-12 h-12 mb-4">
+              <svg class="w-8 h-8 text-white animate-spin" viewBox="0 0 24 24" fill="none">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </div>
+            <p class="text-sm text-zinc-400">Loading listings...</p>
+          </div>
         </div>
-        <div class="py-6 flex justify-center">
-          <Pagination :total-items="filteredListings.length" :page-size="pageSize" v-model:current-page="listingsCurrentPage" />
+      </template>
+      
+      <!-- Empty State -->
+      <template v-else-if="!filteredListings.length && !isRefreshing">
+        <div class="flex items-center justify-center min-h-[calc(100vh-80px)]">
+          <div class="text-center py-16 px-4">
+            <div class="mx-auto h-12 w-12 text-zinc-600 mb-4">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-medium text-white mb-2">No listings found</h3>
+            <p class="text-sm text-zinc-400">Try adjusting your filters or search terms</p>
+          </div>
         </div>
-      </div>
+      </template>
+      
+      <!-- Listings Table -->
+      <template v-else>
+        <div class="border-b border-zinc-800">
+          <div class="px-4 lg:px-6 py-6">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+              <div>
+                <h1 class="text-2xl font-semibold text-white">Active Listings</h1>
+                <p class="mt-1 text-sm text-zinc-400">{{ filteredListings.length.toLocaleString() }} items available for purchase</p>
+              </div>
+              <div class="flex items-center gap-2 text-sm text-zinc-400">
+                <span>Showing {{ slicedListings.length }} of {{ filteredListings.length.toLocaleString() }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="px-4 lg:px-6 py-6">
+          <div class="bg-zinc-800/30 border border-zinc-700/30 rounded-xl overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead class="bg-zinc-900/50 border-b border-zinc-700/50">
+                  <tr>
+                    <th class="text-left px-6 py-4 text-zinc-300 font-medium text-sm cursor-pointer hover:text-white transition-colors" :class="{ 'text-white': listingsSortColumn === 'name' }" @click="sortListings('name')">
+                      <div class="flex items-center gap-2">
+                        <span>Item</span>
+                        <svg v-if="listingsSortColumn === 'name'" class="w-4 h-4" :class="listingsSortDirection === 'asc' ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                      </div>
+                    </th>
+                    <th class="text-left px-6 py-4 text-zinc-300 font-medium text-sm cursor-pointer hover:text-white transition-colors" :class="{ 'text-white': listingsSortColumn === 'supply' }" @click="sortListings('supply')">
+                      <div class="flex items-center gap-2">
+                        <span>Supply</span>
+                        <svg v-if="listingsSortColumn === 'supply'" class="w-4 h-4" :class="listingsSortDirection === 'asc' ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                      </div>
+                    </th>
+                    <th class="text-left px-6 py-4 text-zinc-300 font-medium text-sm cursor-pointer hover:text-white transition-colors" :class="{ 'text-white': listingsSortSecondaryColumn === 'price' }" @click="sortSecondaryListings('price')">
+                      <div class="flex items-center gap-2">
+                        <span>Price</span>
+                        <svg v-if="listingsSortSecondaryColumn === 'price'" class="w-4 h-4" :class="listingsSortSecondaryDirection === 'asc' ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                      </div>
+                    </th>
+                    <th class="text-left px-6 py-4 text-zinc-300 font-medium text-sm cursor-pointer hover:text-white transition-colors" :class="{ 'text-white': listingsSortColumn === 'mint_number' }" @click="sortListings('mint_number')">
+                      <div class="flex items-center gap-2">
+                        <span>Mint</span>
+                        <svg v-if="listingsSortColumn === 'mint_number'" class="w-4 h-4" :class="listingsSortDirection === 'asc' ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                      </div>
+                    </th>
+                    <th class="text-left px-6 py-4 text-zinc-300 font-medium text-sm">
+                      Seller
+                    </th>
+                    <th class="text-left px-6 py-4 text-zinc-300 font-medium text-sm cursor-pointer hover:text-white transition-colors" :class="{ 'text-white': listingsSortColumn === 'date_listed' }" @click="sortListings('date_listed')">
+                      <div class="flex items-center gap-2">
+                        <span>Date Listed</span>
+                        <svg v-if="listingsSortColumn === 'date_listed'" class="w-4 h-4" :class="listingsSortDirection === 'asc' ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <template v-for="(listing, index) in slicedListings" :key="index">
+                    <tr class="border-b border-zinc-700/30 hover:bg-zinc-700/20 transition-colors group">
+                      <td class="px-6 py-4">
+                        <div class="flex items-center gap-4">
+                          <button @click="openLinkWith(marketplaceLink(listing.stats))" class="flex-shrink-0">
+                            <div class="relative w-12 h-12 rounded-xl overflow-hidden bg-zinc-900/50 border border-zinc-700/30">
+                              <img :src="getTokenImage(listing.stats.series.image)" :key="listing.stats.series.image" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" :alt="listing.stats.series.name">
+                            </div>
+                          </button>
+                          <div class="min-w-0">
+                            <button @click="selectAvatar(listing.stats)" class="text-white font-medium text-sm hover:text-zinc-300 transition-colors block truncate">
+                              {{ listing.listing.token.name }}
+                            </button>
+                            <div class="text-zinc-400 text-xs mt-1 truncate">
+                              {{ listing.stats?.collection?.name || 'Unknown Collection' }}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4">
+                        <div class="text-zinc-300 text-sm font-medium">
+                          {{ listing.stats?.series.total_sold?.toLocaleString() || 'N/A' }}
+                        </div>
+                      </td>
+                      <td class="px-6 py-4">
+                        <button @click="openLinkWith(`https://opensea.io/assets/matic/${listing.listing.token.contract_address}/${listing.listing.token.id}`)" class="text-left hover:bg-zinc-800/50 rounded-lg p-2 -m-2 transition-colors group">
+                          <div class="text-white font-semibold text-sm group-hover:text-zinc-200">
+                            {{ (listing.listing.payment_token.base_price / 1000000000000000000).toFixed(6).replace(/\.?0+$/, '') }} {{ listing.listing.payment_token.symbol }}
+                          </div>
+                          <div class="text-zinc-400 text-xs mt-0.5">
+                            {{ ethereumInLocalCurrency(getListingAsGweiPrice(listing.listing)) }}
+                          </div>
+                        </button>
+                      </td>
+                      <td class="px-6 py-4">
+                        <button @click="openLinkWith(`https://opensea.io/assets/matic/${listing.listing.token.contract_address}/${listing.listing.token.id}`)" class="px-2 py-1 bg-zinc-800/50 hover:bg-zinc-700/50 text-white font-medium text-sm rounded-md transition-colors">
+                          #{{ listing.listing.token.mint_number }}
+                        </button>
+                      </td>
+                      <td class="px-6 py-4">
+                        <button @click="openLinkWith(`https://opensea.io/${listing.listing.maker_address}`)" class="text-zinc-400 hover:text-white font-mono text-sm transition-colors hover:bg-zinc-800/50 rounded-lg px-2 py-1 -m-1">
+                          {{ listing.listing.maker_address.slice(0, 6) }}...{{ listing.listing.maker_address.slice(-4) }}
+                        </button>
+                      </td>
+                      <td class="px-6 py-4 text-zinc-400 text-sm">
+                        {{ $timeAgo(new Date(listing.listing.date_listed)) }} ago
+                      </td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="px-6 py-6 bg-zinc-900/20 border-t border-zinc-700/30">
+              <Pagination :total-items="filteredListings.length" :page-size="pageSize" v-model:current-page="listingsCurrentPage" />
+            </div>
+          </div>
+        </div>
+      </template>
+      
+      <!-- Pro Feature Gate -->
       <template v-if="!user">
-        <div class="py-6 flex flex-col items-center text-center gap-2">
-          <div class="text-neutral-300">This is a <NuxtLink to="/upgrade" class="text-amber-500 font-bold italic">Pro</NuxtLink> feature. Please sign in using your Pro account.</div>
-          <NuxtLink to="/login" class="px-4 py-2 bg-amber-600 text-header font-bold rounded-lg">Sign In</NuxtLink>
+        <div class="flex items-center justify-center min-h-[calc(100vh-80px)]">
+          <div class="text-center py-16 px-4">
+            <div class="mx-auto h-12 w-12 text-zinc-600 mb-4">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-medium text-white mb-2">Pro Feature</h3>
+            <p class="text-sm text-zinc-400 mb-6">This is a Pro feature. Please sign in using your Pro account.</p>
+            <NuxtLink to="/login" class="inline-flex items-center px-6 py-3 bg-white hover:bg-zinc-100 text-black font-semibold rounded-lg transition-colors">
+              Sign In
+            </NuxtLink>
+          </div>
         </div>
       </template>
       <template v-else-if="user.tier < 1">
-        <div class="py-6 flex flex-col items-center text-center gap-2">
-          <div class="text-neutral-300">Please upgrade to <NuxtLink to="/upgrade" class="text-amber-500 font-bold italic">Pro</NuxtLink> to use this feature.</div>
-          <NuxtLink to="/upgrade" class="px-4 py-2 bg-amber-600 text-header font-bold rounded-lg">Upgrade</NuxtLink>
+        <div class="flex items-center justify-center min-h-[calc(100vh-80px)]">
+          <div class="text-center py-16 px-4">
+            <div class="mx-auto h-12 w-12 text-zinc-600 mb-4">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-medium text-white mb-2">Upgrade Required</h3>
+            <p class="text-sm text-zinc-400 mb-6">Please upgrade to Pro to access marketplace listings</p>
+            <NuxtLink to="/upgrade" class="inline-flex items-center px-6 py-3 bg-white hover:bg-zinc-100 text-black font-semibold rounded-lg transition-colors">
+              Upgrade to Pro
+            </NuxtLink>
+          </div>
         </div>
       </template>
     </div>
@@ -327,7 +461,5 @@ function selectAvatar(stats: SeriesStats) {
 </script>
 
 <style scoped>
-.table--cell {
-  @apply border-b border-white/10 px-2 py-1 text-left cursor-pointer;
-}
+/* Custom styles for listings page */
 </style>
