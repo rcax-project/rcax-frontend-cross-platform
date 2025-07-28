@@ -45,7 +45,7 @@ const props = defineProps({
 }
 
 .searchbar--input {
-  @apply flex-1 bg-transparent text-sm text-slate-300 placeholder-zinc-500 border-none focus:outline-none cursor-text min-w-0;
+  @apply flex-1 bg-transparent text-sm text-zinc-400 placeholder-zinc-500 border-none focus:outline-none cursor-text min-w-0;
   padding: 0;
   margin: 0;
   height: 20px;
@@ -59,7 +59,7 @@ const props = defineProps({
 }
 
 .searchbar--clear--icon {
-  @apply text-zinc-400 hover:text-slate-300 w-3 h-3;
+  @apply text-zinc-400 hover:text-zinc-400 w-3 h-3;
 }
 
 /* Responsive adjustments */

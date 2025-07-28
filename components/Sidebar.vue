@@ -3,7 +3,7 @@
     <!-- Mobile Menu Button -->
     <button 
       @click="toggleSidebar()"
-      class="lg:hidden fixed top-4 left-4 z-50 flex items-center justify-center w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-slate-300 hover:text-white hover:bg-zinc-700/50 transition-all duration-200"
+      class="lg:hidden fixed top-4 left-4 z-50 flex items-center justify-center w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-zinc-400 hover:text-white hover:bg-zinc-700/50 transition-all duration-200"
       :class="{ 'left-64': sidebarOpen }"
     >
       <Bars3Icon v-if="!sidebarOpen" class="w-5 h-5" />
@@ -225,7 +225,7 @@
               
               <button 
                 @click="logout()"
-                class="block w-full text-left px-3 py-2 text-slate-300 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200 text-sm"
+                class="block w-full text-left px-3 py-2 text-zinc-400 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200 text-sm"
               >
                 Sign out
               </button>
@@ -236,7 +236,7 @@
               <NuxtLink
                 to="/login"
                 @click="closeSidebarOnMobile"
-                class="block px-3 py-2 text-slate-300 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200 font-medium text-sm text-center border border-zinc-700/50"
+                class="block px-3 py-2 text-zinc-400 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200 font-medium text-sm text-center border border-zinc-700/50"
               >
                 Login
               </NuxtLink>
@@ -322,7 +322,7 @@ function logout() {
 
 <style scoped>
 .sidebar-link {
-  @apply flex items-center gap-3 px-2 text-slate-300 hover:text-white hover:bg-zinc-700/30 rounded-lg transition-all duration-200 text-sm font-medium relative h-10 min-w-0;
+  @apply flex items-center gap-3 px-2 text-zinc-400 hover:text-white hover:bg-zinc-700/30 rounded-lg transition-all duration-200 text-sm font-medium relative h-10 min-w-0;
 }
 
 .sidebar-link span {

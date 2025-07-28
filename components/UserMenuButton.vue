@@ -8,7 +8,7 @@
         <div class="w-8 h-8 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
           {{ user.username.charAt(0).toUpperCase() }}
         </div>
-        <span class="text-slate-300 font-medium hidden xl:block">{{ user.username }}</span>
+        <span class="text-zinc-400 font-medium hidden xl:block">{{ user.username }}</span>
       </div>
       <UserCircleIcon v-else class="h-9" />
     </button>
@@ -39,7 +39,7 @@ const props = defineProps({
 
 <style>
 .user-menu-button--button {
-  @apply text-slate-300 hover:text-white duration-300;
+  @apply text-zinc-400 hover:text-white duration-300;
 }
 
 .user-menu-button--menu {
@@ -47,7 +47,7 @@ const props = defineProps({
 }
 
 .user-menu-button--menu--item-wrapper > * {
-  @apply px-4 py-3 w-full inline-flex items-center hover:bg-zinc-700/50 text-slate-300 hover:text-white rounded-lg duration-200 font-medium;
+  @apply px-4 py-3 w-full inline-flex items-center hover:bg-zinc-700/50 text-zinc-400 hover:text-white rounded-lg duration-200 font-medium;
 }
 
 .user-menu-button--menu--item-wrapper > *:first-child {

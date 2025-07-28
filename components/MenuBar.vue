@@ -58,16 +58,16 @@ import {Capacitor} from "@capacitor/core";
 
 /* Modern select styling */
 .menubar-content > select {
-  @apply px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-slate-300 hover:text-white placeholder-zinc-500 font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer min-w-0 w-full max-w-[7rem] md:max-w-fit;
+  @apply px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-zinc-400 hover:text-white placeholder-zinc-500 font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer min-w-0 w-full max-w-[7rem] md:max-w-fit;
 }
 
 .menubar-content > select > option {
-  @apply bg-zinc-800 text-slate-300;
+  @apply bg-zinc-800 text-zinc-400;
 }
 
 /* Modern button styling for filter buttons */
 .menubar-content > button {
-  @apply px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-slate-300 hover:text-white rounded-lg transition-all duration-200 font-medium whitespace-nowrap;
+  @apply px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-zinc-400 hover:text-white rounded-lg transition-all duration-200 font-medium whitespace-nowrap;
 }
 
 .menubar-content > button.active {

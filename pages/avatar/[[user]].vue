@@ -25,7 +25,7 @@
       <div class="flex flex-col items-center md:w-3/4 gap-3">
         <div class="flex gap-2 md:items-start w-full">
           <SearchBar v-model:search-term="searchTerm" :placeholder="`Search by Name`" class="w-full" />
-          <select v-model="filterGenOption" class="px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-slate-300 hover:text-white font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer w-fit">
+          <select v-model="filterGenOption" class="px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-zinc-400 hover:text-white font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer w-fit">
             <option value="all">Gen: All</option>
             <template v-for="gen in Object.keys(Filters)">
               <option :value="gen">{{ gen }}</option>
@@ -34,7 +34,7 @@
         </div>
         <VirtualContainerGrid :items="filteredAvatarBackgrounds" :buffer-mobile="12" :buffer-desktop="20" class="p-1.5 h-[16rem] sm:h-[28rem] md:h-[42rem] w-full border border-white/5 rounded-2xl">
           <template #default="{ item, index }">
-            <BackgroundItem @click="setBackground(getBackgroundIndex(item))" :background="item" class="p-2 h-fit flex flex-col justify-center items-center bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-slate-300 hover:text-white rounded-lg transition-all duration-200 cursor-pointer"/>
+            <BackgroundItem @click="setBackground(getBackgroundIndex(item))" :background="item" class="p-2 h-fit flex flex-col justify-center items-center bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-zinc-400 hover:text-white rounded-lg transition-all duration-200 cursor-pointer"/>
           </template>
         </VirtualContainerGrid>
       </div>
@@ -66,11 +66,11 @@
             </a>
           </template>
           <label>Avatar Size</label>
-          <select v-model="avatarSize" @change="drawAvatar" class="w-full px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-slate-300 hover:text-white font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer">
+          <select v-model="avatarSize" @change="drawAvatar" class="w-full px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-zinc-400 hover:text-white font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer">
             <option v-for="size in AvatarSize" :value="size">{{ size }}</option>
           </select>
           <label class="mt-2">Avatar Position</label>
-          <select v-model="avatarPosition" @change="drawAvatar" class="w-full px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-slate-300 hover:text-white font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer">
+          <select v-model="avatarPosition" @change="drawAvatar" class="w-full px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-zinc-400 hover:text-white font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer">
             <option v-for="position in AvatarPosition" :value="position">{{ position }}</option>
           </select>
           <button :disabled="savingImage || pending" class="mt-4 px-6 py-3 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 disabled:from-zinc-700 disabled:to-zinc-700 disabled:text-zinc-400 text-white font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500/50" @click="saveImage">Download Image</button>

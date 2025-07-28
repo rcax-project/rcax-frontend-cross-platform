@@ -32,7 +32,7 @@ const props = defineProps({
 
 <style>
 .menu-button--button {
-  @apply text-slate-300 hover:text-white duration-300;
+  @apply text-zinc-400 hover:text-white duration-300;
 }
 
 .menu-button--menu {
@@ -40,6 +40,6 @@ const props = defineProps({
 }
 
 .menu-button--menu--item-wrapper > * {
-  @apply px-4 py-3 w-full whitespace-nowrap inline-flex items-center hover:bg-zinc-700/50 text-slate-300 hover:text-white rounded-lg duration-200 border-b border-zinc-700/30 last:border-b-0;
+  @apply px-4 py-3 w-full whitespace-nowrap inline-flex items-center hover:bg-zinc-700/50 text-zinc-400 hover:text-white rounded-lg duration-200 border-b border-zinc-700/30 last:border-b-0;
 }
 </style>

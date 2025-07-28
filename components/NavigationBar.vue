@@ -58,7 +58,7 @@
       <!-- Mobile Menu Button -->
       <button 
         @click="toggleMobileMenu()"
-        class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-slate-300 hover:text-white hover:bg-zinc-700/50 transition-all duration-200 ml-auto"
+        class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-zinc-400 hover:text-white hover:bg-zinc-700/50 transition-all duration-200 ml-auto"
       >
         <Bars3Icon v-if="!mobileMenuOpen" class="w-5 h-5" />
         <XMarkIcon v-else class="w-5 h-5" />
@@ -104,7 +104,7 @@
             </button>
             <button 
               @click="resetSettings()"
-              class="text-zinc-400 hover:text-slate-300 text-sm"
+              class="text-zinc-400 hover:text-zinc-400 text-sm"
             >
               Reset settings
             </button>
@@ -169,14 +169,14 @@
                     replace 
                     to="/dapps/randomavatarswap"
                     @click="closeMobileMenu()"
-                    class="block px-4 py-2 text-slate-300 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200"
+                    class="block px-4 py-2 text-zinc-400 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200"
                   >
                     Random Avatar Swap
                   </NuxtLink>
                   <NuxtLink 
                     to="https://avatartraits.xyz"
                     @click="closeMobileMenu()"
-                    class="block px-4 py-2 text-slate-300 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200"
+                    class="block px-4 py-2 text-zinc-400 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200"
                   >
                     AvatarTraits.xyz
                   </NuxtLink>
@@ -192,7 +192,7 @@
               <span class="text-zinc-400 text-sm font-medium">Currency</span>
               <select 
                 v-model="settings.currency.preferred"
-                class="bg-zinc-800/50 border border-zinc-700/50 text-slate-300 text-sm rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50"
+                class="bg-zinc-800/50 border border-zinc-700/50 text-zinc-400 text-sm rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50"
               >
                 <option v-for="currency in CURRENCIES" :key="currency.ticker" :value="currency.ticker" class="bg-zinc-800">
                   {{ currency.ticker }}
@@ -231,7 +231,7 @@
               </button>
               <button 
                 @click="logout(); closeMobileMenu()"
-                class="block w-full text-left px-4 py-3 text-slate-300 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200"
+                class="block w-full text-left px-4 py-3 text-zinc-400 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200"
               >
                 Sign out
               </button>
@@ -242,7 +242,7 @@
                   replace
                   to="/login"
                   @click="closeMobileMenu()"
-                  class="block px-4 py-3 text-slate-300 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200 font-medium text-center border border-zinc-700/50"
+                  class="block px-4 py-3 text-zinc-400 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200 font-medium text-center border border-zinc-700/50"
                 >
                   Login
                 </NuxtLink>
@@ -259,7 +259,7 @@
             
             <button 
               @click="resetSettings()"
-              class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-slate-300 hover:bg-zinc-700/50 rounded-lg transition-all duration-200 text-sm"
+              class="block w-full text-left px-4 py-2 text-zinc-400 hover:text-zinc-400 hover:bg-zinc-700/50 rounded-lg transition-all duration-200 text-sm"
             >
               Reset settings
             </button>
