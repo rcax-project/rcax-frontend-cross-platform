@@ -312,7 +312,7 @@
 
     <!-- Alert Modal -->
     <template v-if="addingAlert">
-      <div class="fixed inset-0 h-screen flex justify-center items-center bg-black/50 backdrop-blur-sm z-50">
+      <div class="fixed inset-0 h-screen flex justify-center items-center bg-black/50 z-50">
         <div v-click-outside="cancelAlert" class="relative w-full max-w-lg mx-4 flex flex-col bg-zinc-900 border border-zinc-700 rounded-xl overflow-hidden shadow-2xl">
           <!-- Modal Header -->
           <div class="px-6 py-4 border-b border-zinc-800">
