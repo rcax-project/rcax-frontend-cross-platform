@@ -11,7 +11,6 @@
       <select v-model="settings.activity.feedView">
         <option value="sales">Latest Sales</option>
         <option value="listings">Latest Listings</option>
-        <option value="mints">Latest Mints</option>
       </select>
       <template v-if="!Capacitor.isNativePlatform()">
         <RefreshButton :action="refresh" :refreshing="isRefreshing" />

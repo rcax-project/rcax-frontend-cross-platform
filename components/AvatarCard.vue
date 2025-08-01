@@ -8,7 +8,7 @@
       <!-- Image Section -->
       <div class="relative bg-gradient-to-br from-zinc-900/50 to-zinc-800/50 overflow-hidden" style="height: 100px;">
         <button 
-          @click.stop="() => { if (Capacitor.getPlatform() !== 'ios') { openLinkWith(marketplaceLink(seriesStats)) } else { selectAvatar() } }" 
+          @click.stop="selectAvatar" 
           class="relative w-full h-full block"
         >
           <img-placeholder 
@@ -58,9 +58,14 @@
           >
             {{ seriesStats.series.name }}
           </button>
-          <template v-if="ranking">
-            <span class="text-xs font-medium text-zinc-400 flex-shrink-0">#{{ ranking }}</span>
-          </template>
+          <div class="flex items-center gap-1 flex-shrink-0">
+            <template v-if="item.mint_number">
+              <span class="text-xs font-medium text-zinc-400">#{{ item.mint_number }}</span>
+            </template>
+            <template v-if="ranking">
+              <span class="text-xs font-medium text-zinc-400">#{{ ranking }}</span>
+            </template>
+          </div>
         </div>
         
         <!-- Stats Section -->
@@ -69,7 +74,7 @@
         </div>
         
         <!-- Footer -->
-        <div class="flex items-center justify-between pt-1 border-t border-white/10 text-xs">
+        <div v-if="!$slots.footer" class="flex items-center justify-between pt-1 border-t border-white/10 text-xs">
           <div class="text-xs font-medium" :class="{ 'text-green-400': seriesStats.series.total_sold < seriesStats.series.total_quantity, 'text-red-400': seriesStats.series.total_sold >= seriesStats.series.total_quantity }">
             <template v-if="seriesStats && seriesStats.series.mint_price > 0">
               ${{ seriesStats.series.mint_price / 100.00 }}
@@ -80,6 +85,9 @@
           </div>
           <div class="text-xs text-zinc-400">{{ getGeneration }}</div>
         </div>
+        
+        <!-- Custom Footer Slot -->
+        <slot v-if="$slots.footer" name="footer"></slot>
       </div>
     </template>
   </div>
@@ -104,6 +112,7 @@ export interface AvatarCardItem {
   name: string;
   contract_address: string;
   image: string;
+  mint_number?: number;
 }
 
 const watchList = useWatchList();
