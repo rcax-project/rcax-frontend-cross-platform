@@ -50,6 +50,7 @@
           <span class="font-bold text-xs text-white">M</span>
         </template>
         <span class="text-xs font-bold text-white">{{ (item.payment_token.base_price / ETH_TO_GWEI_MODIFIER).toFixed(3).replace(/\.?0+$/, '') }}</span>
+        <span class="text-xs text-zinc-500">({{ listingFiatPrice }})</span>
       </button>
       <span class="text-xs text-zinc-400">{{ $timeAgo(new Date(item.date_listed)) }}</span>
     </div>
@@ -62,11 +63,13 @@ import {Listing} from "~/types/listing";
 import {computed, openLinkWith, getLowestListing} from "#imports";
 import {ETH_TO_GWEI_MODIFIER} from "~/types/ethereum";
 import {normalizeTokenSymbol} from "~/global/utils";
-import {getSeriesStats} from "~/composables/states";
+import {getSeriesStats, useEthereumUsdPrice, useSettings, useEthereumPriceMap} from "~/composables/states";
 
 const props = defineProps({
   item: Object as PropType<Listing>
 });
+
+const ethereumUsdPrice = useEthereumUsdPrice();
 
 const seriesStats = computed(() => {
   return getSeriesStats(props.item.token.contract_address, props.item.token.name);
@@ -74,6 +77,20 @@ const seriesStats = computed(() => {
 
 const lowestListing = computed(() => {
   return getLowestListing(seriesStats.value);
+});
+
+const listingFiatPrice = computed(() => {
+  const ethPrice = props.item.payment_token.base_price / ETH_TO_GWEI_MODIFIER;
+  const settings = useSettings();
+  const currency = settings.value.currency.preferred;
+  const ethereumPriceMap = useEthereumPriceMap();
+  const exchangeRate = ethereumPriceMap.value.get(currency) ?? 0;
+  const fiatValue = ethPrice * exchangeRate;
+  
+  if (fiatValue >= 1000) {
+    return `${new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(fiatValue / 1000).slice(0, -3)}k`;
+  }
+  return new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(fiatValue);
 });
 </script>
 

@@ -107,6 +107,7 @@
               <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path>
             </svg>
             <span class="font-medium text-zinc-400">{{ item.stats.five_last_sales_average.toFixed(3).replace(/\.?0+$/, '') }}</span>
+            <span class="text-xs text-zinc-500">({{ fiveSalesFiatPrice }})</span>
           </div>
         </template>
       </div>
@@ -134,7 +135,8 @@ import {PropType} from "@vue/runtime-core";
 import {
   useWatchList,
   useEthereumUsdPrice,
-  useEthereumPriceMap
+  useEthereumPriceMap,
+  useSettings
 } from "~/composables/states";
 import {computed, ethereumInLocalCurrency} from "#imports";
 import {ETH_TO_GWEI_MODIFIER} from "~/types/ethereum";
@@ -173,6 +175,20 @@ const dailyPriceChange = computed(() => {
   }
 
   return change.toFixed(2);
+});
+
+const fiveSalesFiatPrice = computed(() => {
+  const ethPrice = props.item.stats.five_last_sales_average;
+  const settings = useSettings();
+  const currency = settings.value.currency.preferred;
+  const ethereumPriceMap = useEthereumPriceMap();
+  const exchangeRate = ethereumPriceMap.value.get(currency) ?? 0;
+  const fiatValue = ethPrice * exchangeRate;
+  
+  if (fiatValue >= 1000) {
+    return `${new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(fiatValue / 1000).slice(0, -3)}k`;
+  }
+  return new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(fiatValue);
 });
 </script>
 
