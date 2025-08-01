@@ -23,21 +23,7 @@
     <div class="flex-1">
       <!-- Authentication Required State -->
       <template v-if="!user">
-        <div class="flex items-center justify-center min-h-[calc(100vh-80px)]">
-          <div class="text-center py-16 px-4">
-            <div class="mx-auto h-12 w-12 text-zinc-600 mb-4">
-              <BellIcon class="w-full h-full" />
-            </div>
-            <h3 class="text-lg font-medium text-white mb-2">Authentication Required</h3>
-            <p class="text-sm text-zinc-400 mb-6">Please sign in to create and manage price alerts</p>
-            <NuxtLink 
-              to="/login" 
-              class="px-6 py-2.5 bg-white hover:bg-zinc-100 text-black text-sm font-medium rounded-lg transition-all duration-200 inline-flex items-center gap-2"
-            >
-              <span>Sign In</span>
-            </NuxtLink>
-          </div>
-        </div>
+        <AuthenticationRequired />
       </template>
 
       <!-- Loading State -->
