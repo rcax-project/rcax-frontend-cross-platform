@@ -88,9 +88,19 @@ const listingFiatPrice = computed(() => {
   const fiatValue = ethPrice * exchangeRate;
   
   if (fiatValue >= 1000) {
-    return `${new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(fiatValue / 1000).slice(0, -3)}k`;
+    const formattedK = new Intl.NumberFormat(undefined, { style: 'currency', currency, minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(fiatValue / 1000);
+    return formattedK.replace(/\.0/, '') + 'k';
   }
-  return new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(fiatValue);
+  
+  const minimumFractionDigits = fiatValue >= 100 ? 0 : 2;
+  const maximumFractionDigits = fiatValue >= 100 ? 0 : 2;
+  
+  return new Intl.NumberFormat(undefined, { 
+    style: 'currency', 
+    currency, 
+    minimumFractionDigits, 
+    maximumFractionDigits 
+  }).format(fiatValue);
 });
 </script>
 
