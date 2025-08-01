@@ -1,141 +1,128 @@
 <template>
-  <div>
+  <div class="space-y-1">
     <template v-if="sortingOnShop">
       <!-- Shop Mode Stats -->
-      <div class="space-y-1">
-        <!-- Stock and Progress Row -->
-        <div class="flex items-center justify-between text-xs">
-          <span class="text-zinc-500">{{ Math.max((item.series.total_quantity - item.series.total_sold), 0) }} left</span>
-          <span class="font-medium text-blue-400">{{ Math.round((item.series.total_sold / item.series.total_quantity) * 100 ) }}%</span>
-        </div>
-        
-        <!-- Progress Bar -->
-        <div class="w-full bg-white/10 rounded-full overflow-hidden h-1">
-          <div 
-            class="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full transition-all duration-300" 
-            :style="{ 'width': `${Math.min(100, Math.round((item.series.total_sold / item.series.total_quantity) * 100 ))}%` }"
-          ></div>
-        </div>
-        
-        <!-- Bottom Row -->
-        <div class="flex items-center justify-between text-xs pt-1">
-          <template v-if="item.series.total_sold < item.series.total_quantity">
-            <span class="text-blue-400 font-medium">#{{ item.series.total_quantity - (item.series.total_quantity - item.series.total_sold) + 1 }}</span>
-          </template>
-          <template v-else>
-            <span class="text-red-400 font-medium">Sold Out</span>
-          </template>
-          
-          <template v-if="lowestListing">
-            <span :class="{ 'text-green-400': mintProfitInPercentage >= 0, 'text-red-400': mintProfitInPercentage < 0 }" class="font-medium">{{ mintProfitInPercentage }}%</span>
-          </template>
-        </div>
+      <!-- Stock Info -->
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-zinc-500">Stock</span>
+        <span class="font-medium text-white">{{ Math.max((item.series.total_quantity - item.series.total_sold), 0) }} left</span>
+      </div>
+      
+      <!-- Progress Info -->
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-zinc-500">Progress</span>
+        <span class="font-medium text-blue-400">{{ Math.round((item.series.total_sold / item.series.total_quantity) * 100 ) }}%</span>
+      </div>
+      
+      <!-- Progress Bar -->
+      <div class="w-full bg-white/10 rounded-full overflow-hidden h-1">
+        <div 
+          class="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full transition-all duration-300" 
+          :style="{ 'width': `${Math.min(100, Math.round((item.series.total_sold / item.series.total_quantity) * 100 ))}%` }"
+        ></div>
+      </div>
+      
+      <!-- Next Mint / Status -->
+      <div class="flex items-center justify-between text-xs pt-1 border-t border-white/10">
+        <span class="text-zinc-500">Status</span>
+        <template v-if="item.series.total_sold < item.series.total_quantity">
+          <span class="text-blue-400 font-medium">#{{ item.series.total_quantity - (item.series.total_quantity - item.series.total_sold) + 1 }}</span>
+        </template>
+        <template v-else>
+          <span class="text-red-400 font-medium">Sold Out</span>
+        </template>
       </div>
     </template>
     
     <template v-else>
       <!-- Regular Mode Stats -->
-      <div class="space-y-1">
-        <!-- Main Stats -->
-        <div class="flex items-center justify-between text-xs">
-          <span class="text-zinc-500">Floor</span>
-          <template v-if="lowestListing">
-            <ListingPrice :listing="lowestListing" class="text-xs font-medium" />
-          </template>
-          <template v-else>
-            <span class="text-zinc-600">—</span>
-          </template>
-        </div>
+      <!-- Floor Price -->
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-zinc-500">Floor</span>
+        <template v-if="lowestListing">
+          <ListingPrice :listing="lowestListing" variant="default" class="text-xs font-medium" />
+        </template>
+        <template v-else>
+          <span class="text-zinc-600">—</span>
+        </template>
+      </div>
+      
+      <!-- Last Sale -->
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-zinc-500">Sale</span>
+        <template v-if="item.stats.last_sale">
+          <LastSale :sale="item.stats.last_sale" class="text-xs font-medium" />
+        </template>
+        <template v-else>
+          <span class="text-zinc-600">—</span>
+        </template>
+      </div>
+      
+      <!-- Dynamic Secondary Stat -->
+      <div class="flex items-center justify-between text-xs">
+        <template v-if="sorting === 'lowestFloorMintRatio' || sorting === 'highestFloorMintRatio'">
+          <span class="text-zinc-500">Profit</span>
+          <span :class="{ 'text-green-400': mintProfitInPercentage >= 0, 'text-red-400': mintProfitInPercentage < 0 }" class="font-medium">{{ mintProfitInPercentage }}%</span>
+        </template>
         
-        <div class="flex items-center justify-between text-xs">
-          <span class="text-zinc-500">Sale</span>
-          <template v-if="item.stats.last_sale">
-            <LastSale :sale="item.stats.last_sale" class="text-xs font-medium" />
-          </template>
-          <template v-else>
-            <span class="text-zinc-600">—</span>
-          </template>
-        </div>
+        <template v-else-if="sorting === 'lowestListedPercentage'">
+          <span class="text-zinc-500">Listed</span>
+          <span class="font-medium text-white">{{ item.stats.listed_percentage.toFixed(2) }}%</span>
+        </template>
         
-        <!-- Secondary Stats -->
-        <div class="pt-1 border-t border-white/10">
-          <template v-if="sorting === 'lowestFloorMintRatio' || sorting === 'highestFloorMintRatio'">
-            <div class="flex items-center justify-between text-xs">
-              <span class="text-zinc-500">Profit</span>
-              <span :class="{ 'text-green-400': mintProfitInPercentage >= 0, 'text-red-400': mintProfitInPercentage < 0 }" class="font-medium">{{ mintProfitInPercentage }}%</span>
-            </div>
-          </template>
-          
-          <template v-else-if="sorting === 'lowestListedPercentage'">
-            <div class="flex items-center justify-between text-xs">
-              <span class="text-zinc-500">Listed</span>
-              <span class="font-medium text-white">{{ item.stats.listed_percentage.toFixed(2) }}%</span>
-            </div>
-          </template>
-          
-          <template v-else-if="sorting === 'lowestWeeklyAverage' || sorting === 'highestWeeklyAverage'">
-            <div class="flex items-center justify-between text-xs">
-              <span class="text-zinc-500">7d Avg</span>
-              <span class="font-medium text-white">{{ (item.stats.weekly_average_price ?? 0).toFixed(3).replace(/\.?0+$/, '') }}</span>
-            </div>
-          </template>
-          
-          <template v-else-if="sorting === 'lowestTwoWeeklyAverage' || sorting === 'highestTwoWeeklyAverage'">
-            <div class="flex items-center justify-between text-xs">
-              <span class="text-zinc-500">14d Avg</span>
-              <span class="font-medium text-white">{{ (item.stats.two_weekly_average_price ?? 0).toFixed(2) }}</span>
-            </div>
-          </template>
-          
-          <template v-else-if="sorting === 'lowestMonthlyAverage' || sorting === 'highestMonthlyAverage'">
-            <div class="flex items-center justify-between text-xs">
-              <span class="text-zinc-500">30d Avg</span>
-              <span class="font-medium text-white">{{ (item.stats.monthly_average_price ?? 0).toFixed(2) }}</span>
-            </div>
-          </template>
-          
-          <template v-else-if="sorting === 'artistAsc' || sorting === 'artistDesc'">
-            <div class="flex items-center justify-between text-xs">
-              <span class="text-zinc-500">Artist</span>
-              <a :href="`https://reddit.com/u/${item.collection.artist.displayName}`" target="_blank" class="font-medium text-blue-400 hover:text-blue-300 transition-colors">{{ item.collection.artist.displayName }}</a>
-            </div>
-          </template>
-          
-          <template v-else-if="sorting === 'lowestDailyVolume' || sorting === 'highestDailyVolume'">
-            <div class="flex items-center justify-between text-xs">
-              <span class="text-zinc-500">24h Vol</span>
-              <span class="font-medium text-white">{{ item.stats.daily_volume.toFixed(2) }}</span>
-            </div>
-          </template>
-          
-          <template v-else-if="sorting === 'lowestWeeklyVolume' || sorting === 'highestWeeklyVolume'">
-            <div class="flex items-center justify-between text-xs">
-              <span class="text-zinc-500">7d Vol</span>
-              <span class="font-medium text-white">{{ item.stats.weekly_volume.toFixed(2) }}</span>
-            </div>
-          </template>
-          
-          <template v-else>
-            <div class="flex items-center justify-between text-xs">
-              <span class="text-zinc-500">5 Sales</span>
-              <span class="font-medium text-white">{{ item.stats.five_last_sales_average.toFixed(3).replace(/\.?0+$/, '') }}</span>
-            </div>
-          </template>
-        </div>
+        <template v-else-if="sorting === 'lowestWeeklyAverage' || sorting === 'highestWeeklyAverage'">
+          <span class="text-zinc-500">7d Avg</span>
+          <span class="font-medium text-white">{{ (item.stats.weekly_average_price ?? 0).toFixed(3).replace(/\.?0+$/, '') }}</span>
+        </template>
         
-        <!-- Performance Indicator -->
-        <div class="flex items-center justify-between pt-1 border-t border-white/10 text-xs">
-          <span class="text-zinc-500">24h</span>
-          <template v-if="item.stats.daily_price_change > 0">
-            <span class="font-medium text-green-400">+{{ dailyPriceChange }}%</span>
-          </template>
-          <template v-else-if="item.stats.daily_price_change < 0">
-            <span class="font-medium text-red-400">{{ item.stats.daily_price_change.toFixed(2) }}%</span>
-          </template>
-          <template v-else>
-            <span class="font-medium text-zinc-400">0%</span>
-          </template>
-        </div>
+        <template v-else-if="sorting === 'lowestTwoWeeklyAverage' || sorting === 'highestTwoWeeklyAverage'">
+          <span class="text-zinc-500">14d Avg</span>
+          <span class="font-medium text-white">{{ (item.stats.two_weekly_average_price ?? 0).toFixed(2) }}</span>
+        </template>
+        
+        <template v-else-if="sorting === 'lowestMonthlyAverage' || sorting === 'highestMonthlyAverage'">
+          <span class="text-zinc-500">30d Avg</span>
+          <span class="font-medium text-white">{{ (item.stats.monthly_average_price ?? 0).toFixed(2) }}</span>
+        </template>
+        
+        <template v-else-if="sorting === 'artistAsc' || sorting === 'artistDesc'">
+          <span class="text-zinc-500">Artist</span>
+          <a :href="`https://reddit.com/u/${item.collection.artist.displayName}`" target="_blank" class="font-medium text-blue-400 hover:text-blue-300 transition-colors">{{ item.collection.artist.displayName }}</a>
+        </template>
+        
+        <template v-else-if="sorting === 'lowestDailyVolume' || sorting === 'highestDailyVolume'">
+          <span class="text-zinc-500">24h Vol</span>
+          <span class="font-medium text-white">{{ item.stats.daily_volume.toFixed(2) }}</span>
+        </template>
+        
+        <template v-else-if="sorting === 'lowestWeeklyVolume' || sorting === 'highestWeeklyVolume'">
+          <span class="text-zinc-500">7d Vol</span>
+          <span class="font-medium text-white">{{ item.stats.weekly_volume.toFixed(2) }}</span>
+        </template>
+        
+        <template v-else>
+          <span class="text-zinc-500">5 Sales</span>
+          <div class="flex items-center gap-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-2.5 h-2.5 text-zinc-400">
+              <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path>
+            </svg>
+            <span class="font-medium text-zinc-400">{{ item.stats.five_last_sales_average.toFixed(3).replace(/\.?0+$/, '') }}</span>
+          </div>
+        </template>
+      </div>
+      
+      <!-- 24h Performance -->
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-zinc-500">24h</span>
+        <template v-if="item.stats.daily_price_change > 0">
+          <span class="font-medium text-green-400">+{{ dailyPriceChange }}%</span>
+        </template>
+        <template v-else-if="item.stats.daily_price_change < 0">
+          <span class="font-medium text-red-400">{{ item.stats.daily_price_change.toFixed(2) }}%</span>
+        </template>
+        <template v-else>
+          <span class="font-medium text-zinc-400">0%</span>
+        </template>
       </div>
     </template>
   </div>

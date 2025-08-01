@@ -1,10 +1,14 @@
 <template>
   <button @click.stop="openLinkWith(`https://opensea.io/assets/matic/${listing.token.contract_address}/${listing.token.id}`)" class="flex items-center gap-0.5 text-xs hover:text-blue-400 transition-colors duration-200">
     <template v-if="normalizeTokenSymbol(listing.payment_token.symbol) === 'ETH'">
-      <span class="font-medium text-white">{{ (listing.payment_token.base_price / ETH_TO_GWEI_MODIFIER).toFixed(3).replace(/\.?0+$/, '') }}</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" :class="iconColorClass">
+        <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path>
+      </svg>
+      <span :class="textColorClass">{{ (listing.payment_token.base_price / ETH_TO_GWEI_MODIFIER).toFixed(3).replace(/\.?0+$/, '') }}</span>
     </template>
     <template v-else-if="normalizeTokenSymbol(listing.payment_token.symbol) === 'MATIC'">
-      <span class="font-medium text-white">{{ (listing.payment_token.base_price / ETH_TO_GWEI_MODIFIER).toFixed(3).replace(/\.?0+$/, '') }}M</span>
+      <span :class="maticIconClass">M</span>
+      <span :class="textColorClass">{{ (listing.payment_token.base_price / ETH_TO_GWEI_MODIFIER).toFixed(3).replace(/\.?0+$/, '') }}</span>
     </template>
   </button>
 </template>
@@ -15,15 +19,32 @@ import {PropType} from "@vue/runtime-core";
 import {Listing} from "~/types/listing";
 import {useEthereumPriceMap} from "~/composables/states";
 import {normalizeTokenSymbol} from "~/global/utils";
+import {computed} from "#imports";
 
 const props = defineProps({
   listing: {
     type: Object as PropType<Listing>,
     required: true
+  },
+  variant: {
+    type: String as PropType<'default' | 'muted'>,
+    default: 'default'
   }
 });
 
 const ethereumPriceMap = useEthereumPriceMap();
+
+const iconColorClass = computed(() => {
+  return props.variant === 'muted' ? 'w-2.5 h-2.5 text-zinc-400' : 'w-2.5 h-2.5 text-white';
+});
+
+const textColorClass = computed(() => {
+  return props.variant === 'muted' ? 'font-medium text-zinc-400' : 'font-medium text-white';
+});
+
+const maticIconClass = computed(() => {
+  return props.variant === 'muted' ? 'font-bold text-xs text-zinc-400' : 'font-bold text-xs text-white';
+});
 </script>
 
 <style scoped>
