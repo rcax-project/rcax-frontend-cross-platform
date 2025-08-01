@@ -3,9 +3,7 @@
     <template #default="{ item, index }">
       <AvatarCard :item="{ name: item.token.name, contract_address: item.token.contract_address, image: item.token.image, mint_number: item.token.mint_number }" :series-stats="getSeriesStats(item.token.contract_address, item.token.name)">
         <template #footer>
-          <div class="pt-1 border-t border-white/10">
-            <ListingsComponentItem :item="item" />
-          </div>
+          <ListingsComponentItem :item="item" />
         </template>
       </AvatarCard>
     </template>

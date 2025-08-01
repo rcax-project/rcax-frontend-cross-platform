@@ -5,12 +5,12 @@
         <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path>
       </svg>
       <span class="font-medium text-zinc-400">{{ (sale.payment_token.base_price / ETH_TO_GWEI_MODIFIER).toFixed(3).replace(/\.?0+$/, '') }}</span>
-      <span class="text-xs text-zinc-500">({{ fiatPrice }})</span>
+      <span class="text-xs font-normal text-zinc-500">({{ fiatPrice }})</span>
     </template>
     <template v-else-if="normalizeTokenSymbol(sale.payment_token.symbol) === 'MATIC'">
       <span class="font-bold text-xs text-zinc-400">M</span>
       <span class="font-medium text-zinc-400">{{ (sale.payment_token.base_price / ETH_TO_GWEI_MODIFIER).toFixed(3).replace(/\.?0+$/, '') }}</span>
-      <span class="text-xs text-zinc-500">({{ fiatPrice }})</span>
+      <span class="text-xs font-normal text-zinc-500">({{ fiatPrice }})</span>
     </template>
   </div>
 </template>

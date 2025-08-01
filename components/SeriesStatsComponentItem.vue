@@ -107,7 +107,7 @@
               <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path>
             </svg>
             <span class="font-medium text-zinc-400">{{ item.stats.five_last_sales_average.toFixed(3).replace(/\.?0+$/, '') }}</span>
-            <span class="text-xs text-zinc-500">({{ fiveSalesFiatPrice }})</span>
+            <span class="text-xs font-normal text-zinc-500">({{ fiveSalesFiatPrice }})</span>
           </div>
         </template>
       </div>
