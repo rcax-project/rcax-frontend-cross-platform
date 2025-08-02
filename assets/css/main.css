@@ -43,5 +43,6 @@
     padding: 0.5rem !important;
     font-size: 0.75rem !important;
     height: 32px !important;
+    line-height: 32px !important;
   }
 }

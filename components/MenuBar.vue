@@ -38,7 +38,8 @@ import {Capacitor} from "@capacitor/core";
 }
 
 .menubar-content > * {
-  @apply h-9 sm:h-10 flex-shrink-0;
+  @apply flex-shrink-0;
+  height: 36px;
 }
 
 /* Special handling for SearchBar - allow it to grow but not shrink */
@@ -109,7 +110,8 @@ import {Capacitor} from "@capacitor/core";
   }
   
   .menubar-content > * {
-    @apply h-8 text-sm;
+    @apply text-sm;
+    height: 32px;
   }
   
   .menubar-content > select,
