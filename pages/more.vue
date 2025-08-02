@@ -19,18 +19,6 @@
       </NuxtLink>
     </template>
 
-    <!-- Currency Selector -->
-    <div class="mb-8">
-      <label class="text-zinc-400 text-sm block mb-2">Preferred Currency</label>
-      <select 
-        v-model="settings.currency.preferred"
-        class="w-full bg-zinc-800 border border-zinc-700 text-zinc-300 text-sm rounded-lg px-3 py-2"
-      >
-        <option v-for="currency in CURRENCIES" :key="currency.ticker" :value="currency.ticker">
-          {{ currency.ticker }} - {{ currency.name }}
-        </option>
-      </select>
-    </div>
 
     <!-- Tools & Features Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
@@ -39,28 +27,50 @@
         <h2 class="text-xl font-semibold text-zinc-400 mb-4">Account</h2>
       </div>
       
-      <template v-if="user?.username">
-        <NuxtLink to="/profile" class="block">
-          <div class="feature-card">
-            <div class="flex items-start justify-between mb-4">
-              <UserCircleIcon class="w-10 h-10 text-zinc-400" />
+      <!-- Currency Display -->
+      <div class="col-span-full">
+        <div class="max-w-md">
+          <label class="text-zinc-400 text-sm block mb-2">Preferred Currency</label>
+          <select 
+            v-model="settings.currency.preferred"
+            class="w-full bg-zinc-800 border border-zinc-700 text-zinc-300 text-sm rounded-lg px-3 py-2"
+          >
+            <option v-for="currency in CURRENCIES" :key="currency.ticker" :value="currency.ticker">
+              {{ currency.ticker }} - {{ currency.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Authentication Buttons -->
+      <div class="col-span-full">
+        <div class="max-w-md">
+          <template v-if="user?.username">
+            <button
+              @click="signOut"
+              class="w-full px-4 py-3 text-zinc-400 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200 font-medium text-sm text-center border border-zinc-700/50"
+            >
+              Sign Out
+            </button>
+          </template>
+          <template v-else>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <NuxtLink
+                to="/login"
+                class="flex-1 px-4 py-3 text-zinc-400 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200 font-medium text-sm text-center border border-zinc-700/50"
+              >
+                Sign In
+              </NuxtLink>
+              <NuxtLink
+                to="/signup"
+                class="flex-1 px-4 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all duration-200 font-medium text-sm text-center"
+              >
+                Create Account
+              </NuxtLink>
             </div>
-            <h3 class="text-lg font-semibold text-white mb-2">Profile</h3>
-            <p class="text-zinc-400 text-sm">Manage your account settings and preferences</p>
-          </div>
-        </NuxtLink>
-      </template>
-      <template v-else>
-        <NuxtLink to="/login" class="block">
-          <div class="feature-card">
-            <div class="flex items-start justify-between mb-4">
-              <UserCircleIcon class="w-10 h-10 text-zinc-400" />
-            </div>
-            <h3 class="text-lg font-semibold text-white mb-2">Login</h3>
-            <p class="text-zinc-400 text-sm">Sign in to access your account</p>
-          </div>
-        </NuxtLink>
-      </template>
+          </template>
+        </div>
+      </div>
 
       <!-- Free Tools Section -->
       <div class="col-span-full mt-6 mb-4">
@@ -87,6 +97,16 @@
         </div>
       </NuxtLink>
 
+      <NuxtLink to="/alerts" class="block">
+        <div class="feature-card">
+          <div class="flex items-start justify-between mb-4">
+            <BellIcon class="w-10 h-10 text-zinc-400" />
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">Price Alerts</h3>
+          <p class="text-zinc-400 text-sm">Set custom alerts and get notified via push or email</p>
+        </div>
+      </NuxtLink>
+
       <!-- Premium Tools Section -->
       <div class="col-span-full mt-6 mb-4">
         <h2 class="text-xl font-semibold text-zinc-400 mb-4">Premium Tools</h2>
@@ -100,17 +120,6 @@
           </div>
           <h3 class="text-lg font-semibold text-white mb-2">Listings Browser</h3>
           <p class="text-zinc-400 text-sm">Browse all collection listings in one table with advanced filters</p>
-        </div>
-      </NuxtLink>
-
-      <NuxtLink to="/alerts" class="block">
-        <div class="feature-card premium">
-          <div class="flex items-start justify-between mb-4">
-            <BellIcon class="w-10 h-10 text-amber-500" />
-            <span class="px-2 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-lg">PRO</span>
-          </div>
-          <h3 class="text-lg font-semibold text-white mb-2">Price Alerts</h3>
-          <p class="text-zinc-400 text-sm">Set custom alerts and get notified via push or email</p>
         </div>
       </NuxtLink>
 
@@ -169,6 +178,7 @@ import {
   ArrowTopRightOnSquareIcon
 } from "@heroicons/vue/24/outline";
 import { useUser, useSettings, watch, computed, updateEthereumPrices } from "#imports";
+import { deleteToken } from '~/composables/api/user';
 import { Capacitor } from "@capacitor/core";
 import { CURRENCIES } from "~/types/currency";
 
@@ -182,6 +192,10 @@ const selectedCurrency = computed(() => {
 watch([selectedCurrency], () => {
   updateEthereumPrices();
 });
+
+function signOut() {
+  deleteToken();
+}
 </script>
 
 <style scoped>
