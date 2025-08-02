@@ -49,6 +49,31 @@
         </NuxtLink>
       </template>
 
+      <!-- Free Tools Section -->
+      <div class="col-span-full mt-6 mb-4">
+        <h2 class="text-xl font-semibold text-zinc-400 mb-4">Free Tools</h2>
+      </div>
+
+      <NuxtLink to="/avatar" class="block">
+        <div class="feature-card">
+          <div class="flex items-start justify-between mb-4">
+            <PhotoIcon class="w-10 h-10 text-zinc-400" />
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">Avatar Exporter</h3>
+          <p class="text-zinc-400 text-sm">Customize and download your avatar in high quality</p>
+        </div>
+      </NuxtLink>
+
+      <NuxtLink to="/shop" class="block">
+        <div class="feature-card">
+          <div class="flex items-start justify-between mb-4">
+            <ShoppingBagIcon class="w-10 h-10 text-zinc-400" />
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">Shop Watcher</h3>
+          <p class="text-zinc-400 text-sm">Track upcoming releases and use direct shop links</p>
+        </div>
+      </NuxtLink>
+
       <!-- Premium Tools Section -->
       <div class="col-span-full mt-6 mb-4">
         <h2 class="text-xl font-semibold text-zinc-400 mb-4">Premium Tools</h2>
@@ -73,31 +98,6 @@
           </div>
           <h3 class="text-lg font-semibold text-white mb-2">Price Alerts</h3>
           <p class="text-zinc-400 text-sm">Set custom alerts and get notified via push or email</p>
-        </div>
-      </NuxtLink>
-
-      <!-- Free Tools Section -->
-      <div class="col-span-full mt-6 mb-4">
-        <h2 class="text-xl font-semibold text-zinc-400 mb-4">Free Tools</h2>
-      </div>
-
-      <NuxtLink to="/avatar" class="block">
-        <div class="feature-card">
-          <div class="flex items-start justify-between mb-4">
-            <PhotoIcon class="w-10 h-10 text-zinc-400" />
-          </div>
-          <h3 class="text-lg font-semibold text-white mb-2">Avatar Exporter</h3>
-          <p class="text-zinc-400 text-sm">Customize and download your avatar in high quality</p>
-        </div>
-      </NuxtLink>
-
-      <NuxtLink to="/shop" class="block">
-        <div class="feature-card">
-          <div class="flex items-start justify-between mb-4">
-            <ShoppingBagIcon class="w-10 h-10 text-zinc-400" />
-          </div>
-          <h3 class="text-lg font-semibold text-white mb-2">Shop Watcher</h3>
-          <p class="text-zinc-400 text-sm">Track upcoming releases and use direct shop links</p>
         </div>
       </NuxtLink>
 
