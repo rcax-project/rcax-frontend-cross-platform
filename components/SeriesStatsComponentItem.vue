@@ -49,9 +49,19 @@
       
       <!-- Last Sale -->
       <div class="flex items-center justify-between text-xs">
-        <span class="text-zinc-500">Sale</span>
+        <span class="text-zinc-500">Last Sale</span>
         <template v-if="item.stats.last_sale">
           <LastSale :sale="item.stats.last_sale" class="text-xs font-medium" />
+        </template>
+        <template v-else>
+          <span class="text-zinc-600">—</span>
+        </template>
+      </div>
+      
+      <!-- Last Sale Time -->
+      <div class="flex items-center justify-end text-xs">
+        <template v-if="item.stats.last_sale">
+          <span class="text-xs font-normal text-zinc-500">#{{ item.stats.last_sale.token.mint_number }} • {{ $timeAgo(new Date(item.stats.last_sale.date_sold)) }} ago</span>
         </template>
         <template v-else>
           <span class="text-zinc-600">—</span>
@@ -101,7 +111,7 @@
         </template>
         
         <template v-else>
-          <span class="text-zinc-500">5 Sales</span>
+          <span class="text-zinc-500">L5SA</span>
           <div class="flex items-center gap-0.5">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-2.5 h-2.5 text-zinc-400">
               <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path>
@@ -112,19 +122,6 @@
         </template>
       </div>
       
-      <!-- 24h Performance -->
-      <div class="flex items-center justify-between text-xs">
-        <span class="text-zinc-500">24h</span>
-        <template v-if="item.stats.daily_price_change > 0">
-          <span class="font-medium text-green-400">+{{ dailyPriceChange }}%</span>
-        </template>
-        <template v-else-if="item.stats.daily_price_change < 0">
-          <span class="font-medium text-red-400">{{ item.stats.daily_price_change.toFixed(2) }}%</span>
-        </template>
-        <template v-else>
-          <span class="font-medium text-zinc-400">0%</span>
-        </template>
-      </div>
     </template>
   </div>
 </template>
@@ -167,15 +164,6 @@ const mintProfitInPercentage = computed(() => {
   return Math.round(((getListingAsGweiPrice(lowestListing.value) / ETH_TO_GWEI_MODIFIER) * ethereumPriceInUsd.value) / (props.item.series.mint_price / 100) * 100 -100);
 });
 
-const dailyPriceChange = computed(() => {
-  let change = props.item.stats.daily_price_change;
-
-  if (change >= 100 || change <= -100) {
-    return change.toFixed(0);
-  }
-
-  return change.toFixed(2);
-});
 
 const fiveSalesFiatPrice = computed(() => {
   const ethPrice = props.item.stats.five_last_sales_average;
