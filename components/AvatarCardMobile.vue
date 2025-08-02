@@ -18,10 +18,10 @@
         </button>
         
         <!-- Supply Badge - Top Left of Image -->
-        <div v-if="Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) <= 9999" class="absolute top-0.5 left-0.5">
-          <div class="flex items-center gap-1 px-1.5 py-0.5 bg-black/80 backdrop-blur-md text-xs font-semibold text-white rounded-full border border-white/20" :class="Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) <= 600 ? rarityInfo.color : 'text-white'">
-            <span v-if="Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) <= 600" class="text-[10px] leading-none">{{ rarityInfo.icon }}</span>
-            <span class="text-[10px] leading-none">{{ Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) }}</span>
+        <div v-if="seriesStats.series.total_quantity <= 9999" class="absolute top-0.5 left-0.5">
+          <div class="flex items-center gap-1 px-1.5 py-0.5 bg-black/80 backdrop-blur-md text-xs font-semibold text-white rounded-full border border-white/20" :class="seriesStats.series.total_quantity <= 600 ? rarityInfo.color : 'text-white'">
+            <span v-if="seriesStats.series.total_quantity <= 600" class="text-[10px] leading-none">{{ rarityInfo.icon }}</span>
+            <span class="text-[10px] leading-none">{{ seriesStats.series.total_quantity }}</span>
           </div>
         </div>
       </div>
@@ -144,7 +144,7 @@ const getGeneration = computed(() => {
 });
 
 const rarityInfo = computed(() => {
-  return getRarityInfo(Math.max(props.seriesStats.series.total_quantity, props.seriesStats.series.total_sold));
+  return getRarityInfo(props.seriesStats.series.total_quantity);
 });
 
 const hapticsImpactLight = async () => {
