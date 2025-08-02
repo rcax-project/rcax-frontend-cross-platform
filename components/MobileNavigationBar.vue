@@ -17,8 +17,8 @@
         <component :is="iconForRoute('/events')" class="icon-size"/>
         <span class="text-xs font-medium">Activity</span>
       </NuxtLink>
-      <NuxtLink to="/tools" class="flex flex-col items-center justify-center" :class="{ 'active-tab': isActive('/tools') }">
-        <component :is="iconForRoute('/tools')" class="icon-size"/>
+      <NuxtLink to="/more" class="flex flex-col items-center justify-center" :class="{ 'active-tab': isActive('/more') }">
+        <component :is="iconForRoute('/more')" class="icon-size"/>
         <span class="text-xs font-medium">More</span>
       </NuxtLink>
     </div>
@@ -47,7 +47,7 @@ function iconForRoute(targetRoute) {
     '/watchlist': isActive('/watchlist') ? StarIconSolid : StarIcon,
     '/': isActive('/') ? ChartBarIconSolid : ChartBarIcon,
     '/events': isActive('/events') ? BoltIconSolid : BoltIcon,
-    '/tools': isActive('/tools') ? Squares2X2IconSolid : Squares2X2Icon,
+    '/more': isActive('/more') ? Squares2X2IconSolid : Squares2X2Icon,
   };
   return icons[targetRoute] || null; // Return null or a default icon if route is not matched
 }
