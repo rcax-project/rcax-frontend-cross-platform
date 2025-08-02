@@ -1,5 +1,21 @@
 <template>
+  <!-- Mobile Layout -->
+  <AvatarCardMobile 
+    v-if="isMobile" 
+    :item="item" 
+    :seriesStats="seriesStats" 
+    :hideFloor="hideFloor" 
+    :ranking="ranking"
+  >
+    <slot></slot>
+    <template #footer v-if="$slots.footer">
+      <slot name="footer"></slot>
+    </template>
+  </AvatarCardMobile>
+
+  <!-- Desktop Layout -->
   <div 
+    v-else
     @click="selectAvatar" 
     ref="componentRef" 
     class="group relative bg-white/[0.02] hover:bg-white/[0.04] border border-white/10 hover:border-white/20 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-black/20 w-full"
@@ -115,6 +131,7 @@ import {findCollectionNameByContractAddress} from "~/global/generations";
 import {Haptics, ImpactStyle} from "@capacitor/haptics";
 import {marketplaceLink} from "~/global/marketplace";
 import {getMintClasses, getMintClassesText} from "~/global/mint";
+import AvatarCardMobile from "~/components/AvatarCardMobile.vue";
 
 export interface AvatarCardItem {
   name: string;
@@ -150,6 +167,10 @@ const props = defineProps({
 
 const getGeneration = computed(() => {
   return findCollectionNameByContractAddress(props.item.contract_address);
+});
+
+const isMobile = computed(() => {
+  return Capacitor.isNativePlatform() || window.matchMedia('(max-width: 768px)').matches;
 });
 
 const hapticsImpactLight = async () => {

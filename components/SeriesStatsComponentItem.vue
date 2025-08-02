@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-1">
+  <div class="space-y-0 sm:space-y-1">
     <template v-if="sortingOnShop">
       <!-- Shop Mode Stats -->
       <!-- Stock Info -->
@@ -51,15 +51,18 @@
       <div class="flex items-center justify-between text-xs">
         <span class="text-zinc-500">Last Sale</span>
         <template v-if="item.stats.last_sale">
-          <LastSale :sale="item.stats.last_sale" class="text-xs font-medium" />
+          <div class="flex items-center gap-1">
+            <LastSale :sale="item.stats.last_sale" class="text-xs font-medium" />
+            <span class="text-xs font-normal text-zinc-500 sm:hidden">#{{ item.stats.last_sale.token.mint_number }} • {{ $timeAgo(new Date(item.stats.last_sale.date_sold)) }} ago</span>
+          </div>
         </template>
         <template v-else>
           <span class="text-zinc-600">—</span>
         </template>
       </div>
       
-      <!-- Last Sale Time -->
-      <div class="flex items-center justify-end text-xs">
+      <!-- Last Sale Time - Hidden on mobile -->
+      <div class="hidden sm:flex items-center justify-end text-xs">
         <template v-if="item.stats.last_sale">
           <span class="text-xs font-normal text-zinc-500">#{{ item.stats.last_sale.token.mint_number }} • {{ $timeAgo(new Date(item.stats.last_sale.date_sold)) }} ago</span>
         </template>
