@@ -21,10 +21,9 @@
             </div>
           </div>
           <div class="flex items-center gap-2 flex-shrink-0">
-            <button @click="openLinkWith(marketplaceLink(seriesStats))" class="p-2 hover:bg-zinc-800/50 text-zinc-400 hover:text-white rounded-lg transition-all duration-200" title="View on Marketplace">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-              </svg>
+            <button @click.stop="handleFavouriteClick" class="p-2 hover:bg-zinc-800/50 rounded-lg transition-all duration-200" :class="isInWatchList ? 'text-yellow-400 hover:text-yellow-300' : 'text-zinc-400 hover:text-yellow-400'" :title="isInWatchList ? 'Remove from favourites' : 'Add to favourites'">
+              <StarIcon v-if="isInWatchList" class="w-5 h-5" />
+              <StarIconOutlined v-else class="w-5 h-5" />
             </button>
             <button @click.stop="close" class="p-2 hover:bg-zinc-800/50 text-zinc-400 hover:text-white rounded-lg transition-all duration-200">
               <XMarkIcon class="w-5 h-5" />
@@ -402,9 +401,14 @@ import {
   useUser,
   getListingAsGweiPrice,
   getSaleAsGweiPrice,
-  openLinkWith
+  openLinkWith,
+  useWatchList,
+  addToWatchList,
+  removeFromWatchList
 } from "#imports";
 import {ChevronDownIcon, XMarkIcon} from "@heroicons/vue/24/solid";
+import {StarIcon as StarIconOutlined} from "@heroicons/vue/24/outline";
+import {StarIcon} from "@heroicons/vue/20/solid";
 import {getTokenImage} from "~/global/utils";
 import {Ref} from "@vue/reactivity";
 import {Sale} from "~/types/sale";
@@ -420,6 +424,7 @@ const selectedAvatar = useSelectedAvatar();
 const ethereumPriceInUsd = useEthereumUsdPrice();
 const user = useUser();
 const settings = useSettings();
+const watchList = useWatchList();
 
 const pageSize = 5;
 const sales: Ref<Array<Sale>> = ref([]);
@@ -459,6 +464,12 @@ const contract = computed(() => {
 
 const series = computed(() => {
   return selectedAvatar.value.series;
+});
+
+const isInWatchList = computed(() => {
+  if (!selectedAvatar.value) return false;
+  const watchKey = selectedAvatar.value.seriesStats.collection.contract_address + selectedAvatar.value.seriesStats.series.name;
+  return watchList.value.has(watchKey);
 });
 
 const slicedListings = computed(() => {
@@ -588,6 +599,18 @@ function handleOpenSeaClick() {
     }
   } else {
     console.warn('No series stats available for OpenSea link');
+  }
+}
+
+function handleFavouriteClick() {
+  if (!selectedAvatar.value) return;
+  
+  const watchKey = selectedAvatar.value.seriesStats.collection.contract_address + selectedAvatar.value.seriesStats.series.name;
+  
+  if (isInWatchList.value) {
+    removeFromWatchList(watchKey);
+  } else {
+    addToWatchList(watchKey);
   }
 }
 
