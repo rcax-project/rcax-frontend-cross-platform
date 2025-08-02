@@ -1,11 +1,11 @@
 <template>
   <div class="relative w-full text-xs bg-[#141415] border-b border-zinc-800/30 overflow-hidden z-40 shadow-sm" ref="barMarketInfo" :class="{ 'page-mobile-padding-top': Capacitor.isNativePlatform() }">
     <div class="px-4 lg:px-6 py-3 flex whitespace-nowrap items-center overflow-x-auto scrollbar-hide duration-500" :class="{ 'opacity-0': hideItems }">
-      <div class="inline-flex shrink-0 gap-3 sm:gap-4">
-        <button @click="openLinkWith(`https://app.uniswap.org/tokens/polygon/0x875f123220024368968d9f1ab1f3f9c2f3fd190d`)" class="market-info-card group cursor-pointer">
+      <div class="inline-flex shrink-0 items-center divide-x divide-zinc-700/40">
+        <button @click="openLinkWith(`https://app.uniswap.org/tokens/polygon/0x875f123220024368968d9f1ab1f3f9c2f3fd190d`)" class="market-info-item group cursor-pointer">
           <div class="flex items-center gap-3 text-xs">
             <div class="flex items-center gap-2">
-              <img class="h-4 w-4" src="/images/branding/rcax/RCAX_Logo_Color.svg">
+              <img class="h-3 w-3" src="/images/branding/rcax/RCAX_Logo_Color.svg">
               <span class="text-zinc-400">{{ gweiInLocalCurrency(rcax) }}</span>
             </div>
 <!--            <div class="flex items-center gap-1">-->
@@ -19,36 +19,38 @@
           </div>
         </button>
         
-        <div class="market-info-card">
+        <div class="market-info-item">
           <div class="flex items-center gap-2">
-            <img class="h-4 w-4" src="/images/coins/eth/icon.svg">
+            <img class="h-3 w-3" src="/images/coins/eth/icon.svg">
             <span class="text-zinc-400">{{ ethereumInLocalCurrency(ETH_TO_GWEI_MODIFIER) }}</span>
           </div>
         </div>
         
-        <div class="market-info-card">
+        <div class="market-info-item">
           <div class="flex items-center gap-2">
-            <img class="h-4 w-4" src="/images/coins/matic/icon.svg">
+            <img class="h-3 w-3" src="/images/coins/matic/icon.svg">
             <span class="text-zinc-400">{{ ethereumInLocalCurrency(1 / ethereumPriceMap.get("MATIC") * ETH_TO_GWEI_MODIFIER) }}</span>
           </div>
         </div>
       </div>
       
-      <div class="ml-4 md:ml-auto market-info-card">
-        <div class="flex items-center gap-3">
-          <div class="flex items-center gap-2">
-            <img class="w-4 h-4" src="/images/branding/reddit-icon.svg">
-          </div>
-          <div class="flex items-center gap-1">
-            <span class="text-zinc-500">24h Vol:</span>
-            <div class="flex items-center gap-1">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-purple-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-              <span class="text-zinc-400">{{ dailyVol.toFixed(4).replace(/\.?0+$/, '') }}</span>
+      <div class="ml-4 md:ml-auto">
+        <div class="market-info-item">
+          <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2">
+              <img class="w-4 h-4" src="/images/branding/reddit-icon.svg">
             </div>
-          </div>
-          <div class="flex items-center gap-1">
-            <span class="text-zinc-500">MC:</span>
-            <span class="text-zinc-400">{{ ethereumInLocalCurrency(mCap * ETH_TO_GWEI_MODIFIER) }}</span>
+            <div class="flex items-center gap-1">
+              <span class="text-zinc-500">24h Vol:</span>
+              <div class="flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-zinc-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
+                <span class="text-zinc-400">{{ dailyVol.toFixed(4).replace(/\.?0+$/, '') }}</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-1">
+              <span class="text-zinc-500">MC:</span>
+              <span class="text-zinc-400">{{ ethereumInLocalCurrency(mCap * ETH_TO_GWEI_MODIFIER) }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -119,8 +121,8 @@ function openLinkWith(url: string) {
 </script>
 
 <style scoped>
-.market-info-card {
-  @apply px-3 py-2 bg-zinc-800/20 hover:bg-zinc-700/30 border border-zinc-700/20 hover:border-zinc-600/40 rounded-lg transition-all duration-200 backdrop-blur-sm flex-shrink-0;
+.market-info-item {
+  @apply px-3 py-2 flex-shrink-0;
 }
 
 
