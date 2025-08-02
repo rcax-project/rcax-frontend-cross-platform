@@ -18,13 +18,13 @@
         </button>
         
         <!-- Rarity Badge - Top Left of Image -->
-        <div class="absolute -top-1 -left-1">
+        <div class="absolute top-0.5 left-0.5">
           <div class="flex items-center gap-1 px-1.5 py-0.5 bg-black/80 backdrop-blur-md text-xs font-semibold text-white rounded-full border border-white/20" :class="rarityInfo.color">
-            <DiamondIcon v-if="rarityInfo.tier === 'rare'" class="w-2.5 h-2.5 flex-shrink-0" />
-            <GoldIcon v-else-if="rarityInfo.tier === 'gold'" class="w-2.5 h-2.5 flex-shrink-0" />
-            <SilverIcon v-else-if="rarityInfo.tier === 'silver'" class="w-2.5 h-2.5 flex-shrink-0" />
-            <CommonIcon v-else class="w-2.5 h-2.5 flex-shrink-0" />
-            <span class="text-[9px] leading-none">{{ Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) }}</span>
+            <DiamondIcon v-if="rarityInfo.tier === 'rare'" class="w-3 h-3 flex-shrink-0" />
+            <GoldIcon v-else-if="rarityInfo.tier === 'gold'" class="w-3 h-3 flex-shrink-0" />
+            <SilverIcon v-else-if="rarityInfo.tier === 'silver'" class="w-3 h-3 flex-shrink-0" />
+            <CommonIcon v-else class="w-3 h-3 flex-shrink-0" />
+            <span class="text-[10px] leading-none">{{ Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) }}</span>
           </div>
         </div>
       </div>
