@@ -19,6 +19,19 @@
       </NuxtLink>
     </template>
 
+    <!-- Currency Selector -->
+    <div class="mb-8">
+      <label class="text-zinc-400 text-sm block mb-2">Preferred Currency</label>
+      <select 
+        v-model="settings.currency.preferred"
+        class="w-full bg-zinc-800 border border-zinc-700 text-zinc-300 text-sm rounded-lg px-3 py-2"
+      >
+        <option v-for="currency in CURRENCIES" :key="currency.ticker" :value="currency.ticker">
+          {{ currency.ticker }} - {{ currency.name }}
+        </option>
+      </select>
+    </div>
+
     <!-- Tools & Features Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       <!-- Account Section -->
@@ -155,10 +168,20 @@ import {
   ShoppingBagIcon, ArrowPathIcon, UserCircleIcon, GlobeAltIcon,
   ArrowTopRightOnSquareIcon
 } from "@heroicons/vue/24/outline";
-import { useUser } from "#imports";
+import { useUser, useSettings, watch, computed, updateEthereumPrices } from "#imports";
 import { Capacitor } from "@capacitor/core";
+import { CURRENCIES } from "~/types/currency";
 
 const user = useUser();
+const settings = useSettings();
+
+const selectedCurrency = computed(() => {
+  return settings.value.currency.preferred;
+});
+
+watch([selectedCurrency], () => {
+  updateEthereumPrices();
+});
 </script>
 
 <style scoped>
