@@ -45,7 +45,7 @@
     </div>
 
     <!-- Sale Price -->
-    <div class="flex items-center justify-between pt-1 border-t border-white/10">
+    <div class="flex items-center justify-between pt-1">
       <div class="flex items-center gap-1">
         <template v-if="normalizeTokenSymbol(item.payment_token.symbol) === 'ETH'">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-2.5 h-2.5 text-white">

@@ -36,7 +36,7 @@
     </div>
 
     <!-- Listing Price -->
-    <div class="flex items-center justify-between pt-1 border-t border-white/10">
+    <div class="flex items-center justify-between pt-1">
       <button 
         @click="openLinkWith(`https://opensea.io/assets/matic/${item.token.contract_address}/${item.token.id}`)"
         class="flex items-center gap-1 hover:opacity-80 transition-opacity"
