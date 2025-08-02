@@ -33,7 +33,8 @@ const props = defineProps({
 
 <style>
 .filter-menu-button--button {
-  @apply px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-zinc-400 hover:text-white rounded-lg transition-all duration-200 font-medium flex items-center gap-2;
+  @apply px-3 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-zinc-300 hover:text-zinc-100 rounded-lg transition-all duration-200 font-medium flex items-center gap-2;
+  height: 36px;
 }
 
 .filter-menu-button--button:focus {
@@ -77,7 +78,8 @@ const props = defineProps({
 /* Mobile responsiveness */
 @media (max-width: 640px) {
   .filter-menu-button--button {
-    @apply px-2.5 py-1.5 text-xs;
+    @apply px-2.5 text-xs;
+    height: 32px;
   }
   
   .filter-menu-button--menu {
