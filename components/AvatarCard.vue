@@ -36,7 +36,7 @@
           <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           
           <!-- Top Left: Rarity Badge -->
-          <div class="absolute top-1 left-1">
+          <div v-if="Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) <= 9999" class="absolute top-1 left-1">
             <div class="flex items-center gap-1 px-2 py-1 bg-black/80 backdrop-blur-md text-xs font-semibold text-white rounded-full border border-white/20" :class="rarityInfo.color">
               <DiamondIcon v-if="rarityInfo.tier === 'rare'" class="w-3 h-3 flex-shrink-0" />
               <GoldIcon v-else-if="rarityInfo.tier === 'gold'" class="w-3 h-3 flex-shrink-0" />
