@@ -67,7 +67,7 @@
           <div class="grid grid-cols-1 gap-3">
             <template v-if="selectedAvatar.seriesStats.series.total_sold >= selectedAvatar.seriesStats.series.total_quantity">
               <div class="px-4 py-3 bg-zinc-800/50 border border-zinc-700/30 rounded-xl text-center">
-                <span class="text-zinc-400 font-medium">SOLD OUT</span>
+                <span class="text-zinc-400 font-medium">${{ selectedAvatar.seriesStats.series.mint_price / 100 }}</span>
               </div>
             </template>
             <template v-else-if="!selectedAvatar.seriesStats.series.id">
