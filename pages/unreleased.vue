@@ -2,7 +2,7 @@
   <div class="unreleased-page">
     <MenuBar class="unreleased-controls">
       <SearchBar v-model:search-term="searchTerm" :placeholder="`Search by Name or Artist`" />
-      <select class="ml-auto" v-model="settings.unreleased.showAvailable">
+      <select class="ml-auto uniform-select" v-model="settings.unreleased.showAvailable">
         <option :value="true">Available: Show</option>
         <option :value="false">Available: Hide</option>
       </select>

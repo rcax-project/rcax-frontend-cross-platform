@@ -716,19 +716,41 @@ function getIndividualFiatPrice(contractAddress: string, name: string): string {
 </script>
 
 <style scoped>
-/* Override global select styles to match MenuBar component */
+/* Override global select styles to match SearchBar component exactly */
 .menubar-overrides select {
-  @apply px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-zinc-400 hover:text-white placeholder-zinc-500 font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer min-w-0 w-full max-w-fit h-10;
+  @apply px-2.5 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 text-sm text-zinc-400 rounded-lg transition-all duration-200 focus:outline-none cursor-pointer;
+  border: 1px solid rgb(63 63 70 / 0.3);
+  height: 36px;
+  min-width: fit-content;
+}
+
+.menubar-overrides select:hover {
+  border-color: rgb(82 82 91 / 0.5);
+}
+
+.menubar-overrides select:focus {
+  border-color: rgb(249 115 22 / 0.5);
+  box-shadow: 0 0 0 2px rgb(249 115 22 / 0.5);
+}
+
+.menubar-overrides select:hover {
+  @apply text-zinc-300;
+}
+
+.menubar-overrides select:focus {
+  @apply text-zinc-200;
 }
 
 .menubar-overrides select > option {
-  @apply bg-zinc-800 text-zinc-400;
+  @apply bg-zinc-800 text-zinc-200;
 }
 
-/* Mobile responsive adjustments */
+/* Mobile responsive adjustments to match SearchBar */
 @media (max-width: 640px) {
   .menubar-overrides select {
-    @apply px-2.5 py-1.5 text-xs h-8;
+    @apply px-2 text-xs;
+    height: 32px;
+    gap: 1.5px;
   }
 }
 </style>

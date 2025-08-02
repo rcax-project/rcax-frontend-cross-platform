@@ -6,13 +6,13 @@
         <input type="number" v-model="maxPrice" :placeholder="`Max price ${paymentToken.toUpperCase()}`">
         <input type="number" v-model="minMint" placeholder="Min mint number">
         <input type="number" v-model="maxMint" placeholder="Max mint number">
-        <select v-model="filterGenOption">
+        <select v-model="filterGenOption" class="uniform-select">
           <option value="all">Gen: All</option>
           <template v-for="gen in Object.keys(Filters)">
             <option :value="gen">{{ gen }}</option>
           </template>
         </select>
-        <select v-model="filterRarityOption">
+        <select v-model="filterRarityOption" class="uniform-select">
           <option value="all">Supply: All</option>
           <option value="250">Supply: Max 250</option>
           <option value="777">Supply: Max 777</option>
@@ -22,7 +22,7 @@
           <button @click="clearFilters()" class="p-2 bg-white/10 text-white hover:bg-white/20 text-sm rounded-md transition-colors">Clear All</button>
         </template>
       </FilterMenuButton>
-      <select v-model="paymentToken" class="px-3 py-2 bg-zinc-800/30 border border-zinc-700/30 text-zinc-300 text-sm rounded-lg hover:bg-zinc-700/40 hover:border-zinc-600/50 focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all duration-200">
+      <select v-model="paymentToken" class="uniform-select">
         <option value="eth">ETH</option>
         <option value="matic">MATIC</option>
       </select>
