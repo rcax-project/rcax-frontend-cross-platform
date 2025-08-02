@@ -3,8 +3,8 @@
     <MenuBar class="shop-controls">
       <SearchBar v-model:search-term="searchTerm" :placeholder="`Search by Name or Artist`" />
       <select class="ml-auto uniform-select" v-model="settings.shop.showAvailable">
-        <option :value="true">Available: Show</option>
-        <option :value="false">Available: Hide</option>
+        <option :value="true">Released: Show</option>
+        <option :value="false">Released: Hide</option>
       </select>
       <template v-if="!Capacitor.isNativePlatform()">
         <RefreshButton class="sm:ml-0" :action="refresh" :refreshing="isRefreshing" />
@@ -13,7 +13,7 @@
     
     <div class="px-4 lg:px-6 py-6">
       <!-- Newly Released Section -->
-      <div v-if="newlyReleasedItems.length > 0" class="mb-12">
+      <div v-if="newlyReleasedItems.length > 0 && settings.shop.showAvailable" class="mb-12">
         <div class="section-header">
           <div class="section-title-container">
             <h2 class="section-title">✨ Newly Released</h2>
@@ -238,6 +238,11 @@ const newlyReleasedItems: ComputedRef<Array<Object>> = computed(() => {
     }
     
     return false;
+  }).sort((a, b) => {
+    // Sort by newest released to oldest
+    const dateA = new Date(a['date_available']);
+    const dateB = new Date(b['date_available']);
+    return dateB.getTime() - dateA.getTime();
   });
 });
 
@@ -245,6 +250,11 @@ const pendingReleaseItems: ComputedRef<Array<Object>> = computed(() => {
   return Object.values(items.value).filter((v) => {
     // Show items that are pending release
     return v['edge']['node']['status'] === 'PENDING';
+  }).sort((a, b) => {
+    // Sort by most recently discovered to least
+    const dateA = new Date(a['date_found']);
+    const dateB = new Date(b['date_found']);
+    return dateB.getTime() - dateA.getTime();
   });
 });
 
