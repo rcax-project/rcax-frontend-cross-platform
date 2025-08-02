@@ -35,7 +35,7 @@
         <div class="flex items-center justify-between gap-2">
           <button 
             @click.stop="openLinkWith(marketplaceLink(seriesStats))" 
-            class="text-left flex-1 text-white font-medium text-sm transition-colors duration-200 truncate"
+            class="text-left flex-1 text-white font-medium text-sm transition-colors duration-200 truncate whitespace-nowrap overflow-hidden text-ellipsis"
           >
             {{ seriesStats.series.name }}
           </button>

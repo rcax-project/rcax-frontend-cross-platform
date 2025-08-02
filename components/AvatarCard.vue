@@ -82,7 +82,7 @@
         <div class="flex items-center justify-between gap-1 mb-1">
           <button 
             @click.stop="openLinkWith(marketplaceLink(seriesStats))" 
-            class="text-left flex-1 text-white font-medium text-xs hover:text-blue-400 transition-colors duration-200 line-clamp-1"
+            class="text-left flex-1 text-white font-medium text-xs hover:text-blue-400 transition-colors duration-200 truncate whitespace-nowrap overflow-hidden text-ellipsis"
           >
             {{ seriesStats.series.name }}
           </button>
@@ -201,10 +201,4 @@ function selectAvatar() {
 </script>
 
 <style scoped>
-.line-clamp-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
 </style>
