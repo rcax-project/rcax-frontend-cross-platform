@@ -219,10 +219,17 @@
                             </div>
                             <div class="mt-1.5">
                               <p class="text-xs font-medium text-white truncate group-hover:text-zinc-300 transition-colors">{{ getSeriesStats(series.contract_address, series.name)?.series.name }}</p>
-                              <div @click.stop="openLinkWith(marketplaceLink(getSeriesStats(series.contract_address, series.name)))" class="flex items-center gap-0.5 mt-0.5 cursor-pointer hover:text-orange-400 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-zinc-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-                                <span class="text-xs text-zinc-400 font-medium">{{ (getSeriesValue(series.contract_address, series.name) / 1000000000000000000 * series.count).toFixed(3).replace(/\.?0+$/, '') }}</span>
-                                <span v-if="series.count > 1" class="text-xs text-zinc-500">({{ (getSeriesValue(series.contract_address, series.name) / 1000000000000000000).toFixed(3).replace(/\.?0+$/, '') }})</span>
+                              <div class="space-y-0.5">
+                                <div @click.stop="openLinkWith(marketplaceLink(getSeriesStats(series.contract_address, series.name)))" class="flex items-center gap-0.5 cursor-pointer hover:text-orange-400 transition-colors">
+                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-zinc-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
+                                  <span class="text-xs text-zinc-400 font-medium">{{ (getSeriesValue(series.contract_address, series.name) / 1000000000000000000 * series.count).toFixed(3).replace(/\.?0+$/, '') }}</span>
+                                  <span class="text-xs font-normal text-zinc-500">({{ getGroupedFiatPrice(series.contract_address, series.name, series.count) }})</span>
+                                </div>
+                                <div v-if="series.count > 1" class="flex items-center gap-0.5 text-xs text-zinc-600">
+                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-2.5 h-2.5"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
+                                  <span>{{ (getSeriesValue(series.contract_address, series.name) / 1000000000000000000).toFixed(3).replace(/\.?0+$/, '') }}</span>
+                                  <span class="text-zinc-600">({{ getIndividualFiatPrice(series.contract_address, series.name) }})</span>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -256,6 +263,7 @@
                               <div @click.stop="openLinkWith(marketplaceLink(getSeriesStats(token.contract_address, token.name)))" class="flex items-center gap-0.5 mt-0.5 cursor-pointer hover:text-orange-400 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-zinc-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
                                 <span class="text-xs text-zinc-400 font-medium">{{ (getSeriesValue(token.contract_address, token.name) / 1000000000000000000).toFixed(3).replace(/\.?0+$/, '') }}</span>
+                                <span class="text-xs font-normal text-zinc-500">({{ getIndividualFiatPrice(token.contract_address, token.name) }})</span>
                               </div>
                             </div>
                           </div>
@@ -285,7 +293,8 @@ import {
   updateMarketInfo,
   useSettings,
   useSelectedAvatar,
-  useRcaxEthPrice
+  useRcaxEthPrice,
+  useEthereumPriceMap
 } from "~/composables/states";
 import {getLowestListingAsGweiPrice, onMounted, ref} from "#imports";
 import {Ref} from "@vue/reactivity";
@@ -309,6 +318,7 @@ const rcaxEthPrice = useRcaxEthPrice();
 const cone = useConeEthPrice();
 const settings = useSettings();
 const selectedAvatar = useSelectedAvatar();
+const ethereumPriceMap = useEthereumPriceMap();
 
 const walletAddress = ref<string>("");
 const searchTerm = ref<string>("");
@@ -658,6 +668,50 @@ function selectAvatar(seriesStats: SeriesStats) {
     contract: seriesStats.series.contract_address,
     series: seriesStats.series.name
   }
+}
+
+function getGroupedFiatPrice(contractAddress: string, name: string, count: number): string {
+  const ethPrice = getSeriesValue(contractAddress, name) / 1000000000000000000 * count;
+  const currency = settings.value.currency.preferred;
+  const exchangeRate = ethereumPriceMap.value.get(currency) ?? 0;
+  const fiatValue = ethPrice * exchangeRate;
+  
+  if (fiatValue >= 1000) {
+    const formattedK = new Intl.NumberFormat(undefined, { style: 'currency', currency, minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(fiatValue / 1000);
+    return formattedK.replace(/\.0/, '') + 'k';
+  }
+  
+  const minimumFractionDigits = fiatValue >= 100 ? 0 : 2;
+  const maximumFractionDigits = fiatValue >= 100 ? 0 : 2;
+  
+  return new Intl.NumberFormat(undefined, { 
+    style: 'currency', 
+    currency, 
+    minimumFractionDigits, 
+    maximumFractionDigits 
+  }).format(fiatValue);
+}
+
+function getIndividualFiatPrice(contractAddress: string, name: string): string {
+  const ethPrice = getSeriesValue(contractAddress, name) / 1000000000000000000;
+  const currency = settings.value.currency.preferred;
+  const exchangeRate = ethereumPriceMap.value.get(currency) ?? 0;
+  const fiatValue = ethPrice * exchangeRate;
+  
+  if (fiatValue >= 1000) {
+    const formattedK = new Intl.NumberFormat(undefined, { style: 'currency', currency, minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(fiatValue / 1000);
+    return formattedK.replace(/\.0/, '') + 'k';
+  }
+  
+  const minimumFractionDigits = fiatValue >= 100 ? 0 : 2;
+  const maximumFractionDigits = fiatValue >= 100 ? 0 : 2;
+  
+  return new Intl.NumberFormat(undefined, { 
+    style: 'currency', 
+    currency, 
+    minimumFractionDigits, 
+    maximumFractionDigits 
+  }).format(fiatValue);
 }
 </script>
 
