@@ -1,50 +1,13 @@
 <template>
   <div>
-    <!-- Mobile Menu Button -->
-    <button 
-      @click="toggleSidebar()"
-      class="lg:hidden fixed top-4 left-4 z-50 flex items-center justify-center w-10 h-10 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-zinc-400 hover:text-white hover:bg-zinc-700/50 transition-all duration-200"
-      :class="{ 'left-64': sidebarOpen }"
+    <!-- Sidebar - Desktop Only -->
+    <aside 
+      v-if="isDesktop"
+      @mouseenter="isHovered = true"
+      @mouseleave="isHovered = false; appsMenuOpen = false"
+      class="group fixed left-0 top-0 h-full bg-[#141415] border-r border-zinc-800/50 flex flex-col transition-all duration-300 ease-in-out overflow-hidden z-50"
+      :class="isCompact && !isHovered ? 'w-16' : 'w-64'"
     >
-      <Bars3Icon v-if="!sidebarOpen" class="w-5 h-5" />
-      <XMarkIcon v-else class="w-5 h-5" />
-    </button>
-
-    <!-- Sidebar Overlay (Mobile) -->
-    <Transition
-      enter-active-class="transition-opacity duration-300"
-      enter-from-class="opacity-0"
-      enter-to-class="opacity-100"
-      leave-active-class="transition-opacity duration-200"
-      leave-from-class="opacity-100"
-      leave-to-class="opacity-0"
-    >
-      <div 
-        v-if="sidebarOpen" 
-        @click="closeSidebar()"
-        class="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
-      ></div>
-    </Transition>
-
-    <!-- Sidebar -->
-    <Transition
-      enter-active-class="transition-transform duration-300 ease-out"
-      enter-from-class="-translate-x-full"
-      enter-to-class="translate-x-0"
-      leave-active-class="transition-transform duration-200 ease-in"
-      leave-from-class="translate-x-0"
-      leave-to-class="-translate-x-full"
-    >
-      <aside 
-        v-show="sidebarOpen || isDesktop"
-        @mouseenter="isHovered = true"
-        @mouseleave="isHovered = false; appsMenuOpen = false"
-        class="group fixed left-0 top-0 h-full bg-[#141415] border-r border-zinc-800/50 flex flex-col transition-all duration-300 ease-in-out overflow-hidden"
-        :class="[
-          { 'sidebar-mobile-padding-top': Capacitor.isNativePlatform() },
-          isDesktop && isCompact && !isHovered ? 'w-16 z-40' : 'w-64 z-50'
-        ]"
-      >
         <!-- Logo Section -->
         <div class="px-4 py-6 overflow-hidden">
           <div class="flex items-center gap-3 min-w-0">
@@ -74,7 +37,6 @@
               exact-active-class="sidebar-link-active" 
               class="sidebar-link"
               :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
-              @click="closeSidebarOnMobile"
             >
               <HomeIcon class="sidebar-icon flex-shrink-0" />
               <span>Avatars</span>
@@ -85,8 +47,7 @@
                 exact-active-class="sidebar-link-active"
                 class="sidebar-link"
                 :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
-                @click="closeSidebarOnMobile"
-            >
+              >
               <StarIcon class="sidebar-icon flex-shrink-0" />
               <span>Watchlist</span>
             </NuxtLink>
@@ -96,7 +57,6 @@
               active-class="sidebar-link-active" 
               class="sidebar-link"
               :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
-              @click="closeSidebarOnMobile"
             >
               <BoltIcon class="sidebar-icon flex-shrink-0" />
               <span>Activity</span>
@@ -107,7 +67,6 @@
               active-class="sidebar-link-active" 
               class="sidebar-link"
               :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
-              @click="closeSidebarOnMobile"
             >
               <WalletIcon class="sidebar-icon flex-shrink-0" />
               <span>Wallet</span>
@@ -118,7 +77,6 @@
               active-class="sidebar-link-active" 
               class="sidebar-link"
               :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
-              @click="closeSidebarOnMobile"
             >
               <ShoppingBagIcon class="sidebar-icon flex-shrink-0" />
               <span>Shop</span>
@@ -129,7 +87,6 @@
               active-class="sidebar-link-active" 
               class="sidebar-link"
               :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
-              @click="closeSidebarOnMobile"
             >
               <GlobeEuropeAfricaIcon class="sidebar-icon flex-shrink-0" />
               <span>Listings</span>
@@ -140,8 +97,7 @@
                 active-class="sidebar-link-active"
                 class="sidebar-link"
                 :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
-                @click="closeSidebarOnMobile"
-            >
+              >
               <PhotoIcon class="sidebar-icon flex-shrink-0" />
               <span>Exporter</span>
             </NuxtLink>
@@ -151,7 +107,6 @@
               active-class="sidebar-link-active" 
               class="sidebar-link"
               :class="{ 'compact-mode': isDesktop && isCompact && !isHovered }"
-              @click="closeSidebarOnMobile"
             >
               <BellIcon class="sidebar-icon flex-shrink-0" />
               <span>Alerts</span>
@@ -164,8 +119,7 @@
               <NuxtLink 
                 to="/dapps/randomavatarswap"
                 class="sidebar-link"
-                @click="closeSidebarOnMobile"
-              >
+                >
                 <Squares2X2Icon class="sidebar-icon flex-shrink-0" />
                 <span>Random Avatar Swap</span>
               </NuxtLink>
@@ -173,8 +127,7 @@
                 to="https://avatartraits.xyz"
                 target="_blank"
                 class="sidebar-link"
-                @click="closeSidebarOnMobile"
-              >
+                >
                 <GlobeAltIcon class="sidebar-icon flex-shrink-0" />
                 <span>AvatarTraits.xyz</span>
               </NuxtLink>
@@ -216,8 +169,7 @@
               <template v-if="user?.tier < 1">
                 <NuxtLink
                   to="/upgrade"
-                  @click="closeSidebarOnMobile"
-                  class="block w-full px-3 py-2 text-amber-400 hover:text-amber-300 bg-amber-400/10 hover:bg-amber-400/20 rounded-lg transition-all duration-200 font-medium text-sm text-center"
+                      class="block w-full px-3 py-2 text-amber-400 hover:text-amber-300 bg-amber-400/10 hover:bg-amber-400/20 rounded-lg transition-all duration-200 font-medium text-sm text-center"
                 >
                   Upgrade to Pro
                 </NuxtLink>
@@ -235,15 +187,13 @@
             <div class="space-y-2">
               <NuxtLink
                 to="/login"
-                @click="closeSidebarOnMobile"
-                class="block px-3 py-2 text-zinc-400 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200 font-medium text-sm text-center border border-zinc-700/50"
+                  class="block px-3 py-2 text-zinc-400 hover:text-white hover:bg-zinc-700/50 rounded-lg transition-all duration-200 font-medium text-sm text-center border border-zinc-700/50"
               >
                 Login
               </NuxtLink>
               <NuxtLink
                 to="/signup"
-                @click="closeSidebarOnMobile"
-                class="block px-3 py-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all duration-200 font-medium text-sm text-center"
+                  class="block px-3 py-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all duration-200 font-medium text-sm text-center"
               >
                 Create account
               </NuxtLink>
@@ -251,7 +201,6 @@
           </template>
         </div>
       </aside>
-    </Transition>
   </div>
 </template>
 
@@ -262,8 +211,8 @@ import { deleteToken } from '~/composables/api/user';
 import { CURRENCIES } from '~/types/currency';
 import { Capacitor } from '@capacitor/core';
 import { 
-  ChevronDownIcon, Bars3Icon, XMarkIcon, HomeIcon, PhotoIcon,
-  Squares2X2Icon, WalletIcon, ChartBarIcon, BoltIcon, 
+  ChevronDownIcon, HomeIcon, PhotoIcon,
+  Squares2X2Icon, WalletIcon, BoltIcon, 
   ShoppingBagIcon, GlobeEuropeAfricaIcon, BellIcon, StarIcon, GlobeAltIcon
 } from '@heroicons/vue/24/outline';
 
@@ -271,7 +220,6 @@ const user = useUser();
 const settings = useSettings();
 const router = useRouter();
 
-const sidebarOpen = ref(false);
 const appsMenuOpen = ref(false);
 const isDesktop = ref(false);
 const isCompact = ref(true);
@@ -290,33 +238,12 @@ onUnmounted(() => {
   window.removeEventListener('resize', checkDesktop);
 });
 
-router.afterEach(() => {
-  if (!isDesktop.value) {
-    sidebarOpen.value = false;
-  }
-});
-
-function toggleSidebar() {
-  sidebarOpen.value = !sidebarOpen.value;
-}
-
-function closeSidebar() {
-  sidebarOpen.value = false;
-}
-
-function closeSidebarOnMobile() {
-  if (!isDesktop.value) {
-    sidebarOpen.value = false;
-  }
-}
-
 function toggleAppsMenu() {
   appsMenuOpen.value = !appsMenuOpen.value;
 }
 
 function logout() {
   deleteToken();
-  closeSidebarOnMobile();
 }
 </script>
 
@@ -342,7 +269,7 @@ function logout() {
 }
 
 .sidebar-link.compact-mode span {
-  @apply absolute left-14 top-1/2 transform -translate-y-1/2 text-white px-2 py-1 rounded shadow-lg z-50 opacity-0 pointer-events-none transition-opacity duration-200 whitespace-nowrap;
+  @apply absolute left-14 top-1/2 transform -translate-y-1/2 text-white px-2 py-1 rounded shadow-lg z-[60] opacity-0 pointer-events-none transition-opacity duration-200 whitespace-nowrap;
 }
 
 .sidebar-link.compact-mode:hover span {
@@ -361,7 +288,4 @@ function logout() {
   @apply h-5 w-5 flex-shrink-0;
 }
 
-.sidebar-mobile-padding-top {
-  padding-top: env(safe-area-inset-top);
-}
 </style>
