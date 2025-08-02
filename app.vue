@@ -67,7 +67,7 @@ import {Ref} from "@vue/reactivity";
 
 useHead({
   title: 'RCAX | Reddit Collectible Avatars prices, statistics, sales and more!',
-  link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }],
+  link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
   meta: [
     { name: "title", content: "RCAX" },
     { name: 'description', content: 'Reddit Collectible Avatars prices, statistics, sales and more!' },
