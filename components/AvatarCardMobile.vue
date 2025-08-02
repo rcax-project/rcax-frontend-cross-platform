@@ -17,10 +17,14 @@
           />
         </button>
         
-        <!-- Supply Badge - Top Left of Image -->
+        <!-- Rarity Badge - Top Left of Image -->
         <div class="absolute -top-1 -left-1">
-          <div class="px-1 py-0.5 bg-black/70 backdrop-blur-md text-xs font-medium text-white rounded" :class="getMintClassesText(Math.max(seriesStats.series.total_quantity, seriesStats.series.total_sold))">
-            {{ Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) }}
+          <div class="flex items-center gap-1 px-1.5 py-0.5 bg-black/80 backdrop-blur-md text-xs font-semibold text-white rounded-full border border-white/20" :class="rarityInfo.color">
+            <DiamondIcon v-if="rarityInfo.tier === 'rare'" class="w-2.5 h-2.5 flex-shrink-0" />
+            <GoldIcon v-else-if="rarityInfo.tier === 'gold'" class="w-2.5 h-2.5 flex-shrink-0" />
+            <SilverIcon v-else-if="rarityInfo.tier === 'silver'" class="w-2.5 h-2.5 flex-shrink-0" />
+            <CommonIcon v-else class="w-2.5 h-2.5 flex-shrink-0" />
+            <span class="text-[9px] leading-none">{{ Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) }}</span>
           </div>
         </div>
       </div>
@@ -104,7 +108,11 @@ import {getTokenImage} from "~/global/utils";
 import {findCollectionNameByContractAddress} from "~/global/generations";
 import {Haptics, ImpactStyle} from "@capacitor/haptics";
 import {marketplaceLink} from "~/global/marketplace";
-import {getMintClasses, getMintClassesText} from "~/global/mint";
+import {getMintClasses, getMintClassesText, getRarityInfo} from "~/global/mint";
+import DiamondIcon from "~/components/icons/DiamondIcon.vue";
+import GoldIcon from "~/components/icons/GoldIcon.vue";
+import SilverIcon from "~/components/icons/SilverIcon.vue";
+import CommonIcon from "~/components/icons/CommonIcon.vue";
 
 export interface AvatarCardItem {
   name: string;
@@ -140,6 +148,10 @@ const props = defineProps({
 
 const getGeneration = computed(() => {
   return findCollectionNameByContractAddress(props.item.contract_address);
+});
+
+const rarityInfo = computed(() => {
+  return getRarityInfo(Math.max(props.seriesStats.series.total_quantity, props.seriesStats.series.total_sold));
 });
 
 const hapticsImpactLight = async () => {

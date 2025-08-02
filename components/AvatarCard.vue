@@ -35,10 +35,14 @@
           <!-- Gradient Overlay -->
           <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           
-          <!-- Top Left: Supply Badge -->
+          <!-- Top Left: Rarity Badge -->
           <div class="absolute top-1 left-1">
-            <div class="px-1 py-0.5 bg-black/70 backdrop-blur-md text-xs font-medium text-white rounded" :class="getMintClassesText(Math.max(seriesStats.series.total_quantity, seriesStats.series.total_sold))">
-              {{ Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) }}
+            <div class="flex items-center gap-1 px-2 py-1 bg-black/80 backdrop-blur-md text-xs font-semibold text-white rounded-full border border-white/20" :class="rarityInfo.color">
+              <DiamondIcon v-if="rarityInfo.tier === 'rare'" class="w-3 h-3 flex-shrink-0" />
+              <GoldIcon v-else-if="rarityInfo.tier === 'gold'" class="w-3 h-3 flex-shrink-0" />
+              <SilverIcon v-else-if="rarityInfo.tier === 'silver'" class="w-3 h-3 flex-shrink-0" />
+              <CommonIcon v-else class="w-3 h-3 flex-shrink-0" />
+              <span class="text-[10px] leading-none">{{ Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) }}</span>
             </div>
           </div>
           
@@ -130,8 +134,12 @@ import {getTokenImage} from "~/global/utils";
 import {findCollectionNameByContractAddress} from "~/global/generations";
 import {Haptics, ImpactStyle} from "@capacitor/haptics";
 import {marketplaceLink} from "~/global/marketplace";
-import {getMintClasses, getMintClassesText} from "~/global/mint";
+import {getMintClasses, getMintClassesText, getRarityInfo} from "~/global/mint";
 import AvatarCardMobile from "~/components/AvatarCardMobile.vue";
+import DiamondIcon from "~/components/icons/DiamondIcon.vue";
+import GoldIcon from "~/components/icons/GoldIcon.vue";
+import SilverIcon from "~/components/icons/SilverIcon.vue";
+import CommonIcon from "~/components/icons/CommonIcon.vue";
 
 export interface AvatarCardItem {
   name: string;
@@ -171,6 +179,10 @@ const getGeneration = computed(() => {
 
 const isMobile = computed(() => {
   return Capacitor.isNativePlatform() || window.matchMedia('(max-width: 768px)').matches;
+});
+
+const rarityInfo = computed(() => {
+  return getRarityInfo(Math.max(props.seriesStats.series.total_quantity, props.seriesStats.series.total_sold));
 });
 
 const hapticsImpactLight = async () => {
