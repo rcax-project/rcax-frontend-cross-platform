@@ -1,16 +1,16 @@
 <template>
-  <div class="relative flex min-h-screen w-full">
+  <div class="relative flex min-h-screen w-full max-w-full">
     <!-- Sidebar -->
     <Sidebar />
     
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col lg:ml-16">
+    <div class="flex-1 flex flex-col w-full lg:ml-16 min-w-0 max-w-full">
       <HeaderTop :hide-items="scrolled >= 48" :class="{ 'sticky -top-[48px]': Capacitor.isNativePlatform(), 'lg:ml-0': true }" ref="barMarketInfo" />
       <AvatarViewer />
       <template v-if="!Capacitor.isNativePlatform()">
         <AdvertisementBanner class="" />
       </template>
-      <div class="relative flex flex-col grow items-center w-full" :class="{ 'page-mobile-padding-bottom': Capacitor.isNativePlatform() }">
+      <div class="relative flex flex-col grow items-center w-full min-w-0" :class="{ 'page-mobile-padding-bottom': Capacitor.isNativePlatform() }">
         <NuxtPage/>
       </div>
       <template v-if="!Capacitor.isNativePlatform()">
@@ -267,6 +267,14 @@ const getDeliveredNotifications = async () => {
 html, body {
   @apply bg-[#141415];
   -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent horizontal scroll on mobile without breaking sticky */
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+    position: relative;
+  }
 }
 
 select {
