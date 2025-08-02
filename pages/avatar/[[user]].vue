@@ -24,7 +24,7 @@
     <div class="px-6 pt-6 flex flex-col md:flex-row md:justify-center md:items-center gap-6 md:gap-12 w-full" :class="{ 'hidden': !avatar }">
       <div class="flex flex-col items-center md:w-3/4 gap-3">
         <div class="flex gap-2 md:items-start w-full">
-          <SearchBar v-model:search-term="searchTerm" :placeholder="`Search by Name`" class="w-full" />
+          <SearchBar v-model:search-term="searchTerm" :placeholder="`Search by Name`" />
           <select v-model="filterGenOption" class="px-3 py-2 bg-zinc-800/30 hover:bg-zinc-700/50 border border-zinc-700/30 hover:border-zinc-600/50 text-sm text-zinc-400 hover:text-white font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 rounded-lg transition-all duration-200 cursor-pointer w-fit">
             <option value="all">Gen: All</option>
             <template v-for="gen in Object.keys(Filters)">
@@ -471,10 +471,6 @@ async function savePermissions() {
 </script>
 
 <style>
-.avatar-view .searchbar {
-  @apply h-10;
-}
-
 .avatar-view img.normal {
   bottom: 10%;
   transform: translate(-50%, 0%);
