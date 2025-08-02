@@ -12,7 +12,7 @@
           class="relative w-full h-full block"
         >
           <img-placeholder 
-            img-class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+            img-class="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:filter group-hover:drop-shadow-[0_0_20px_rgba(147,197,253,0.6)]" 
             :src="getTokenImage(seriesStats.series.image)" 
           />
           
@@ -46,6 +46,14 @@
             </template>
           </div>
         </button>
+      </div>
+      
+      <!-- Background Glow -->
+      <div class="absolute -bottom-6 left-0 right-0 z-0 h-12">
+        <img-placeholder 
+          img-class="w-full h-full object-cover blur-xl opacity-10"
+          :src="getTokenImage(seriesStats.series.image)" 
+        />
       </div>
       
       <!-- Content Section -->
