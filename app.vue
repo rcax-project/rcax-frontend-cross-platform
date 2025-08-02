@@ -18,6 +18,9 @@
       </template>
     </div>
     
+    <!-- Mobile Navigation -->
+    <MobileNavigationBar />
+    
     <!-- Modals and Overlays -->
     <template v-if="!Capacitor.isNativePlatform() && !settings.cookies.accepted">
       <CookieWarning/>
@@ -59,6 +62,7 @@ import {computed} from "vue";
 import HeaderTop from "~/components/HeaderTop.vue";
 import FooterSmall from "~/components/FooterSmall.vue";
 import Sidebar from "~/components/Sidebar.vue";
+import MobileNavigationBar from "~/components/MobileNavigationBar.vue";
 import {Ref} from "@vue/reactivity";
 
 useHead({
