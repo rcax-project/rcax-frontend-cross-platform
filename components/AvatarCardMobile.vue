@@ -17,13 +17,10 @@
           />
         </button>
         
-        <!-- Rarity Badge - Top Left of Image -->
+        <!-- Supply Badge - Top Left of Image -->
         <div v-if="Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) <= 9999" class="absolute top-0.5 left-0.5">
-          <div class="flex items-center gap-1 px-1.5 py-0.5 bg-black/80 backdrop-blur-md text-xs font-semibold text-white rounded-full border border-white/20" :class="rarityInfo.color">
-            <DiamondIcon v-if="rarityInfo.tier === 'rare'" class="w-3 h-3 flex-shrink-0" />
-            <GoldIcon v-else-if="rarityInfo.tier === 'gold'" class="w-3 h-3 flex-shrink-0" />
-            <SilverIcon v-else-if="rarityInfo.tier === 'silver'" class="w-3 h-3 flex-shrink-0" />
-            <CommonIcon v-else class="w-3 h-3 flex-shrink-0" />
+          <div class="flex items-center gap-1 px-1.5 py-0.5 bg-black/80 backdrop-blur-md text-xs font-semibold text-white rounded-full border border-white/20" :class="Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) <= 600 ? rarityInfo.color : 'text-white'">
+            <span v-if="Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) <= 600" class="text-[10px] leading-none">{{ rarityInfo.icon }}</span>
             <span class="text-[10px] leading-none">{{ Math.max(seriesStats.series.total_sold, seriesStats.series.total_quantity) }}</span>
           </div>
         </div>
@@ -109,10 +106,6 @@ import {findCollectionNameByContractAddress} from "~/global/generations";
 import {Haptics, ImpactStyle} from "@capacitor/haptics";
 import {marketplaceLink} from "~/global/marketplace";
 import {getMintClasses, getMintClassesText, getRarityInfo} from "~/global/mint";
-import DiamondIcon from "~/components/icons/DiamondIcon.vue";
-import GoldIcon from "~/components/icons/GoldIcon.vue";
-import SilverIcon from "~/components/icons/SilverIcon.vue";
-import CommonIcon from "~/components/icons/CommonIcon.vue";
 
 export interface AvatarCardItem {
   name: string;

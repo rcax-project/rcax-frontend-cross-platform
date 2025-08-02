@@ -37,28 +37,28 @@ export function getRarityInfo(totalQuantity: number): RarityInfo {
   if (totalQuantity < 100) {
     return {
       tier: 'rare',
-      icon: 'DiamondIcon',
-      color: 'text-cyan-400',
+      icon: '💎',
+      color: 'text-blue-400',
       label: 'Rare'
     };
-  } else if (totalQuantity < 200) {
+  } else if (totalQuantity <= 200) {
     return {
       tier: 'gold',
-      icon: 'GoldIcon',
+      icon: '🔶',
       color: 'text-yellow-400',
       label: 'Gold'
     };
-  } else if (totalQuantity < 500) {
+  } else if (totalQuantity <= 600) {
     return {
       tier: 'silver',
-      icon: 'SilverIcon',
+      icon: '🪙',
       color: 'text-gray-300',
       label: 'Silver'
     };
   } else {
     return {
       tier: 'common',
-      icon: 'CommonIcon',
+      icon: '⬛',
       color: 'text-gray-500',
       label: 'Common'
     };
