@@ -106,7 +106,7 @@ import {Capacitor} from "@capacitor/core";
 /* Additional responsive improvements */
 @media (max-width: 640px) {
   .menubar-content {
-    @apply px-3 py-2;
+    @apply px-2 py-2;
   }
   
   .menubar-content > * {
