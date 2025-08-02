@@ -2,7 +2,7 @@
   <div 
     @click="selectAvatar" 
     ref="componentRef" 
-    class="group relative cursor-pointer transition-all duration-300 w-full flex items-start gap-3 p-2"
+    class="group relative cursor-pointer transition-all duration-300 w-full flex items-start gap-3 p-2 border-b border-zinc-700/30"
   >
     <template v-if="seriesStats">
       <!-- Left: Avatar Image -->
@@ -31,7 +31,7 @@
         <div class="flex items-center justify-between gap-2">
           <button 
             @click.stop="openLinkWith(marketplaceLink(seriesStats))" 
-            class="text-left flex-1 text-white font-medium text-sm hover:text-blue-400 transition-colors duration-200 truncate"
+            class="text-left flex-1 text-white font-medium text-sm transition-colors duration-200 truncate"
           >
             {{ seriesStats.series.name }}
           </button>
@@ -69,7 +69,7 @@
         <!-- Footer -->
         <div v-if="!$slots.footer" class="flex items-center justify-between text-xs">
           <div class="flex items-center gap-2">
-            <div class="text-xs font-medium" :class="{ 'text-green-400': seriesStats.series.total_sold < seriesStats.series.total_quantity, 'text-red-400': seriesStats.series.total_sold >= seriesStats.series.total_quantity }">
+            <div class="text-xs" :class="{ 'text-green-400': seriesStats.series.total_sold < seriesStats.series.total_quantity, 'text-red-400': seriesStats.series.total_sold >= seriesStats.series.total_quantity }">
               <template v-if="seriesStats && seriesStats.series.mint_price > 0">
                 ${{ seriesStats.series.mint_price / 100.00 }}
               </template>
