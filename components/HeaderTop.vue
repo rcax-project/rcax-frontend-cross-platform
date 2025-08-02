@@ -37,8 +37,8 @@
       <div class="ml-4 md:ml-auto">
         <div class="market-info-item">
           <div class="flex items-center gap-3">
-            <div class="flex items-center gap-2">
-              <img class="w-4 h-4" src="/images/branding/reddit-icon.svg">
+            <div class="flex items-center gap-2 flex-shrink-0">
+              <img class="w-4 h-4 min-w-[1rem] min-h-[1rem]" src="/images/branding/reddit-icon.svg" alt="Reddit">
             </div>
             <div class="flex items-center gap-1">
               <span class="text-zinc-500">24h Vol:</span>
