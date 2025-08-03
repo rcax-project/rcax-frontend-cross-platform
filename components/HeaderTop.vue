@@ -126,6 +126,7 @@ function openLinkWith(url: string) {
 }
 
 
+
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;

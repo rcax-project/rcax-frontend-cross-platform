@@ -1,5 +1,5 @@
 <template>
-  <div class="menubar" :class="{ 'mobile-padding-top': Capacitor.isNativePlatform() }">
+  <div class="menubar">
     <div class="menubar-content">
       <slot></slot>
     </div>
@@ -7,25 +7,50 @@
 </template>
 
 <script setup>
-
 import {Capacitor} from "@capacitor/core";
 </script>
 
 <style>
 .menubar {
-  position: sticky;
-  top: 0;
-  z-index: 40;
+  position: sticky;  
+  z-index: 50;
   width: 100%;
-  background-color: #141415;
+  background-color: #141415;  
   border-bottom: 1px solid rgba(39, 39, 42, 0.5);
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   transition-duration: 500ms;
 }
 
+/* Default top position */
+.menubar {
+  top: 0;
+}
+
+/* On devices with safe area, stick below status bar */
+@supports (padding: env(safe-area-inset-top)) {
+  .menubar {
+    top: env(safe-area-inset-top);
+  }
+  
+  /* Fill the space above MenuBar with same background color */
+  .menubar::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-top);
+    background-color: #141415;
+    z-index: 49;
+    pointer-events: none;
+  }
+}
+
 .menubar-content {
   @apply px-4 lg:px-6 py-3 flex items-center gap-3 sm:gap-4 overflow-x-auto scrollbar-hide relative min-w-0;
 }
+
+
 
 /* Prevent horizontal scroll when dropdowns are open */
 .menubar-content:has(.filter-menu-button--menu) {
@@ -92,16 +117,6 @@ import {Capacitor} from "@capacitor/core";
   display: none;
 }
 
-.mobile-padding-top {
-  top: env(safe-area-inset-top);
-}
-
-/* Desktop mobile padding adjustment */
-@media (min-width: 1024px) {
-  .mobile-padding-top {
-    top: 0;
-  }
-}
 
 /* Additional responsive improvements */
 @media (max-width: 640px) {
