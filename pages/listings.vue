@@ -169,7 +169,7 @@
                       <td class="px-6 py-4">
                         <button @click="openLinkWith(`https://opensea.io/assets/matic/${listing.listing.token.contract_address}/${listing.listing.token.id}`)" class="text-left hover:bg-zinc-800/50 rounded-lg p-2 -m-2 transition-colors group">
                           <div class="text-white font-semibold text-sm group-hover:text-zinc-200">
-                            {{ (listing.listing.payment_token.base_price / 1000000000000000000).toFixed(6).replace(/\.?0+$/, '') }} {{ listing.listing.payment_token.symbol }}
+                            {{ formatPrice(listing.listing.payment_token.base_price / 1000000000000000000, 6) }} {{ listing.listing.payment_token.symbol }}
                           </div>
                           <div class="text-zinc-400 text-xs mt-0.5">
                             {{ ethereumInLocalCurrency(getListingAsGweiPrice(listing.listing)) }}
@@ -227,7 +227,7 @@ import {SeriesStats} from "~/types/seriesStats";
 import {Filters} from "~/global/generations";
 import {getSeriesStats, useSeriesStatsV2} from "~/composables/states";
 import {fetchSeriesStats} from "~/composables/api/seriesStats";
-import {getTokenImage, normalizeTokenSymbol} from "~/global/utils";
+import {getTokenImage, normalizeTokenSymbol, formatPrice} from "~/global/utils";
 import {Haptics, ImpactStyle} from "@capacitor/haptics";
 import {marketplaceLink} from "~/global/marketplace";
 

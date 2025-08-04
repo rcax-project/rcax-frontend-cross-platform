@@ -85,17 +85,17 @@
         
         <template v-else-if="sorting === 'lowestWeeklyAverage' || sorting === 'highestWeeklyAverage'">
           <span class="text-zinc-500">7d Avg</span>
-          <span class="font-medium text-white">{{ (item.stats.weekly_average_price ?? 0).toFixed(3).replace(/\.?0+$/, '') }}</span>
+          <span class="font-medium text-white">{{ formatPrice(item.stats.weekly_average_price ?? 0, 3) }}</span>
         </template>
         
         <template v-else-if="sorting === 'lowestTwoWeeklyAverage' || sorting === 'highestTwoWeeklyAverage'">
           <span class="text-zinc-500">14d Avg</span>
-          <span class="font-medium text-white">{{ (item.stats.two_weekly_average_price ?? 0).toFixed(2) }}</span>
+          <span class="font-medium text-white">{{ formatPrice(item.stats.two_weekly_average_price ?? 0, 2) }}</span>
         </template>
         
         <template v-else-if="sorting === 'lowestMonthlyAverage' || sorting === 'highestMonthlyAverage'">
           <span class="text-zinc-500">30d Avg</span>
-          <span class="font-medium text-white">{{ (item.stats.monthly_average_price ?? 0).toFixed(2) }}</span>
+          <span class="font-medium text-white">{{ formatPrice(item.stats.monthly_average_price ?? 0, 2) }}</span>
         </template>
         
         <template v-else-if="sorting === 'artistAsc' || sorting === 'artistDesc'">
@@ -119,7 +119,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-2.5 h-2.5 text-zinc-400">
               <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path>
             </svg>
-            <span class="font-medium text-zinc-400">{{ item.stats.five_last_sales_average.toFixed(3).replace(/\.?0+$/, '') }}</span>
+            <span class="font-medium text-zinc-400">{{ formatPrice(item.stats.five_last_sales_average, 3) }}</span>
             <span class="text-xs font-normal text-zinc-500">({{ fiveSalesFiatPrice }})</span>
           </div>
         </template>
@@ -142,6 +142,7 @@ import {computed, ethereumInLocalCurrency} from "#imports";
 import {ETH_TO_GWEI_MODIFIER} from "~/types/ethereum";
 import {getLowestListing, getListingAsGweiPrice} from "~/composables/helpers";
 import {ClockIcon} from "@heroicons/vue/24/outline";
+import {formatPrice} from "~/global/utils";
 
 const watchList = useWatchList();
 const ethereumPriceInUsd = useEthereumUsdPrice();
@@ -177,14 +178,16 @@ const fiveSalesFiatPrice = computed(() => {
   const fiatValue = ethPrice * exchangeRate;
   
   if (fiatValue >= 1000) {
-    const formattedK = new Intl.NumberFormat(undefined, { style: 'currency', currency, minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(fiatValue / 1000);
+    const locale = currency === 'USD' ? 'en-US' : undefined;
+    const formattedK = new Intl.NumberFormat(locale, { style: 'currency', currency, minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(fiatValue / 1000);
     return formattedK.replace(/\.0/, '') + 'k';
   }
   
   const minimumFractionDigits = fiatValue >= 100 ? 0 : 2;
   const maximumFractionDigits = fiatValue >= 100 ? 0 : 2;
   
-  return new Intl.NumberFormat(undefined, { 
+  const locale = currency === 'USD' ? 'en-US' : undefined;
+  return new Intl.NumberFormat(locale, { 
     style: 'currency', 
     currency, 
     minimumFractionDigits, 

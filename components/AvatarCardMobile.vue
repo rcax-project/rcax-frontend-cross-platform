@@ -34,7 +34,7 @@
             @click.stop="openLinkWith(marketplaceLink(seriesStats))" 
             class="text-left flex-1 text-white font-medium text-sm transition-colors duration-200 truncate whitespace-nowrap overflow-hidden text-ellipsis"
           >
-            {{ seriesStats.series.name }}
+            {{ seriesStats.series.name }}<span v-if="item.mint_number" class="text-xs font-medium text-zinc-400 ml-1">#{{ item.mint_number }}</span>
           </button>
           
           <div class="flex items-center gap-2 flex-shrink-0">
@@ -78,9 +78,6 @@
                 FREE
               </template>
             </div>
-            <template v-if="item.mint_number">
-              <span class="text-xs font-medium text-zinc-400">#{{ item.mint_number }}</span>
-            </template>
           </div>
           <div class="text-xs text-zinc-400">{{ getGeneration }}</div>
         </div>

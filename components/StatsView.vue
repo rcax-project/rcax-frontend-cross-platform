@@ -124,7 +124,7 @@
                           <template v-if="normalizeTokenSymbol(listing.payment_token.symbol) === 'ETH'">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-purple-500"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
                             <div class="flex gap-1">
-                              <span>{{ (listing.payment_token.base_price / ETH_TO_GWEI_MODIFIER).toFixed(6).replace(/\.?0+$/, '') }}</span>
+                              <span>{{ formatPrice(listing.payment_token.base_price / ETH_TO_GWEI_MODIFIER, 6) }}</span>
                               <span class="text-white/40">(<span class="text-amber-500">{{ ethereumInLocalCurrency(listing.payment_token.base_price) }}</span>)</span>
                               <span class="text-details">#{{ listing.token.mint_number }}</span>
                             </div>
@@ -132,7 +132,7 @@
                           <template v-else-if="normalizeTokenSymbol(listing.payment_token.symbol) === 'MATIC'">
                             <div class="flex items-center text-orange-500">M</div>
                             <div class="flex gap-1">
-                              <span>{{ (listing.payment_token.base_price / ETH_TO_GWEI_MODIFIER).toFixed(4).replace(/\.?0+$/, '') }}</span>
+                              <span>{{ formatPrice(listing.payment_token.base_price / ETH_TO_GWEI_MODIFIER, 4) }}</span>
                               <span class="text-white/40">(<span class="text-amber-500">{{ ethereumInLocalCurrency(getListingAsGweiPrice(listing)) }}</span>)</span>
                               <span class="text-details">#{{ listing.token.mint_number }}</span>
                             </div>
@@ -248,7 +248,7 @@ import {Capacitor} from "@capacitor/core";
 import {ETH_TO_GWEI_MODIFIER} from "~/types/ethereum";
 import {getLowestListing, getListingAsGweiPrice, maticToEth} from "~/composables/helpers";
 import {getAllCollections, Filters} from "~/global/generations";
-import {getTokenImage, normalizeTokenSymbol} from "~/global/utils";
+import {getTokenImage, normalizeTokenSymbol, formatPrice} from "~/global/utils";
 import {openLinkWith} from "~/composables/states";
 import {ethereumInLocalCurrency} from "#imports";
 import {Haptics, ImpactStyle} from "@capacitor/haptics";
@@ -435,7 +435,9 @@ const filteredAndSortedSeriesStats: ComputedRef<SeriesStats[]> = computed(() => 
       });
       break;
     case "lowestPrice":
-      sortedSeriesStats = filteredSeriesStats.sort((a, b) => {
+      // Filter out items without listings when sorting by lowest price
+      const itemsWithListings = filteredSeriesStats.filter((seriesStat) => !!seriesStat.stats.lowest_listing);
+      sortedSeriesStats = itemsWithListings.sort((a, b) => {
         const aBasePrice = getLowestListingAsGweiPrice(a);
         const bBasePrice = getLowestListingAsGweiPrice(b);
 

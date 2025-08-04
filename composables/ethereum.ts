@@ -27,32 +27,33 @@ export function ethereumInLocalCurrency(eth: number, abbreviate: boolean): strin
             break;
     }
 
-    const currencyFormatter = new Intl.NumberFormat(undefined, {
-        style: "currency",
-        currency,
-    });
-
-    let symbol = currencyFormatter.formatToParts(0)[0].value;
-
-    if (symbol.startsWith("US")) {
-        symbol = symbol.slice(2, symbol.length);
-    }
-
+    // Use the appropriate locale for currency formatting
+    const formatterLocale = currency === 'USD' ? 'en-US' : localeString;
+    
     if (abbreviate) {
         [price, abb] = abbreviateNumber(price);
-    } else if (price >= 100) {
-        price = Math.round(price);
+        
+        const currencyFormatter = new Intl.NumberFormat(formatterLocale, {
+            style: "currency",
+            currency,
+            minimumFractionDigits: price >= 100 ? 0 : 2,
+            maximumFractionDigits: price >= 100 ? 0 : 2,
+        });
+        
+        // Format the price and append abbreviation
+        const formatted = currencyFormatter.format(price);
+        return formatted + abb;
     } else {
-         price = +price.toFixed(2);
+        // For non-abbreviated prices, use standard currency formatting
+        const currencyFormatter = new Intl.NumberFormat(formatterLocale, {
+            style: "currency",
+            currency,
+            minimumFractionDigits: price >= 100 ? 0 : 2,
+            maximumFractionDigits: price >= 100 ? 0 : 2,
+        });
+        
+        return currencyFormatter.format(price);
     }
-
-    let priceString = price.toLocaleString(localeString);
-
-    if (priceString.includes('.') && priceString.split('.')[1].length === 1 || priceString.includes(',') && priceString.split(',')[1].length === 1) {
-        priceString += '0';
-    }
-
-    return `${symbol}${priceString}${abb}`;
 }
 
 export function gweiInLocalCurrency(eth: number): string {

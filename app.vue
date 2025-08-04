@@ -5,7 +5,7 @@
     
     <!-- Main Content -->
     <div class="flex-1 flex flex-col w-full lg:ml-16 min-w-0 max-w-full">
-      <HeaderTop :hide-items="scrolled >= 48" :class="{ 'sticky -top-[48px]': Capacitor.isNativePlatform(), 'lg:ml-0': true }" ref="barMarketInfo" />
+      <HeaderTop :hide-items="scrolled >= 48" :class="{ 'lg:ml-0': true }" ref="barMarketInfo" />
       <AvatarViewer />
       <template v-if="!Capacitor.isNativePlatform()">
         <AdvertisementBanner class="" />
