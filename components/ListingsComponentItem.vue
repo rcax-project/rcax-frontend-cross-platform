@@ -24,13 +24,13 @@
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-2.5 h-2.5">
             <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path>
           </svg>
-          <span>{{ (lowestListing.payment_token.base_price / ETH_TO_GWEI_MODIFIER).toFixed(3).replace(/\.?0+$/, '') }}</span>
+          <span>{{ formatPrice(lowestListing.payment_token.base_price / ETH_TO_GWEI_MODIFIER, 3) }}</span>
         </div>
       </template>
       <template v-else-if="normalizeTokenSymbol(lowestListing.payment_token.symbol) === 'MATIC'">
         <div class="flex items-center gap-0.5 font-medium text-zinc-400">
           <span class="font-bold text-xs">M</span>
-          <span>{{ (lowestListing.payment_token.base_price / ETH_TO_GWEI_MODIFIER).toFixed(3).replace(/\.?0+$/, '') }}</span>
+          <span>{{ formatPrice(lowestListing.payment_token.base_price / ETH_TO_GWEI_MODIFIER, 3) }}</span>
         </div>
       </template>
     </div>
@@ -49,7 +49,7 @@
         <template v-else-if="normalizeTokenSymbol(item.payment_token.symbol) === 'MATIC'">
           <span class="font-bold text-xs text-white">M</span>
         </template>
-        <span class="text-xs font-bold text-white">{{ (item.payment_token.base_price / ETH_TO_GWEI_MODIFIER).toFixed(3).replace(/\.?0+$/, '') }}</span>
+        <span class="text-xs font-bold text-white">{{ formatPrice(item.payment_token.base_price / ETH_TO_GWEI_MODIFIER, 3) }}</span>
         <span class="text-xs text-zinc-500">({{ listingFiatPrice }})</span>
       </button>
       <span class="text-xs text-zinc-400">{{ $timeAgo(new Date(item.date_listed)) }}</span>
@@ -62,7 +62,7 @@ import {PropType} from "@vue/runtime-core";
 import {Listing} from "~/types/listing";
 import {computed, openLinkWith, getLowestListing} from "#imports";
 import {ETH_TO_GWEI_MODIFIER} from "~/types/ethereum";
-import {normalizeTokenSymbol} from "~/global/utils";
+import {normalizeTokenSymbol, formatPrice} from "~/global/utils";
 import {getSeriesStats, useEthereumUsdPrice, useSettings, useEthereumPriceMap} from "~/composables/states";
 
 const props = defineProps({
@@ -87,15 +87,18 @@ const listingFiatPrice = computed(() => {
   const exchangeRate = ethereumPriceMap.value.get(currency) ?? 0;
   const fiatValue = ethPrice * exchangeRate;
   
+  // Use proper locale for currency formatting
+  const locale = currency === 'USD' ? 'en-US' : undefined;
+  
   if (fiatValue >= 1000) {
-    const formattedK = new Intl.NumberFormat(undefined, { style: 'currency', currency, minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(fiatValue / 1000);
+    const formattedK = new Intl.NumberFormat(locale, { style: 'currency', currency, minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(fiatValue / 1000);
     return formattedK.replace(/\.0/, '') + 'k';
   }
   
   const minimumFractionDigits = fiatValue >= 100 ? 0 : 2;
   const maximumFractionDigits = fiatValue >= 100 ? 0 : 2;
   
-  return new Intl.NumberFormat(undefined, { 
+  return new Intl.NumberFormat(locale, { 
     style: 'currency', 
     currency, 
     minimumFractionDigits, 

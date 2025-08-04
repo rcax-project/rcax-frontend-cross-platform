@@ -75,7 +75,7 @@
                 <div class="mt-1 flex items-baseline gap-2">
                   <div class="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-5 h-5 text-zinc-400 mr-1.5"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-                    <span class="text-2xl font-semibold text-white">{{ (getTotalWorth / 1000000000000000000).toFixed(4).replace(/\.?0+$/, '') }}</span>
+                    <span class="text-2xl font-semibold text-white">{{ formatPrice(getTotalWorth / 1000000000000000000, 4) }}</span>
                   </div>
                   <span class="text-sm text-zinc-400">({{ ethereumInLocalCurrency(getTotalWorth) }})</span>
                 </div>
@@ -93,7 +93,7 @@
                 <div class="mt-1 flex items-baseline gap-2">
                   <div class="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-4 h-4 text-zinc-400 mr-1"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-                    <span class="text-2xl font-semibold text-white">{{ getTotalItems > 0 ? ((getTotalWorth / getTotalItems) / 1000000000000000000).toFixed(4).replace(/\.?0+$/, '') : '0' }}</span>
+                    <span class="text-2xl font-semibold text-white">{{ getTotalItems > 0 ? formatPrice((getTotalWorth / getTotalItems) / 1000000000000000000, 4) : '0' }}</span>
                   </div>
                 </div>
               </div>
@@ -131,7 +131,7 @@
                         <div class="flex items-center gap-4 mt-1">
                           <div class="flex items-center gap-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3.5 h-3.5 text-zinc-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-                            <span class="text-sm font-medium text-white">{{ (getWalletValue(walletAddress) / 1000000000000000000).toFixed(4).replace(/\.?0+$/, '') }}</span>
+                            <span class="text-sm font-medium text-white">{{ formatPrice(getWalletValue(walletAddress) / 1000000000000000000, 4) }}</span>
                             <span class="text-sm text-zinc-400">({{ ethereumInLocalCurrency(getWalletValue(walletAddress)) }})</span>
                           </div>
                           <span class="text-sm text-zinc-400">{{ Object.keys(walletTokens).length }} items</span>
@@ -173,7 +173,7 @@
                         <div class="text-right">
                           <div class="flex items-center text-xs">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-zinc-400 mr-1"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-                            <span class="text-zinc-300">{{ rcaxToEth((getRcax(walletAddress) ?? 0) / 1000000000000000000).toFixed(4).replace(/\.?0+$/, '') }}</span>
+                            <span class="text-zinc-300">{{ formatPrice(rcaxToEth((getRcax(walletAddress) ?? 0) / 1000000000000000000), 4) }}</span>
                           </div>
                           <p class="text-xs text-zinc-500">{{ ethereumInLocalCurrency(rcaxToEth((getRcax(walletAddress) ?? 0))) }}</p>
                         </div>
@@ -193,7 +193,7 @@
                         <div class="text-right">
                           <div class="flex items-center text-xs">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-zinc-400 mr-1"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-                            <span class="text-zinc-300">{{ ((getWeth(walletAddress) ?? 0) / 1000000000000000000).toFixed(4).replace(/\.?0+$/, '') }}</span>
+                            <span class="text-zinc-300">{{ formatPrice((getWeth(walletAddress) ?? 0) / 1000000000000000000, 4) }}</span>
                           </div>
                           <p class="text-xs text-zinc-500">{{ ethereumInLocalCurrency(((getWeth(walletAddress) ?? 0))) }}</p>
                         </div>
@@ -222,12 +222,12 @@
                               <div class="space-y-0.5">
                                 <div @click.stop="openLinkWith(marketplaceLink(getSeriesStats(series.contract_address, series.name)))" class="flex items-center gap-0.5 cursor-pointer hover:text-orange-400 transition-colors">
                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-zinc-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-                                  <span class="text-xs text-zinc-400 font-medium">{{ (getSeriesValue(series.contract_address, series.name) / 1000000000000000000 * series.count).toFixed(3).replace(/\.?0+$/, '') }}</span>
+                                  <span class="text-xs text-zinc-400 font-medium">{{ formatPrice(getSeriesValue(series.contract_address, series.name) / 1000000000000000000 * series.count, 3) }}</span>
                                   <span class="text-xs font-normal text-zinc-500">({{ getGroupedFiatPrice(series.contract_address, series.name, series.count) }})</span>
                                 </div>
                                 <div v-if="series.count > 1" class="flex items-center gap-0.5 text-xs text-zinc-600">
                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-2.5 h-2.5"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-                                  <span>{{ (getSeriesValue(series.contract_address, series.name) / 1000000000000000000).toFixed(3).replace(/\.?0+$/, '') }}</span>
+                                  <span>{{ formatPrice(getSeriesValue(series.contract_address, series.name) / 1000000000000000000, 3) }}</span>
                                   <span class="text-zinc-600">({{ getIndividualFiatPrice(series.contract_address, series.name) }})</span>
                                 </div>
                               </div>
@@ -262,7 +262,7 @@
                               <p class="text-xs font-medium text-white truncate group-hover:text-zinc-300 transition-colors">{{ getSeriesStats(token.contract_address, token.name)?.series.name }}</p>
                               <div @click.stop="openLinkWith(marketplaceLink(getSeriesStats(token.contract_address, token.name)))" class="flex items-center gap-0.5 mt-0.5 cursor-pointer hover:text-orange-400 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-zinc-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-                                <span class="text-xs text-zinc-400 font-medium">{{ (getSeriesValue(token.contract_address, token.name) / 1000000000000000000).toFixed(3).replace(/\.?0+$/, '') }}</span>
+                                <span class="text-xs text-zinc-400 font-medium">{{ formatPrice(getSeriesValue(token.contract_address, token.name) / 1000000000000000000, 3) }}</span>
                                 <span class="text-xs font-normal text-zinc-500">({{ getIndividualFiatPrice(token.contract_address, token.name) }})</span>
                               </div>
                             </div>
@@ -304,7 +304,7 @@ import {ethereumInLocalCurrency, coneToEth, gweiInLocalCurrency} from "#imports"
 import {ArrowPathIcon, ChevronDownIcon, XMarkIcon} from "@heroicons/vue/24/solid";
 import {Token} from "~/types/token";
 import {Capacitor} from "@capacitor/core";
-import {getTokenImage, isValidEthereumAddress} from "~/global/utils";
+import {getTokenImage, isValidEthereumAddress, formatPrice} from "~/global/utils";
 import {getSaleAsGweiPrice} from "~/composables/helpers";
 import {getFreeCollections} from "~/global/generations";
 import {SeriesStats} from "~/types/seriesStats";

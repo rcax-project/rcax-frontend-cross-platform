@@ -44,7 +44,7 @@
               <span class="text-zinc-500">24h Vol:</span>
               <div class="flex items-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-zinc-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-                <span class="text-zinc-400">{{ dailyVol.toFixed(4).replace(/\.?0+$/, '') }}</span>
+                <span class="text-zinc-400">{{ formatPrice(dailyVol, 4) }}</span>
               </div>
             </div>
             <div class="flex items-center gap-1">
@@ -80,6 +80,7 @@ import {ethereumInLocalCurrency, gweiInLocalCurrency} from "#imports";
 import {ETH_TO_GWEI_MODIFIER} from "~/types/ethereum";
 import {Capacitor} from "@capacitor/core";
 import {Ref} from "@vue/reactivity";
+import {formatPrice} from "~/global/utils";
 
 const user = useUser();
 const token = useToken();

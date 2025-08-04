@@ -51,7 +51,7 @@
               <p class="text-sm text-zinc-400 mb-1">Current price</p>
               <div class="flex items-center justify-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-5 h-5 text-purple-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-                <span class="text-xl font-bold text-white">{{ (seriesStats.stats.lowest_listing.payment_token.base_price / 1000000000000000000).toFixed(4).replace(/\.?0+$/, '') }}</span>
+                <span class="text-xl font-bold text-white">{{ formatPrice(seriesStats.stats.lowest_listing.payment_token.base_price / 1000000000000000000, 4) }}</span>
               </div>
               <p class="text text-zinc-500 mt-1">{{ ethereumInLocalCurrency(seriesStats.stats.lowest_listing.payment_token.base_price) }}</p>
             </div>
@@ -293,7 +293,7 @@
                           <div>
                             <button @click="openLinkWith(`https://opensea.io/assets/matic/${listing.token.contract_address}/${listing.token.id}`)" class="flex items-center gap-1 hover:opacity-80 transition-opacity duration-200">
                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-purple-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-                              <span class="text-white text-sm font-medium">{{ (listing.payment_token.base_price / 1000000000000000000).toFixed(4).replace(/\.?0+$/, '') }} {{ listing.payment_token.symbol }}</span>
+                              <span class="text-white text-sm font-medium">{{ formatPrice(listing.payment_token.base_price / 1000000000000000000, 4) }} {{ listing.payment_token.symbol }}</span>
                             </button>
                             <template v-if="normalizeTokenSymbol(listing.payment_token.symbol) === 'ETH'">
                               <p class="text-xs text-zinc-500">{{ ethereumInLocalCurrency(listing.payment_token.base_price) }}</p>
@@ -362,7 +362,7 @@
                           <div>
                             <button @click="openLinkWith(`https://opensea.io/assets/matic/${sale.token.contract_address}/${sale.token.id}`)" class="flex items-center gap-1 hover:opacity-80 transition-opacity duration-200">
                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="currentColor" class="w-3 h-3 text-purple-400"><path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"></path></svg>
-                              <span class="text-white text-sm font-medium">{{ (sale.payment_token.base_price / 1000000000000000000).toFixed(4).replace(/\.?0+$/, '') }} {{ sale.payment_token.symbol }}</span>
+                              <span class="text-white text-sm font-medium">{{ formatPrice(sale.payment_token.base_price / 1000000000000000000, 4) }} {{ sale.payment_token.symbol }}</span>
                             </button>
                             <template v-if="normalizeTokenSymbol(sale.payment_token.symbol) === 'ETH'">
                               <p class="text-xs text-zinc-500">{{ ethereumInLocalCurrency(sale.payment_token.base_price) }}</p>
@@ -420,7 +420,7 @@ import {fetchSalesForSeries} from "~/composables/api/sales";
 import {Capacitor} from "@capacitor/core";
 import {marketplaceLink} from "~/global/marketplace";
 import {getMintClasses} from "~/global/mint";
-import {normalizeTokenSymbol} from "~/global/utils";
+import {normalizeTokenSymbol, formatPrice} from "~/global/utils";
 
 const selectedAvatar = useSelectedAvatar();
 const ethereumPriceInUsd = useEthereumUsdPrice();

@@ -54,3 +54,20 @@ export function normalizeTokenSymbol(symbol: string): string {
     
     return tokenAliases[symbol] || symbol;
 }
+
+export function formatPrice(price: number, decimals: number = 3): string {
+    if (price === 0) return '0';
+    
+    if (price < Math.pow(10, -decimals)) {
+        // For very small numbers, increase decimal places to show the actual value
+        let precision = decimals;
+        while (price < Math.pow(10, -precision) && precision < 10) {
+            precision++;
+        }
+        const formatted = price.toFixed(precision);
+        return formatted.replace(/\.?0+$/, '');
+    }
+    
+    const formatted = price.toFixed(decimals);
+    return formatted.replace(/\.?0+$/, '');
+}
