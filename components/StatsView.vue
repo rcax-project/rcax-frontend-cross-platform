@@ -435,7 +435,9 @@ const filteredAndSortedSeriesStats: ComputedRef<SeriesStats[]> = computed(() => 
       });
       break;
     case "lowestPrice":
-      sortedSeriesStats = filteredSeriesStats.sort((a, b) => {
+      // Filter out items without listings when sorting by lowest price
+      const itemsWithListings = filteredSeriesStats.filter((seriesStat) => !!seriesStat.stats.lowest_listing);
+      sortedSeriesStats = itemsWithListings.sort((a, b) => {
         const aBasePrice = getLowestListingAsGweiPrice(a);
         const bBasePrice = getLowestListingAsGweiPrice(b);
 
