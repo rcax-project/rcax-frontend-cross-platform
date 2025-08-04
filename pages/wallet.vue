@@ -677,14 +677,16 @@ function getGroupedFiatPrice(contractAddress: string, name: string, count: numbe
   const fiatValue = ethPrice * exchangeRate;
   
   if (fiatValue >= 1000) {
-    const formattedK = new Intl.NumberFormat(undefined, { style: 'currency', currency, minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(fiatValue / 1000);
+    const locale = currency === 'USD' ? 'en-US' : undefined;
+    const formattedK = new Intl.NumberFormat(locale, { style: 'currency', currency, minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(fiatValue / 1000);
     return formattedK.replace(/\.0/, '') + 'k';
   }
   
   const minimumFractionDigits = fiatValue >= 100 ? 0 : 2;
   const maximumFractionDigits = fiatValue >= 100 ? 0 : 2;
   
-  return new Intl.NumberFormat(undefined, { 
+  const locale = currency === 'USD' ? 'en-US' : undefined;
+  return new Intl.NumberFormat(locale, { 
     style: 'currency', 
     currency, 
     minimumFractionDigits, 
@@ -699,14 +701,16 @@ function getIndividualFiatPrice(contractAddress: string, name: string): string {
   const fiatValue = ethPrice * exchangeRate;
   
   if (fiatValue >= 1000) {
-    const formattedK = new Intl.NumberFormat(undefined, { style: 'currency', currency, minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(fiatValue / 1000);
+    const locale = currency === 'USD' ? 'en-US' : undefined;
+    const formattedK = new Intl.NumberFormat(locale, { style: 'currency', currency, minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(fiatValue / 1000);
     return formattedK.replace(/\.0/, '') + 'k';
   }
   
   const minimumFractionDigits = fiatValue >= 100 ? 0 : 2;
   const maximumFractionDigits = fiatValue >= 100 ? 0 : 2;
   
-  return new Intl.NumberFormat(undefined, { 
+  const locale = currency === 'USD' ? 'en-US' : undefined;
+  return new Intl.NumberFormat(locale, { 
     style: 'currency', 
     currency, 
     minimumFractionDigits, 
