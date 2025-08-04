@@ -13,7 +13,7 @@ import {Capacitor} from "@capacitor/core";
 <style>
 .menubar {
   position: sticky;  
-  z-index: 50;
+  z-index: 40;
   width: 100%;
   background-color: #141415;  
   border-bottom: 1px solid rgba(39, 39, 42, 0.5);
@@ -41,7 +41,7 @@ import {Capacitor} from "@capacitor/core";
     right: 0;
     height: env(safe-area-inset-top);
     background-color: #141415;
-    z-index: 49;
+    z-index: 39;
     pointer-events: none;
   }
 }

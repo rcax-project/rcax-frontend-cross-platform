@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full text-xs bg-[#141415] border-b border-zinc-800/30 overflow-hidden z-40 shadow-sm" ref="barMarketInfo" :class="{ 'page-mobile-padding-top': Capacitor.isNativePlatform() }">
+  <div class="relative w-full text-xs bg-[#141415] border-b border-zinc-800/30 overflow-hidden z-30 shadow-sm" ref="barMarketInfo" :class="{ 'page-mobile-padding-top': Capacitor.isNativePlatform() }">
     <div class="px-2 sm:px-4 lg:px-6 py-2 flex whitespace-nowrap items-center overflow-x-auto scrollbar-hide duration-500 min-w-0" :class="{ 'opacity-0': hideItems }">
       <div class="inline-flex shrink-0 items-center divide-x divide-zinc-700/40">
         <button @click="openLinkWith(`https://app.uniswap.org/tokens/polygon/0x875f123220024368968d9f1ab1f3f9c2f3fd190d`)" class="market-info-item group cursor-pointer">
