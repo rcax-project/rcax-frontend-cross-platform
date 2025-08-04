@@ -171,7 +171,7 @@ const getGeneration = computed(() => {
 });
 
 const isMobile = computed(() => {
-  return Capacitor.isNativePlatform() || window.matchMedia('(max-width: 768px)').matches;
+  return Capacitor.isNativePlatform() || window.matchMedia('(max-width: 639px)').matches;
 });
 
 const rarityInfo = computed(() => {
